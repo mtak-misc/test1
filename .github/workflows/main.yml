@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  PKGDEST: "/tmp/nvidia-390xx-settings.git"
+  PKGDEST: "/tmp/nvidia-390xx-settings"
 
 jobs:
   build:
