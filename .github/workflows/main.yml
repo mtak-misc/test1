@@ -18,9 +18,18 @@ jobs:
           pacman -Syu --noconfirm base-devel sudo git
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           git clone https://aur.archlinux.org/nvidia-390xx-settings.git
+          git clone https://aur.archlinux.org/nvidia-390xx-utils.git
           chown builder -R ..
           chown builder -R /tmp
-      - name: Build
+      - name: Build utils
+        run: |
+          cd nvidia-390xx-utils
+          sed -i 's/e1bd2982f9697e74b593380acf471e03192cd8d20f14bd9b43e6d5925421c518278e75515a0713be25b29bf99d7ea49c770adf2cede79736a03f323d5ed96a33/44b855cd11f3b2f231f9fb90492ae2e67a67ea3ea83c413e7c90956d38c9730a8bd0321281ae03c6afce633d102f5b499aed25622b9bfd31bdd2c98f0717e95b/g' PKGBUILD
+          sed -i 's/154/157/g' PKGBUILD
+          sed -i 's/pkgrel=2/pkgrel=1/g' PKGBUILD
+          su builder -c "yes '' | makepkg --noconfirm -sc"
+          pacman -U /tmp/nvidia-390xx-utils/nvidia-390xx-utils-390.157-1-x86_64.pkg.tar.zst
+      - name: Build settings
         run: |
           cd nvidia-390xx-settings
           sed -i 's/cbb6b5f69784f66155a08da786b98de1de8659aa1b42af1a5baca02031e8e21c5d001292188994e01986dd4fca24ec9b7b5fb56491bfab889e7448cdde55f8ba/03b8cfa287612eaa1699845136283fe1ec4a43212fb0b9d3d0682ce6dd51702fbdfc53c29ea9ebe914034d2c20abb35af7667e0314948842152efd746773771a/g' PKGBUILD
