@@ -1,0 +1,34 @@
+name: build-action
+
+on:
+  workflow_dispatch:
+
+env:
+  PKGDEST: "/tmp/nvidia-390xx-utils"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest    
+    steps:
+      - name: Checkount repo
+        uses: actions/checkout@v3
+      - name: Prepare for makepkg
+        run: |
+          pacman -Syu --noconfirm base-devel sudo git
+          useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          git clone https://aur.archlinux.org/nvidia-390xx-utils.git
+          chown builder -R ..
+          chown builder -R /tmp
+      - name: Build
+        run: |
+          cd nvidia-390xx-utils
+          sed -i 's/e1bd2982f9697e74b593380acf471e03192cd8d20f14bd9b43e6d5925421c518278e75515a0713be25b29bf99d7ea49c770adf2cede79736a03f323d5ed96a33/44b855cd11f3b2f231f9fb90492ae2e67a67ea3ea83c413e7c90956d38c9730a8bd0321281ae03c6afce633d102f5b499aed25622b9bfd31bdd2c98f0717e95b/g' PKGBUILD
+          sed -i 's/154/157/g' PKGBUILD
+          sed -i 's/pkgrel=2/pkgrel=1/g' PKGBUILD
+          su builder -c "yes '' | makepkg --noconfirm -sc"
+      - uses: actions/upload-artifact@v3
+        with:
+          name: nvidia-390xx-utils
+          path: ${{ env.PKGDEST }}/*.pkg.tar.zst
+        
