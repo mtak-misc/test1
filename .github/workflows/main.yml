@@ -30,8 +30,9 @@ jobs:
       - name: Scan
         run: |
           freshclam
-#          maldet -d
-#          maldet -u
+          /usr/bin/maldet --monitor /etc/maldet/monitor_paths
+          maldet -d
+          maldet -u
       - uses: actions/upload-artifact@v3
         with:
           name: maldet
