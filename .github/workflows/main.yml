@@ -25,8 +25,8 @@ jobs:
           cd maldet
           su builder -c "yes '' | makepkg --noconfirm -sc"
           pacman -U --noconfirm /tmp/maldet/maldet*.zst
-          tar -tf /tmp/maldet/maldet*.zst
-          cat /usr/lib/systemd/system/maldet.service
+#          tar -tf /tmp/maldet/maldet*.zst
+#          cat /usr/lib/systemd/system/maldet.service
       - name: Undock container
         run: |
           curl -LO https://github.com/crazy-max/undock/releases/download/v0.3.0/undock_0.3.0_linux_amd64.tar.gz
