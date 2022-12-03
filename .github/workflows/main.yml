@@ -26,12 +26,12 @@ jobs:
           su builder -c "yes '' | makepkg --noconfirm -sc"
           pacman -U --noconfirm /tmp/maldet/maldet*.zst
           tar -tf /tmp/maldet/maldet*.zst
+          cat /usr/lib/systemd/system/maldet.service
       - name: Scan
         run: |
           freshclam
-          systemctl start maldet
-          maldet -d
-          maldet -u
+#          maldet -d
+#          maldet -u
       - uses: actions/upload-artifact@v3
         with:
           name: maldet
