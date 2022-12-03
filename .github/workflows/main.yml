@@ -27,12 +27,18 @@ jobs:
           pacman -U --noconfirm /tmp/maldet/maldet*.zst
           tar -tf /tmp/maldet/maldet*.zst
           cat /usr/lib/systemd/system/maldet.service
+      - name: Undock container
+        run: |
+          curl -LO https://github.com/crazy-max/undock/releases/download/v0.3.0/undock_0.3.0_linux_amd64.tar.gz
+          tar zxf undock_0.3.0_linux_amd64.tar.gz
+          ./undock --include / --rm-dist --all selenium/hub:latest /tmp/hub
       - name: Scan
         run: |
           freshclam
           /usr/bin/maldet --monitor /etc/maldet/monitor_paths
           maldet -d
           maldet -u
+          maldet -a /tmp/hub
       - uses: actions/upload-artifact@v3
         with:
           name: maldet
