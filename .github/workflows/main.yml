@@ -32,9 +32,10 @@ jobs:
           curl -LO https://github.com/crazy-max/undock/releases/download/v0.3.0/undock_0.3.0_linux_amd64.tar.gz
           tar zxf undock_0.3.0_linux_amd64.tar.gz
           ./undock --include / --rm-dist --all selenium/hub:latest /tmp/hub
-          curl -LO https://secure.eicar.org/eicar.com
-          chown builder:builder eicar.com
-          mv eicar.com /tmp/hub
+          find /tmp/hub
+#          curl -LO https://secure.eicar.org/eicar.com
+#          chown builder:builder eicar.com
+#          mv eicar.com /tmp/hub
       - name: Scan
         run: |
           freshclam
