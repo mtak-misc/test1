@@ -43,6 +43,7 @@ jobs:
           maldet -d
           maldet -u
           maldet -a /tmp
+          clamscan -r -i /tmp
       - uses: actions/upload-artifact@v3
         with:
           name: maldet
