@@ -33,7 +33,6 @@ jobs:
           tar zxf undock_0.3.0_linux_amd64.tar.gz
           ./undock --include / --rm-dist --all selenium/hub:latest /tmp/hub
           ./undock --include / --rm-dist --all selenium/node-chrome:latest /tmp/node-chrome
-#          find /tmp/hub
           curl -LO https://secure.eicar.org/eicar.com
           chown builder:builder eicar.com
           mv eicar.com /tmp/hub/etc
