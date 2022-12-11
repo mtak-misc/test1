@@ -37,6 +37,6 @@ jobs:
           su builder -c "yes '' | makepkg --noconfirm -sc"
       - uses: actions/upload-artifact@v3
         with:
-          name: nvidia-390xx-settings
+          name: nvidia-390xx
           path: ${{ env.PKGDEST }}/*.pkg.tar.zst
         
