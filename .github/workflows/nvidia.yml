@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  PKGDEST: "/tmp/nvidia-390xx-settings"
+  PKGDEST: "/tmp/nvidia-390xx"
 
 jobs:
   build:
@@ -28,7 +28,7 @@ jobs:
           sed -i 's/154/157/g' PKGBUILD
           sed -i 's/pkgrel=2/pkgrel=1/g' PKGBUILD
           su builder -c "yes '' | makepkg --noconfirm -sc"
-          pacman -U --noconfirm $(find /tmp | grep nvidia-390xx-utils-390.157-1-x86_64.pkg.tar.zst)
+          pacman -U --noconfirm $PKGDEST/nvidia-390xx-utils-390.157-1-x86_64.pkg.tar.zst
       - name: Build settings
         run: |
           cd nvidia-390xx-settings
