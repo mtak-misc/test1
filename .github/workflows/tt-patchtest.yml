@@ -1,4 +1,4 @@
-name: build-action
+name: tt-patch-test
 
 on:
   workflow_dispatch:
