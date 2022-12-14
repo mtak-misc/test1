@@ -19,6 +19,9 @@ jobs:
           curl -L https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/6.1/tt-6.1.patch -o tt.patch
           cd linux
           patch patch -Np1 -i ../tt.patch
+      - name: Check error
+        run: |
+          cd linux
           ls -l *.rej
 #      - uses: actions/upload-artifact@v3
 #        with:
