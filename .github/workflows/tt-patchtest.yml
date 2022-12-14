@@ -15,7 +15,6 @@ jobs:
           ref: 6.1
       - name: Apply patches
         run: |
-          cd linux
           curl -L https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/6.1/tt-6.1.patch -o tt.patch
           patch -N -i tt.patch
 #      - uses: actions/upload-artifact@v3
