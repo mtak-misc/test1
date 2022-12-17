@@ -1,4 +1,4 @@
-name: build-action
+name: scan-image
 
 on:
   workflow_dispatch:
