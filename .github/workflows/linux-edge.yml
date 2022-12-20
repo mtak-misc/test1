@@ -1,0 +1,53 @@
+name: build-linux-edge
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: alpine:3.17    
+    steps:
+      - name: Install sdk
+        run: |
+          apk upgrade
+          apk add alpine-sdk sudo  
+      - name: Checkount aports repository
+        uses: actions/checkout@v3  
+        with:
+          repository: alpinelinux/aports
+          ref: 3.17-stable
+          path: aports
+      - name: Prepare abuild
+#          echo "permit nopass :wheel" >> /etc/doas.d/doas.conf      
+        run: |
+          adduser builder -D -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          addgroup builder abuild
+          chown builder -R ..
+          chown builder -R /tmp
+          mkdir -p /var/cache/distfiles
+          chmod a+w /var/cache/distfiles
+          chgrp abuild /var/cache/distfiles
+          chmod g+w /var/cache/distfiles
+          su builder -c "abuild-keygen -a -i -n"
+      - name: Move repo directory
+        run: |
+           mv aports/community/linux-edge /home/builder
+           chown builder -R /home/builder
+           cd /home/builder/linux-edge
+           sed -i 's/6.0.12/6.0.14/g' APKBUILD
+           sed -i 's/d604975d02735d6ba8f98268d418397d78bf49d129aabd326599196708bf05795b17d22398ddd0229bc2944f7b152902e9638ff9aa04977c46a229566894dd00/d426d8dc98b657df29e86635ccba910bfc56f0628e8948f7efa21bc2a015e733e5a21c37a9ed351d2075cf877a9279c2ec5eca4f98a0eb958875afbc71569c91/g' APKBUILD
+      - name: Install packages
+        run: |
+           cd /home/builder/firefox
+           su builder -c "abuild checksum"
+           su builder -c "abuild deps"                
+      - name: Build apk
+        run: |
+           cd /home/builder/firefox
+           su builder -c "abuild"        
+           cp $(find /home/builder -name linux-edge*.apk) /tmp
+      - uses: actions/upload-artifact@v3
+        with:
+          name: linux-edge
+          path: /tmp/*.apk
