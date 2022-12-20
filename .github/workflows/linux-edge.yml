@@ -39,12 +39,12 @@ jobs:
            sed -i 's/d604975d02735d6ba8f98268d418397d78bf49d129aabd326599196708bf05795b17d22398ddd0229bc2944f7b152902e9638ff9aa04977c46a229566894dd00/d426d8dc98b657df29e86635ccba910bfc56f0628e8948f7efa21bc2a015e733e5a21c37a9ed351d2075cf877a9279c2ec5eca4f98a0eb958875afbc71569c91/g' APKBUILD
       - name: Install packages
         run: |
-           cd /home/builder/firefox
+           cd /home/builder/linux-edge
            su builder -c "abuild checksum"
            su builder -c "abuild deps"                
       - name: Build apk
         run: |
-           cd /home/builder/firefox
+           cd /home/builder/linux-edge
            su builder -c "abuild"        
            cp $(find /home/builder -name linux-edge*.apk) /tmp
       - uses: actions/upload-artifact@v3
