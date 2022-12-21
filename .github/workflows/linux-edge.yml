@@ -36,7 +36,7 @@ jobs:
            chown builder -R /home/builder
            cd /home/builder/linux-edge
            curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.0.15.xz
-           export SHA512SUM=$(sha512sum patch-6.0.15)
+           export SHA512SUM=$(sha512sum patch-6.0.15.xz)
            sed -i 's/6.0.12/6.0.15/g' APKBUILD
            sed -i 's/d604975d02735d6ba8f98268d418397d78bf49d129aabd326599196708bf05795b17d22398ddd0229bc2944f7b152902e9638ff9aa04977c46a229566894dd00/${SHA512SUM}/g' APKBUILD
       - name: Install packages
