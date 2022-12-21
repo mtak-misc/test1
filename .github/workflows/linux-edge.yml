@@ -35,8 +35,10 @@ jobs:
            mv aports/community/linux-edge /home/builder
            chown builder -R /home/builder
            cd /home/builder/linux-edge
-           sed -i 's/6.0.12/6.0.14/g' APKBUILD
-           sed -i 's/d604975d02735d6ba8f98268d418397d78bf49d129aabd326599196708bf05795b17d22398ddd0229bc2944f7b152902e9638ff9aa04977c46a229566894dd00/d426d8dc98b657df29e86635ccba910bfc56f0628e8948f7efa21bc2a015e733e5a21c37a9ed351d2075cf877a9279c2ec5eca4f98a0eb958875afbc71569c91/g' APKBUILD
+           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.0.15.xz
+           export SHA512SUM=$(sha512sum patch-6.0.15)
+           sed -i 's/6.0.12/6.0.15/g' APKBUILD
+           sed -i 's/d604975d02735d6ba8f98268d418397d78bf49d129aabd326599196708bf05795b17d22398ddd0229bc2944f7b152902e9638ff9aa04977c46a229566894dd00/${SHA512SUM}/g' APKBUILD
       - name: Install packages
         run: |
            cd /home/builder/linux-edge
