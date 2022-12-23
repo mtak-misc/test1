@@ -18,8 +18,16 @@ jobs:
            git clone https://aur.archlinux.org/linux-lqx.git
            sed -i -e "95i export BUILD_FLAGS=(CC=clang CXX=clang++ HOSTCC=clang HOSTCXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1)" linux-lqx/PKGBUILD
            sed -i 's/make /make ${BUILD_FLAGS[*]} /g' linux-lqx/PKGBUILD
+           sed -i -e "160i scripts/config --enable CONFIG_HAVE_GCC_PLUGINS" linux-lqx/PKGBUILD
+           sed -i -e "160i scripts/config --disable CONFIG_LTO_CLANG_THIN" linux-lqx/PKGBUILD
+           sed -i -e "160i scripts/config --disable CONFIG_LTO_CLANG_THIN" linux-lqx/PKGBUILD
+           sed -i -e "160i scripts/config --enable CONFIG_LTO_CLANG_FULL" linux-lqx/PKGBUILD
+           sed -i -e "160i scripts/config --enable CONFIG_HAS_LTO_CLANG" linux-lqx/PKGBUILD
+           sed -i -e "160i scripts/config --disable CONFIG_LTO_NONE" linux-lqx/PKGBUILD
+           sed -i -e "160i scripts/config --enable CONFIG_ARCH_SUPPORTS_LTO_CLANG_THIN" linux-lqx/PKGBUILD
+           sed -i -e "160i scripts/config --enable CONFIG_ARCH_SUPPORTS_LTO_CLANG" linux-lqx/PKGBUILD
+           sed -i -e "160i scripts/config --enable CONFIG_LTO_CLANG" linux-lqx/PKGBUILD
            sed -i -e "160i scripts/config --enable CONFIG_LTO" linux-lqx/PKGBUILD
-           sed -i -e "161i scripts/config --enable CONFIG_ARCH_SUPPORTS_LTO_CLANG" linux-lqx/PKGBUILD
            cat linux-lqx/PKGBUILD
 #      - name: Build kernel
 #        run: |
