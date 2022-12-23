@@ -11,8 +11,8 @@ jobs:
 #        uses: pierotofy/set-swap-space@master
 #        with:
 #          swap-size-gb: 13
-#      - name: Check out repository
-#        uses: actions/checkout@v3
+      - name: Check out repository
+        uses: actions/checkout@v3
 #      - name: Check out linux-tkg repository
 #        uses: actions/checkout@v3
 #        with:
