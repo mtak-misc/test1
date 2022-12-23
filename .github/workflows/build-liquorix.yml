@@ -17,7 +17,7 @@ jobs:
         run: |
            git clone https://aur.archlinux.org/linux-lqx.git
            sed -i -e "95i export BUILD_FLAGS=(CC=clang CXX=clang++ HOSTCC=clang HOSTCXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1)" linux-lqx/PKGBUILD
-           sed -i "s/make /make \${BUILD_FLAGS[*]}/g' linux-lqx/PKGBUILD
+           sed -i 's/make /make ${BUILD_FLAGS[*]} /g' linux-lqx/PKGBUILD
            grep "make " linux-lqx/PKGBUILD
 #      - name: Build kernel
 #        run: |
