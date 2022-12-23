@@ -1,0 +1,31 @@
+name: build-liquorix
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+#      - name: Set Swap Space
+#        uses: pierotofy/set-swap-space@master
+#        with:
+#          swap-size-gb: 13
+#      - name: Check out repository
+#        uses: actions/checkout@v3
+#      - name: Check out linux-tkg repository
+#        uses: actions/checkout@v3
+#        with:
+#          repository: Frogging-Family/linux-tkg
+#          path: linux-tkg
+      - name: Prepare for build
+        run: git clone https://aur.archlinux.org/linux-lqx.git
+      - name: Build kernel
+        run: |
+            ls -l
+#           docker run -e USERID=$(id -u $(whoami)) -e GITHUB_TOKEN=${{ secrets.pat }} -v $GITHUB_WORKSPACE:/workspace archlinux:latest /bin/bash /workspace/build.sh
+#           cp $GITHUB_WORKSPACE/linux-tkg/*.pkg.tar.zst /tmp
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: linux-lqx
+#          path: /tmp/*.pkg.tar.zst
