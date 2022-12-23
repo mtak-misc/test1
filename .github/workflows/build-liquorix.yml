@@ -13,20 +13,15 @@ jobs:
 #          swap-size-gb: 13
       - name: Check out repository
         uses: actions/checkout@v3
-#      - name: Check out linux-tkg repository
-#        uses: actions/checkout@v3
-#        with:
-#          repository: Frogging-Family/linux-tkg
-#          path: linux-tkg
       - name: Prepare for build
         run: |
            git clone https://aur.archlinux.org/linux-lqx.git
            sed -i -e "95i export BUILD_FLAGS=(CC=clang CXX=clang++ HOSTCC=clang HOSTCXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1)" linux-lqx/PKGBUILD
            cat linux-lqx/PKGBUILD
-#      - name: Build kernel
-#        run: |
-#           docker run -e USERID=$(id -u $(whoami)) -e GITHUB_TOKEN=${{ secrets.pat }} -v $GITHUB_WORKSPACE:/workspace archlinux:latest /bin/bash /workspace/build-lqx.sh
-#           cp $GITHUB_WORKSPACE/linux-lqx/*.pkg.tar.zst /tmp
+      - name: Build kernel
+        run: |
+           docker run -e USERID=$(id -u $(whoami)) -e GITHUB_TOKEN=${{ secrets.pat }} -v $GITHUB_WORKSPACE:/workspace archlinux:latest /bin/bash /workspace/build-lqx.sh
+           cp $GITHUB_WORKSPACE/linux-lqx/*.pkg.tar.zst /tmp
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: linux-lqx
