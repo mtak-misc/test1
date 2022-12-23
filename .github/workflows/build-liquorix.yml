@@ -17,9 +17,8 @@ jobs:
         run: |
            git clone https://aur.archlinux.org/linux-lqx.git
            sed -i -e "/export KBUILD_BUILD_HOST=archlinux/i export BUILD_FLAGS=(CC=clang CXX=clang++ HOSTCC=clang HOSTCXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1)" linux-lqx/PKGBUILD
-           cat linux-lqx/PKGBUILD
-#           sed -i 's/make /make ${BUILD_FLAGS[*]} /g' linux-lqx/PKGBUILD
-#           sed -i -e "160i \ \t\tscripts/config --disable CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE" linux-lqx/PKGBUILD
+           sed -i 's/make /make ${BUILD_FLAGS[*]} /g' linux-lqx/PKGBUILD
+           sed -i -e "/scripts/config --disable CONFIG_SCHED_BMQ/i \ \t\tscripts/config --disable CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE" linux-lqx/PKGBUILD
 #           sed -i -e "160i \ \t\tscripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL" linux-lqx/PKGBUILD
 #           sed -i -e "160i \ \t\tscripts/config --enable CONFIG_CPU_FREQ_GOV_SCHEDUTIL" linux-lqx/PKGBUILD
 #           sed -i -e "160i \ \t\tscripts/config --enable CONFIG_HAVE_GCC_PLUGINS" linux-lqx/PKGBUILD
