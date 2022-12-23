@@ -8,4 +8,4 @@ pacman -Syu --noconfirm base-devel sudo git jq curl unzip schedtool
 #pacman --noconfirm -U llvm-git*.pkg.tar.zst llvm-libs-git*.pkg.tar.zst
 useradd builder  -u $USERID -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 su builder -c "gpg --recv 38DBBDC86092693E"
-cd /workspace/linux-lqx ; su builder -c "yes '' | BUILD_FLAGS=(CC=clang CXX=clang++ HOSTCC=clang HOSTCXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1) makepkg --noconfirm -sc"
+cd /workspace/linux-lqx ; su builder -c "yes '' | makepkg --noconfirm -sc"
