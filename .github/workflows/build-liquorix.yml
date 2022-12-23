@@ -30,7 +30,7 @@ jobs:
            sed -i -e "160i scripts/config --enable CONFIG_ARCH_SUPPORTS_LTO_CLANG_THIN" linux-lqx/PKGBUILD
            sed -i -e "160i scripts/config --enable CONFIG_ARCH_SUPPORTS_LTO_CLANG" linux-lqx/PKGBUILD
            sed -i -e "160i scripts/config --enable CONFIG_LTO_CLANG" linux-lqx/PKGBUILD
-           sed -i -e "160i \t\tscripts/config --enable CONFIG_LTO" linux-lqx/PKGBUILD
+           sed -i -e "160i \t \t scripts/config --enable CONFIG_LTO" linux-lqx/PKGBUILD
            cat linux-lqx/PKGBUILD
 #      - name: Build kernel
 #        run: |
