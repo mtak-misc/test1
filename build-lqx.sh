@@ -8,4 +8,4 @@ unzip llvm-git.zip
 pacman --noconfirm -U llvm-git*.pkg.tar.zst llvm-libs-git*.pkg.tar.zst
 useradd builder  -u $USERID -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 su builder -c "gpg --recv 38DBBDC86092693E"
-cd /workspace/linux-lqx ; su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+cd /workspace/linux-lqx/pds ; su builder -c "yes '' | env _compiler=2 makepkg --noconfirm -sc"
