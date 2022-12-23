@@ -31,7 +31,6 @@ jobs:
            sed -i -e "160i scripts/config --enable CONFIG_ARCH_SUPPORTS_LTO_CLANG" linux-lqx/PKGBUILD
            sed -i -e "160i scripts/config --enable CONFIG_LTO_CLANG" linux-lqx/PKGBUILD
            sed -i -e "160i scripts/config --enable CONFIG_LTO" linux-lqx/PKGBUILD
-           cat linux-lqx/PKGBUILD
       - name: Build kernel
         run: |
            docker run -e USERID=$(id -u $(whoami)) -e GITHUB_TOKEN=${{ secrets.pat }} -v $GITHUB_WORKSPACE:/workspace archlinux:latest /bin/bash /workspace/build-lqx.sh
