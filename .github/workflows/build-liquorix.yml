@@ -30,12 +30,13 @@ jobs:
            sed -i -e "160i scripts/config --enable CONFIG_ARCH_SUPPORTS_LTO_CLANG_THIN" linux-lqx/PKGBUILD
            sed -i -e "160i scripts/config --enable CONFIG_ARCH_SUPPORTS_LTO_CLANG" linux-lqx/PKGBUILD
            sed -i -e "160i scripts/config --enable CONFIG_LTO_CLANG" linux-lqx/PKGBUILD
-           sed -i -e "160i scripts/config --enable CONFIG_LTO" linux-lqx/PKGBUILD
-      - name: Build kernel
-        run: |
-           docker run -e USERID=$(id -u $(whoami)) -e GITHUB_TOKEN=${{ secrets.pat }} -v $GITHUB_WORKSPACE:/workspace archlinux:latest /bin/bash /workspace/build-lqx.sh
-           cp $GITHUB_WORKSPACE/linux-lqx/*.pkg.tar.zst /tmp
-      - uses: actions/upload-artifact@v3
-        with:
-          name: linux-lqx
-          path: /tmp/*.pkg.tar.zst
+           sed -i -e "160i                 scripts/config --enable CONFIG_LTO" linux-lqx/PKGBUILD
+           cat linux-lqx/PKGBUILD
+#      - name: Build kernel
+#        run: |
+#           docker run -e USERID=$(id -u $(whoami)) -e GITHUB_TOKEN=${{ secrets.pat }} -v $GITHUB_WORKSPACE:/workspace archlinux:latest /bin/bash /workspace/build-lqx.sh
+#           cp $GITHUB_WORKSPACE/linux-lqx/*.pkg.tar.zst /tmp
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: linux-lqx
+#          path: /tmp/*.pkg.tar.zst
