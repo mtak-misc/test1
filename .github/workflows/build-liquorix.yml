@@ -7,10 +7,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-#      - name: Set Swap Space
-#        uses: pierotofy/set-swap-space@master
-#        with:
-#          swap-size-gb: 13
+      - name: Set Swap Space
+        uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 13
       - name: Check out repository
         uses: actions/checkout@v3
       - name: Prepare for build
@@ -32,11 +32,11 @@ jobs:
            sed -i -e "160i scripts/config --enable CONFIG_LTO_CLANG" linux-lqx/PKGBUILD
            sed -i -e "160i scripts/config --enable CONFIG_LTO" linux-lqx/PKGBUILD
            cat linux-lqx/PKGBUILD
-#      - name: Build kernel
-#        run: |
-#           docker run -e USERID=$(id -u $(whoami)) -e GITHUB_TOKEN=${{ secrets.pat }} -v $GITHUB_WORKSPACE:/workspace archlinux:latest /bin/bash /workspace/build-lqx.sh
-#           cp $GITHUB_WORKSPACE/linux-lqx/*.pkg.tar.zst /tmp
-#      - uses: actions/upload-artifact@v3
-#        with:
-#          name: linux-lqx
-#          path: /tmp/*.pkg.tar.zst
+      - name: Build kernel
+        run: |
+           docker run -e USERID=$(id -u $(whoami)) -e GITHUB_TOKEN=${{ secrets.pat }} -v $GITHUB_WORKSPACE:/workspace archlinux:latest /bin/bash /workspace/build-lqx.sh
+           cp $GITHUB_WORKSPACE/linux-lqx/*.pkg.tar.zst /tmp
+      - uses: actions/upload-artifact@v3
+        with:
+          name: linux-lqx
+          path: /tmp/*.pkg.tar.zst
