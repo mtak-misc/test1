@@ -25,9 +25,14 @@ jobs:
           path: linux-lqx
       - name: Build kernel
         run: |
-           docker run -e USERID=$(id -u $(whoami)) -e GITHUB_TOKEN=${{ secrets.pat }} -v $GITHUB_WORKSPACE:/workspace archlinux:latest /bin/bash /workspace/build-lqx.sh
-           cp $GITHUB_WORKSPACE/linux-lqx/pds/*.pkg.tar.zst /tmp
-      - uses: actions/upload-artifact@v3
-        with:
-          name: linux-lqx
-          path: /tmp/*.pkg.tar.zst
+           sed -i 's/config --enable CONFIG_LTO_CLANG_THIN/config --disable CONFIG_LTO_CLANG_THIN/g' linux-lqx/pds/PKGBUILD
+           sed -i 's/config --disable CONFIG_LTO_CLANG_FULL/config --enable CONFIG_LTO_CLANG_FULL/g' linux-lqx/pds/PKGBUILD
+           sed -i 's/config --enable CONFIG_ARCH_SUPPORTS_LTO_CLANG_THIN/config --disable CONFIG_ARCH_SUPPORTS_LTO_CLANG_THIN/g' linux-lqx/pds/PKGBUILD
+           sed -i '/\ \tscripts/config --enable CONFIG_HAVE_GCC_PLUGINS/i config --enable CONFIG_ARCH_SUPPORTS_LTO_CLANG_FULL/' linux-lqx/pds/PKGBUILD
+           cat linux-lqx/pds/PKGBUILD
+#           docker run -e USERID=$(id -u $(whoami)) -e GITHUB_TOKEN=${{ secrets.pat }} -v $GITHUB_WORKSPACE:/workspace archlinux:latest /bin/bash /workspace/build-lqx.sh
+#           cp $GITHUB_WORKSPACE/linux-lqx/pds/*.pkg.tar.zst /tmp
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: linux-lqx
+#          path: /tmp/*.pkg.tar.zst
