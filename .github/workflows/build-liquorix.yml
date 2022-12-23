@@ -32,11 +32,11 @@ jobs:
            sed -i -e "/scripts\/config --disable CONFIG_SCHED_BMQ/i \ \t\tscripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL" linux-lqx/PKGBUILD
            sed -i -e "/scripts\/config --disable CONFIG_SCHED_BMQ/i \ \t\tscripts/config --disable CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE" linux-lqx/PKGBUILD
            cat linux-lqx/PKGBUILD
-#      - name: Build kernel
-#        run: |
-#           docker run -e USERID=$(id -u $(whoami)) -e GITHUB_TOKEN=${{ secrets.pat }} -v $GITHUB_WORKSPACE:/workspace archlinux:latest /bin/bash /workspace/build-lqx.sh
-#           cp $GITHUB_WORKSPACE/linux-lqx/*.pkg.tar.zst /tmp
-#      - uses: actions/upload-artifact@v3
-#        with:
-#          name: linux-lqx
-#          path: /tmp/*.pkg.tar.zst
+      - name: Build kernel
+        run: |
+           docker run -e USERID=$(id -u $(whoami)) -e GITHUB_TOKEN=${{ secrets.pat }} -v $GITHUB_WORKSPACE:/workspace archlinux:latest /bin/bash /workspace/build-lqx.sh
+           cp $GITHUB_WORKSPACE/linux-lqx/*.pkg.tar.zst /tmp
+      - uses: actions/upload-artifact@v3
+        with:
+          name: linux-lqx
+          path: /tmp/*.pkg.tar.zst
