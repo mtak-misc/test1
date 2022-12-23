@@ -18,11 +18,13 @@ jobs:
            git clone https://aur.archlinux.org/linux-lqx.git
            sed -i -e "95i export BUILD_FLAGS=(CC=clang CXX=clang++ HOSTCC=clang HOSTCXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1)" linux-lqx/PKGBUILD
            sed -i 's/make /make ${BUILD_FLAGS[*]} /g' linux-lqx/PKGBUILD
-           grep "make " linux-lqx/PKGBUILD
-      - name: Build kernel
-        run: |
-           docker run -e USERID=$(id -u $(whoami)) -e GITHUB_TOKEN=${{ secrets.pat }} -v $GITHUB_WORKSPACE:/workspace archlinux:latest /bin/bash /workspace/build-lqx.sh
-           cp $GITHUB_WORKSPACE/linux-lqx/*.pkg.tar.zst /tmp
+           sed -i -e "160i scripts/config --enable CONFIG_LTO" linux-lqx/PKGBUILD
+           sed -i -e "161i scripts/config --enable CONFIG_ARCH_SUPPORTS_LTO_CLANG" linux-lqx/PKGBUILD
+           cat linux-lqx/PKGBUILD
+#      - name: Build kernel
+#        run: |
+#           docker run -e USERID=$(id -u $(whoami)) -e GITHUB_TOKEN=${{ secrets.pat }} -v $GITHUB_WORKSPACE:/workspace archlinux:latest /bin/bash /workspace/build-lqx.sh
+#           cp $GITHUB_WORKSPACE/linux-lqx/*.pkg.tar.zst /tmp
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: linux-lqx
