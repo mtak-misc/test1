@@ -24,7 +24,7 @@ jobs:
           chown builder -R ..
           chown builder -R /tmp
           su builder -c "gpg --recv 38DBBDC86092693E"
-        - name: Build kernel
+      - name: Build kernel
         run: |
           cd linux-lqx/pds 
           su builder -c "yes '' | env _compiler=2 makepkg --noconfirm -sc"
