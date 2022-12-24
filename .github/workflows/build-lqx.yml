@@ -1,4 +1,4 @@
-name: build-lqx2
+name: build-lqx
 
 on:
   workflow_dispatch:
