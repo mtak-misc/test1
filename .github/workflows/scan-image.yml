@@ -7,7 +7,7 @@ env:
   PKGDEST: "/tmp/maldet"
 
 jobs:
-  build:
+  scan:
     runs-on: ubuntu-latest
     container: archlinux:latest    
     steps:
