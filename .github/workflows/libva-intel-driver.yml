@@ -17,23 +17,14 @@ jobs:
         run: |
           pacman -Syu --noconfirm base-devel sudo git
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-          git clone https://aur.archlinux.org/linux-xanmod.git
           chown builder -R ..
           chown builder -R /tmp
           su builder -c "gpg --recv 38DBBDC86092693E"
-      - name: Apply patches
+      - name: Build
         run: |
-          cd linux-xanmod
-          patch -N -i ../pkgbuild.patch
-          curl -L https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/6.1/tt-6.1.patch -o tt.patch
-          patch -N -i ../ttpatch.patch
-          curl -L https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-tkg-patches/6.1/0013-optimize_harder_O3.patch -o O3.patch
-      - name: Build kernel
-        run: |
-          cd linux-xanmod
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" env use_numa=n use_tracers=n makepkg --noconfirm -sc"
       - uses: actions/upload-artifact@v3
         with:
-          name: linux-xanmod
+          name: libva-intel-driver
           path: ${{ env.PKGDEST }}/*.pkg.tar.zst
         
