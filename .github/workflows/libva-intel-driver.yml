@@ -11,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     container: archlinux:latest    
     steps:
-      - name: Checkount repo
-        uses: actions/checkout@v3
       - name: Prepare for makepkg
         run: |
           pacman -Syu --noconfirm base-devel sudo git
@@ -26,4 +24,3 @@ jobs:
         with:
           name: libva-intel-driver
           path: ${{ env.PKGDEST }}/*.pkg.tar.zst
-        
