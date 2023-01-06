@@ -23,7 +23,7 @@ jobs:
       - name: Build
         run: |
           cd /workspace/chromium/trunk/
-          yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc
+          MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc
       - uses: actions/upload-artifact@v3
         with:
           name: chromium
