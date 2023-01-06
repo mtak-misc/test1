@@ -25,7 +25,7 @@ jobs:
           chown builder -R /tmp
       - name: Build
         run: |
-          cd chromium/svntogit-packages/trunk/
+          cd chromium/trunk/
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
       - uses: actions/upload-artifact@v3
         with:
