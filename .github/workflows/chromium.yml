@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  PKGDEST: "/workspace/chromium"
+  PKGDEST: "/workspace/chromium/trunk"
 
 jobs:
   build:
@@ -18,6 +18,7 @@ jobs:
           path: chromium
       - name: Prepare for makepkg
         run: |
+          rm -rf /workspace/chromium
           mv chromium /workspace
           chown builder -R /workspace
       - name: Build
