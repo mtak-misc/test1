@@ -14,9 +14,9 @@ jobs:
       - name: Checkount repo
         uses: actions/checkout@v3
         with: 
-          repository: 'archlinux/svntogit-packages'
-          ref: 'packages/chromium'
-          path: 'chromium'
+          repository: archlinux/svntogit-packages
+          ref: packages/chromium
+          path: chromium
       - name: Prepare for makepkg
         run: |
           pacman -Syu --noconfirm base-devel sudo git
@@ -25,9 +25,8 @@ jobs:
           chown builder -R /tmp
       - name: Build
         run: |
-          cd chromium
-          ls -l
-#          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+          cd chromium/svntogit-packages/trunk/
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
       - uses: actions/upload-artifact@v3
         with:
           name: chromium
