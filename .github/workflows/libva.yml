@@ -23,10 +23,10 @@ jobs:
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           chown builder -R ..
           chown builder -R /tmp
-          sed -i 's/df3c584bb79d1a1e521372d62fa62e8b1c52ce6c/da4a18fe814c9695f420d466ad3065cebdbe288a/g' libva/PKGBUILD
+          sed -i 's/df3c584bb79d1a1e521372d62fa62e8b1c52ce6c/da4a18fe814c9695f420d466ad3065cebdbe288a/g' libva/trunk/PKGBUILD
       - name: Build
         run: |
-          cd libva
+          cd libva/trunk
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
       - uses: actions/upload-artifact@v3
         with:
