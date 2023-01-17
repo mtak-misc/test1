@@ -24,7 +24,7 @@ jobs:
           chown builder -R ..
           chown builder -R /tmp
           sed -i 's/df3c584bb79d1a1e521372d62fa62e8b1c52ce6c/2579eb0f77897dc01a02c1e43defc63c40fd2988/g' libva/trunk/PKGBUILD
-          sed -i 's/git describe --tags/echo "2.17.0"/g' linbva/trunk/PKGBUILD
+          sed -i 's/git describe --tags/echo "2.17.0"/g' libva/trunk/PKGBUILD
       - name: Build
         run: |
           cd libva/trunk
