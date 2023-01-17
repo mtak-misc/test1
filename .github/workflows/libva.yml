@@ -23,7 +23,7 @@ jobs:
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           chown builder -R ..
           chown builder -R /tmp
-          sed -i 's/df3c584bb79d1a1e521372d62fa62e8b1c52ce6c/ef1df02f3ad45ac98b1fa57c373176d7c14dcc57/g' libva/trunk/PKGBUILD
+          sed -i 's/df3c584bb79d1a1e521372d62fa62e8b1c52ce6c/4d4c5f06519fe4c40d6fe1b2ccff812ff3b3b402/g' libva/trunk/PKGBUILD
           sed -i 's/git describe --tags/echo "2.17.0"/g' libva/trunk/PKGBUILD
       - name: Build
         run: |
