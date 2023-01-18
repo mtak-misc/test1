@@ -25,7 +25,7 @@ jobs:
           chown builder -R /tmp
           sed -i 's/df3c584bb79d1a1e521372d62fa62e8b1c52ce6c/ef1df02f3ad45ac98b1fa57c373176d7c14dcc57/g' libva/trunk/PKGBUILD
           sed -i 's/git describe --tags/echo "2.17.0"/g' libva/trunk/PKGBUILD
-          sed -i -e 'arch-meson libva build/i  \ \tsed -i "s\/va_DRI3_Get\/va_DRI2_Get\/g" ./va/x11/va_x11.c' libva/trunk/PKGBUILD 
+          sed -i -e '/arch-meson libva build/i  \ \ sed -i "s\/va_DRI3_Get\/va_DRI2_Get\/g" ./va/x11/va_x11.c' libva/trunk/PKGBUILD 
       - name: Build
         run: |
           cd libva/trunk
