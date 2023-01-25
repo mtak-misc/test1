@@ -1,4 +1,4 @@
-name: build-libva
+name: build-libva-arch
 
 on:
   workflow_dispatch:
