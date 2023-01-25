@@ -35,7 +35,7 @@ jobs:
            mv aports/main/libva /home/builder
            chown builder -R /home/builder
            cd /home/builder/libva
-           sed -i -e '/abuild-meson/i  \t sed -i "s\/va_DRI3_Get\/va_DRI2_Get\/g" ./libva/va/x11/va_x11.c' APKBUILD
+           sed -i -e '/abuild-meson/i  \\t sed -i "s\/va_DRI3_Get\/va_DRI2_Get\/g" ./libva/va/x11/va_x11.c' APKBUILD
            cat APKBUILD
       - name: Install packages
         run: |
