@@ -1,0 +1,35 @@
+name: build-libva-utils 
+
+on:
+  workflow_dispatch:
+
+env:
+  PKGDEST: "/tmp/libva-utils "
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest    
+    steps:
+      - name: Checkount repo
+        uses: actions/checkout@v3
+        with: 
+          repository: archlinux/svntogit-packages
+          ref: packages/libva-utils
+          path: libva-utils
+      - name: Prepare for makepkg
+        run: |
+          pacman -Syu --noconfirm base-devel sudo git
+          useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          chown builder -R ..
+          chown builder -R /tmp
+          sed -i 's/arch-meson ${pkgname}-${pkgver} build/arch-meson ${pkgname}-${pkgver} build -Dbuildtype=debugoptimized/g' libva-utils/trunk/PKGBUILD 
+      - name: Build
+        run: |
+          cd libva-utils/trunk
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: libva-utils
+          path: ${{ env.PKGDEST }}/*.pkg.tar.zst
+        
