@@ -22,6 +22,7 @@ jobs:
           chown builder -R /tmp
           sed -i -e '/arch-meson ${pkgname}-${pkgver} build/i  \ \ \ \ sed -i "s/+ m/+ -g3 + m/g" ./${pkgname}-${pkgver}/vainfo/meson.build' PKGBUILD
           sed "s/-g3/'-g3'/g" PKGBUILD
+          cat PKGBUILD
           sed -i -e '/arch-meson ${pkgname}-${pkgver} build/i  \ \ \ \ cat ./${pkgname}-${pkgver}/vainfo/meson.build' PKGBUILD 
           sed -i 's/arch-meson ${pkgname}-${pkgver} build/arch-meson ${pkgname}-${pkgver} build --buildtype=debugoptimized/g' PKGBUILD 
       - name: Build
