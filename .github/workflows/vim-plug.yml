@@ -1,0 +1,31 @@
+name: build-vim-plug
+
+on:
+  workflow_dispatch:
+
+env:
+  PKGDEST: "/tmp/pkgbuild-vim-plug"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest    
+    steps:
+      - name: Checkount repo
+        uses: actions/checkout@v3
+      - name: Prepare for makepkg
+        run: |
+          pacman -Syu --noconfirm base-devel sudo git
+          useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          git clone https://aur.archlinux.org/vim-plug.git
+          chown builder -R ..
+          chown builder -R /tmp
+      - name: Build
+        run: |
+          cd vim-plug
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+      - uses: actions/upload-artifact@v3
+        with:
+          name: vim-plug
+          path: ${{ env.PKGDEST }}/*.pkg.tar.zst
+        
