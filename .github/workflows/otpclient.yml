@@ -1,4 +1,4 @@
-name: sample-action
+name: build-otpclient
 
 on:
   workflow_dispatch:
