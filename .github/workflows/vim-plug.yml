@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     container: archlinux:latest    
     steps:
-      - name: Checkount repo
-        uses: actions/checkout@v3
+
       - name: Prepare for makepkg
         run: |
           pacman -Syu --noconfirm base-devel sudo git
