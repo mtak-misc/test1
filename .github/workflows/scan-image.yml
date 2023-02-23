@@ -46,8 +46,8 @@ jobs:
           clamscan -r -i /tmp
           trivy image selenium/hub:latest
           trivy image selenium/node-chrome:latest
-          osv-scanner --docker selenium/hub:latest
-          osv-scanner --docker selenium/node-chrome:latest
+          osv-scanner /tmp/hub
+          osv-scanner /tmp/node-chrome
       - uses: actions/upload-artifact@v3
         with:
           name: maldet
