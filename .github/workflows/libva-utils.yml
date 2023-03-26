@@ -27,7 +27,7 @@ jobs:
           sed -i 's/df3c584bb79d1a1e521372d62fa62e8b1c52ce6c/2.18.0/g' libva/trunk/PKGBUILD
           cd libva/trunk
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
-          ls -l
+          ls -l libva
           pacman -U $(ls -1 ${{ env.PKGDEST }}/libva*.pkg.tar.zst)
       - name: Checkount repo
         run: curl -LO https://raw.githubusercontent.com/archlinux/svntogit-community/packages/libva-utils/trunk/PKGBUILD
