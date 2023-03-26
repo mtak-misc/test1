@@ -23,8 +23,9 @@ jobs:
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           chown builder -R ..
           chown builder -R /tmp
-          sed -i 's/intel\/libva.git#tag=${_tag}/evelikov\/libva.git#branch=rework-device-names/g' libva/trunk/PKGBUILD
-          sed -i 's/git describe --tags/echo 2.17.0/g' libva/trunk/PKGBUILD
+          sed -i 's/df3c584bb79d1a1e521372d62fa62e8b1c52ce6c/2.18.0/g' libva/trunk/PKGBUILD
+          sed -i 's/git describe --tags/echo 2.18.0/g' libva/trunk/PKGBUILD
+#          sed -i 's/intel\/libva.git#tag=${_tag}/evelikov\/libva.git#branch=rework-device-names/g' libva/trunk/PKGBUILD
 #          echo "options=(debug !strip)" >> libva/trunk/PKGBUILD
 #          sed -i -e '/arch-meson libva build/i  \ \ sed -i "s\/va_DRI3_Get\/va_DRI2_Get\/g" ./libva/va/x11/va_x11.c' libva/trunk/PKGBUILD
       - name: Build
