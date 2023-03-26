@@ -23,9 +23,9 @@ jobs:
           curl -LO https://github.com/intel/libva-utils/archive/2.18.0/libva-utils-2.18.0.tar.gz
           export NEW=$(sha256sum libva-utils-2.18.0.tar.gz | awk '{ print $1}')
           curl -LO https://github.com/intel/libva-utils/archive/2.17.1/libva-utils-2.17.1.tar.gz
-          export NEW=$(sha256sum libva-utils-2.17.1.tar.gz | awk '{ print $1}')
+          export OLD=$(sha256sum libva-utils-2.17.1.tar.gz | awk '{ print $1}')
           echo "sed -i 's/${OLD}/${NEW}/g' PKGBUILD" | bash
-          sed -e -i 's/2.17.1/2.18.0/g' PKGBUILD
+          sed-i 's/2.17.1/2.18.0/g' PKGBUILD
 #          echo "options=(debug !strip)" >> PKGBUILD
       - name: Build
         run: |
