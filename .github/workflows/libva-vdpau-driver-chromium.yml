@@ -28,7 +28,9 @@ jobs:
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm ${{ env.PKGDEST }}/libva*.pkg.tar.zst
       - name: Checkount repo
-        run: git clone https://aur.archlinux.org/libva-vdpau-driver-chromium.git
+        run: |
+          git clone https://aur.archlinux.org/libva-vdpau-driver-chromium.git
+          chown builder -R ./libva-vdpau-driver-chromium.git
       - name: Build
         run: |
           cd libva-vdpau-driver-chromium
