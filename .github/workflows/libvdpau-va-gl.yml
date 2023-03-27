@@ -1,4 +1,4 @@
-name: libvdpau-va-gl
+name: build-libvdpau-va-gl
 
 on:
   workflow_dispatch:
