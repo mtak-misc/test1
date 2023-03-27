@@ -30,7 +30,7 @@ jobs:
       - name: Checkount repo
         run: |
           git clone https://aur.archlinux.org/libva-vdpau-driver-chromium.git
-          chown builder -R ./libva-vdpau-driver-chromium.git
+          chown builder -R ./libva-vdpau-driver-chromium
       - name: Build
         run: |
           cd libva-vdpau-driver-chromium
