@@ -1,4 +1,4 @@
-name: libva-vdpau-driver-chromium
+name: build-libva-vdpau-driver-chromium
 
 on:
   workflow_dispatch:
