@@ -1,0 +1,24 @@
+name: build-kubernetes-dashboard
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - name: Check out linux-tkg repository
+        uses: actions/checkout@v3
+        with:
+          repository: kubernetes/dashboard
+          path: dashboard
+      - name: Build 
+        run: |
+           cd dashboard
+           make run
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: dashboard
+#          path: /tmp/*.tar.gz
