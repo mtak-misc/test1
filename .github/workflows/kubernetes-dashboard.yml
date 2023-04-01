@@ -25,7 +25,7 @@ jobs:
       - name: Build 
         run: |
            cd dashboard
-           make run
+           PATH=$PATH:$GOPATH/bin make run
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: dashboard
