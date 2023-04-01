@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  GOHOME: "/tmp/go/bin"
+  GOPATH: "/tmp/go/bin"
 
 jobs:
   build:
