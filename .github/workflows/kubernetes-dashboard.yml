@@ -27,9 +27,7 @@ jobs:
         run: |
            cd dashboard
            yarn
-           PATH=$PATH:$GOPATH/bin make build
-           PATH=$PATH:$GOPATH/bin make docker-build-head
-#           PATH=$PATH:$GOPATH/bin make run
+           PATH=$PATH:$GOPATH/bin make run
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: dashboard
