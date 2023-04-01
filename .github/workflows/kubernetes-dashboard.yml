@@ -3,6 +3,9 @@ name: build-kubernetes-dashboard
 on:
   workflow_dispatch:
 
+env:
+  GOHOME: "/tmp/go/bin"
+
 jobs:
   build:
     runs-on: ubuntu-latest
