@@ -5,6 +5,7 @@ on:
 
 env:
   GOPATH: "/tmp/go"
+  PATH: $PATH:$GOPATH/bin
 
 jobs:
   build:
@@ -27,7 +28,7 @@ jobs:
         run: |
            cd dashboard
            yarn
-           PATH=$PATH:$GOPATH/bin make run
+           make run
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: dashboard
