@@ -28,8 +28,10 @@ jobs:
         run: |
            cd dashboard
            export PATH=$GOPATH/bin:$PATH
-           yarn
-           sudo make docker-build-release
+           go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f1
+           go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f2
+#           yarn
+#           sudo make docker-build-release
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: dashboard
