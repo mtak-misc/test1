@@ -21,6 +21,8 @@ jobs:
           ref: v2.7.0
       - name: Prepare for build
         run: |
+           cd dashboard
+           sed -i 's/MIN_GO_MINOR_VERSION = 19/MIN_GO_MINOR_VERSION = 18/g' Makefile
            cd /tmp
            curl -L https://golang.google.cn/dl/go1.19.7.linux-amd64.tar.gz -o go.tar.gz
            tar zxf go.tar.gz
@@ -28,10 +30,8 @@ jobs:
         run: |
            cd dashboard
            export PATH=$GOPATH/bin:$PATH
-           go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f1
-           go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f2
-#           yarn
-#           sudo make docker-build-release
+           yarn
+           sudo make docker-build-release
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: dashboard
