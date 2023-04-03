@@ -28,6 +28,7 @@ jobs:
         run: |
            cd dashboard
            export PATH=$PATH:$GOPATH/bin
+           go version
            yarn
            make docker-build-release
 #      - uses: actions/upload-artifact@v3
