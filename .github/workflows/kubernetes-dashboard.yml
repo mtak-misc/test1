@@ -3,8 +3,8 @@ name: build-kubernetes-dashboard
 on:
   workflow_dispatch:
 
-env:
-  GOPATH: "/tmp/go"
+#env:
+#  GOPATH: "/tmp/go"
 
 jobs:
   build:
@@ -20,17 +20,20 @@ jobs:
           ref: v2.7.0
       - name: Prepare for build
         run: |
-           cd /tmp
-           curl -L https://golang.google.cn/dl/go1.19.7.linux-amd64.tar.gz -o go.tar.gz
-           tar zxf go.tar.gz
-           ls -l /tmp/go/
+           apt-get update
+           apt-get upgrade
+           go version
+#           cd /tmp
+#           curl -L https://golang.google.cn/dl/go1.19.7.linux-amd64.tar.gz -o go.tar.gz
+#           tar zxf go.tar.gz
+#           ls -l /tmp/go/
       - name: Build 
         run: |
            cd dashboard
-           export PATH=$PATH:$GOPATH/bin
            go version
            yarn
            make docker-build-release
+#           export PATH=$PATH:$GOPATH/bin
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: dashboard
