@@ -1,0 +1,36 @@
+name: build-kubernetes-dashboard
+
+on:
+  workflow_dispatch:
+
+env:
+  GOPATH: "/tmp/go"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - name: Check out dashboard repository
+        uses: actions/checkout@v3
+        with:
+          repository: kubernetes/dashboard
+          path: dashboard
+          ref: v2.7.0
+      - name: Prepare for build
+        run: |
+           cd /tmp
+           curl -L https://golang.google.cn/dl/go1.19.7.linux-amd64.tar.gz -o go.tar.gz
+           tar zxf go.tar.gz
+           ls -l /tmp/go/
+      - name: Build 
+        run: |
+           cd dashboard
+           export PATH=$PATH:$GOPATH/bin
+           yarn
+           make docker-build-release
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: dashboard
+#          path: /tmp/*.tar.gz
