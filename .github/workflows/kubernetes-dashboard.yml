@@ -32,7 +32,7 @@ jobs:
            export PATH=$GOPATH/bin:$PATH
            go version
            yarn
-           make docker-build-release
+           sudo make docker-build-release
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: dashboard
