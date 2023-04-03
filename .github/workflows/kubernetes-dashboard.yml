@@ -20,8 +20,8 @@ jobs:
           ref: v2.7.0
       - name: Prepare for build
         run: |
-           apt-get update
-           apt-get upgrade
+           sudo apt-get update
+           sudo apt-get upgrade
            go version
 #           cd /tmp
 #           curl -L https://golang.google.cn/dl/go1.19.7.linux-amd64.tar.gz -o go.tar.gz
