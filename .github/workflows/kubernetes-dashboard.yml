@@ -5,6 +5,7 @@ on:
 
 env:
   GOPATH: "/tmp/go"
+  GOHOME: "/tmp/go"
 
 jobs:
   build:
@@ -20,17 +21,13 @@ jobs:
           ref: v2.7.0
       - name: Prepare for build
         run: |
-           sudo apt-get update
-           sudo apt-get -y upgrade
            cd /tmp
            curl -L https://golang.google.cn/dl/go1.19.7.linux-amd64.tar.gz -o go.tar.gz
            tar zxf go.tar.gz
-           ls -l /tmp/go/
       - name: Build 
         run: |
            cd dashboard
            export PATH=$GOPATH/bin:$PATH
-           go version
            yarn
            sudo make docker-build-release
 #      - uses: actions/upload-artifact@v3
