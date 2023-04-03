@@ -21,7 +21,7 @@ jobs:
       - name: Prepare for build
         run: |
            sudo apt-get update
-           sudo apt-get upgrade
+           sudo apt-get -y upgrade
            go version
 #           cd /tmp
 #           curl -L https://golang.google.cn/dl/go1.19.7.linux-amd64.tar.gz -o go.tar.gz
