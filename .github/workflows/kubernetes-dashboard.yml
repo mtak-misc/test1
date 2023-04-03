@@ -31,7 +31,8 @@ jobs:
            cd dashboard
            export PATH=$GOPATH/bin:$PATH
            yarn
-           sudo make docker-build-release
+           make build
+           make docker-build-head
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: dashboard
