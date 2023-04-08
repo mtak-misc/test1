@@ -39,7 +39,7 @@ jobs:
            yarn
            make build
            make docker-build-release
-           docker save kubernetesui/dashboard-amd6:v2.7.0 > /tmp/dashboard.tar
+           docker save kubernetesui/dashboard-amd64:v2.7.0 > /tmp/dashboard.tar
       - uses: actions/upload-artifact@v3
         with:
           name: dashboard
