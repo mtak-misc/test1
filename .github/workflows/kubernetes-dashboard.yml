@@ -25,6 +25,7 @@ jobs:
            sudo apt-get -y upgrade
            cd dashboard
            sed -i 's/amd64 arm64 arm ppc64le s390x/amd64/g' Makefile
+           sed -i 's/--push//g' Makefile
            cd src/app/frontend/common/components/workloadstatus
            rm component.ts
            curl -LO https://raw.githubusercontent.com/kubernetes/dashboard/6921db541124b2b7d999c9c82b60297db8ec44f0/modules/web/src/common/components/workloadstatus/component.ts
@@ -40,7 +41,7 @@ jobs:
            yarn
            make build
            make docker-build-release
-           docker save kubernetesui/dashboard-amd6:v2.7.0 > dashboard.tar
+           docker save kubernetesui/dashboard-amd6:v2.7.0 > /tmp/dashboard.tar
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: dashboard
