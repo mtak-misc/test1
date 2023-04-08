@@ -27,7 +27,7 @@ jobs:
            sed -i 's/amd64 arm64 arm ppc64le s390x/amd64/g' Makefile
            cd src/app/frontend/common/components/workloadstatus
            rm component.ts
-           https://raw.githubusercontent.com/kubernetes/dashboard/6921db541124b2b7d999c9c82b60297db8ec44f0/modules/web/src/common/components/workloadstatus/component.ts
+           curl -LO https://raw.githubusercontent.com/kubernetes/dashboard/6921db541124b2b7d999c9c82b60297db8ec44f0/modules/web/src/common/components/workloadstatus/component.ts
            cd /tmp
            curl -L https://golang.google.cn/dl/go1.19.8.linux-amd64.tar.gz -o go.tar.gz
            tar zxf go.tar.gz
