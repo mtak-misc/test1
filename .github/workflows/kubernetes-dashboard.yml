@@ -21,18 +21,26 @@ jobs:
           ref: v2.7.0
       - name: Prepare for build
         run: |
+           apt-get update
+           apt-get -y upgrade
            cd dashboard
-           sed -i 's/MIN_GO_MINOR_VERSION = 19/MIN_GO_MINOR_VERSION = 18/g' Makefile
+           sed -i 's/amd64 arm64 arm ppc64le s390x/amd64/g' Makefile
+           cd src/app/frontend/common/components/workloadstatus
+           rm component.ts
+           https://raw.githubusercontent.com/kubernetes/dashboard/6921db541124b2b7d999c9c82b60297db8ec44f0/modules/web/src/common/components/workloadstatus/component.ts
            cd /tmp
-           curl -L https://golang.google.cn/dl/go1.19.7.linux-amd64.tar.gz -o go.tar.gz
+           curl -L https://golang.google.cn/dl/go1.19.8.linux-amd64.tar.gz -o go.tar.gz
            tar zxf go.tar.gz
+           docker buildx version
+#           sed -i 's/MIN_GO_MINOR_VERSION = 19/MIN_GO_MINOR_VERSION = 18/g' Makefile
       - name: Build 
         run: |
            cd dashboard
            export PATH=$GOPATH/bin:$PATH
            yarn
            make build
-           make docker-build-head
+           make docker-build-release
+           docker save kubernetesui/dashboard-amd6:v2.7.0 > dashboard.tar
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: dashboard
