@@ -33,7 +33,6 @@ jobs:
            curl -L https://golang.google.cn/dl/go1.19.8.linux-amd64.tar.gz -o go.tar.gz
            tar zxf go.tar.gz
            docker buildx version
-#           sed -i 's/MIN_GO_MINOR_VERSION = 19/MIN_GO_MINOR_VERSION = 18/g' Makefile
       - name: Build 
         run: |
            cd dashboard
@@ -42,7 +41,7 @@ jobs:
            make build
            make docker-build-release
            docker save kubernetesui/dashboard-amd6:v2.7.0 > /tmp/dashboard.tar
-#      - uses: actions/upload-artifact@v3
-#        with:
-#          name: dashboard
-#          path: /tmp/*.tar.gz
+      - uses: actions/upload-artifact@v3
+        with:
+          name: dashboard
+          path: /tmp/dashboard.tar
