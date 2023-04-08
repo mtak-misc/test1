@@ -32,7 +32,6 @@ jobs:
            cd /tmp
            curl -L https://golang.google.cn/dl/go1.19.8.linux-amd64.tar.gz -o go.tar.gz
            tar zxf go.tar.gz
-           docker buildx version
       - name: Build 
         run: |
            cd dashboard
