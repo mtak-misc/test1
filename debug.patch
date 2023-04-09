@@ -1,0 +1,32 @@
+--- libbz3.c.orig	2023-04-09 11:05:29.677153360 +0900
++++ libbz3.c	2023-04-09 11:08:48.296518890 +0900
+@@ -497,12 +497,14 @@
+ 
+ BZIP3_API struct bz3_state * bz3_new(s32 block_size) {
+     if (block_size < KiB(65) || block_size > MiB(511)) {
++        printf("here1\n");
+         return NULL;
+     }
+ 
+     struct bz3_state * bz3_state = malloc(sizeof(struct bz3_state));
+ 
+     if (!bz3_state) {
++        printf("here2\n");
+         return NULL;
+     }
+ 
+@@ -515,10 +517,10 @@
+     bz3_state->lzp_lut = calloc(1 << LZP_DICTIONARY, sizeof(s32));
+ 
+     if (!bz3_state->cm_state || !bz3_state->swap_buffer || !bz3_state->sais_array || !bz3_state->lzp_lut) {
+-        if (bz3_state->cm_state) free(bz3_state->cm_state);
+-        if (bz3_state->swap_buffer) free(bz3_state->swap_buffer);
+-        if (bz3_state->sais_array) free(bz3_state->sais_array);
+-        if (bz3_state->lzp_lut) free(bz3_state->lzp_lut);
++        if (bz3_state->cm_state) { free(bz3_state->cm_state); printf("here3\n"); }
++        if (bz3_state->swap_buffer) { free(bz3_state->swap_buffer); printf("here4\n"); }
++        if (bz3_state->sais_array) { free(bz3_state->sais_array); printf("here5\n"); }
++        if (bz3_state->lzp_lut) { free(bz3_state->lzp_lut); printf("here6\n"); }
+         free(bz3_state);
+         return NULL;
+     }
