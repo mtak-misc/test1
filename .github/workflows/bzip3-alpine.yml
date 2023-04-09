@@ -12,6 +12,8 @@ jobs:
         run: |
           apk upgrade
           apk add alpine-sdk sudo  
+      - name: Checkount repository
+        uses: actions/checkout@v3  
       - name: Checkount aports repository
         uses: actions/checkout@v3  
         with:
@@ -33,8 +35,10 @@ jobs:
       - name: Move repo directory
         run: |
            mv aports/community/bzip3 /home/builder
+           mv debug.pattch /home/builder
            cd /home/builder/bzip3
            sed -i 's/pkgver=1.2.3/pkgver=1.3.0/g' APKBUILD
+           sed -i '/make DESTDIR="$pkgdir" install/i cd src ; patch -Np1 -i /home/builder/debug.patch' APKBUILD
            chown builder -R /home/builder
       - name: Install packages
         run: |
