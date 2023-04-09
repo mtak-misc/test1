@@ -1,0 +1,14 @@
+--- libbz3.c.orig	2023-04-09 11:05:29.677153360 +0900
++++ libbz3.c	2023-04-09 12:28:28.186635523 +0900
+@@ -507,8 +507,11 @@
+     }
+ 
+     bz3_state->cm_state = malloc(sizeof(state));
++    memset(bz3_state->cm_state, 0, sizeof(state));
+ 
+     bz3_state->swap_buffer = malloc(bz3_bound(block_size));
++    memset(bz3_state->swap_buffer, 0, bz3_bound(block_size));
++
+     bz3_state->sais_array = malloc(BWT_BOUND(block_size) * sizeof(s32));
+     memset(bz3_state->sais_array, 0, sizeof(s32) * BWT_BOUND(block_size));
+ 
