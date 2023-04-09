@@ -38,7 +38,7 @@ jobs:
            mv debug.patch /home/builder/bzip3
            cd /home/builder/bzip3
            sed -i 's/pkgver=1.2.3/pkgver=1.3.0/g' APKBUILD
-           sed -i '/make check/i cd src ; \ \t patch -N -i /home/builder/bzip3/debug.patch' APKBUILD
+           sed -i '/make check/i \t cd src ; patch -N -i /home/builder/bzip3/debug.patch' APKBUILD
            cat APKBUILD
            chown builder -R /home/builder
       - name: Install packages
