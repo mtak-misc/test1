@@ -34,6 +34,7 @@ jobs:
           su builder -c "abuild-keygen -a -i -n"
       - name: Move repo directory
         run: |
+           ls /workspace
            mv aports/community/bzip3 /home/builder
            mv /workspace/debug.patch /home/builder/bzip3
            cd /home/builder/bzip3
