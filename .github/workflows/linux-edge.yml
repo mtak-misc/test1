@@ -42,8 +42,6 @@ jobs:
            sed -i 's/6.2.8/6.2.11/g' APKBUILD
            sed -i 's/${OLD}/${NEW}/g' APKBUILD
            sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
-           sed -i -e '/unset LDFLAGS/i \ \tgrep CONFIG_MOUSE_PS2_SENTELIC .config' APKBUILD
-           cat APKBUILD
       - name: Install packages
         run: |
            cd /home/builder/linux-edge
