@@ -1,0 +1,33 @@
+name: build-scrcpy
+
+on:
+  workflow_dispatch:
+
+env:
+  PKGDEST: "/tmp/intel-media-driver"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest    
+    steps:
+      - name: Checkount repo
+        uses: actions/checkout@v3
+      - name: Prepare for makepkg
+        run: |
+          pacman -Syu --noconfirm base-devel sudo git
+          useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          curl -LO https://raw.githubusercontent.com/archlinux/svntogit-community/packages/scrcpy/trunk/PKGBUILD
+          curl -LO https://raw.githubusercontent.com/Genymobile/scrcpy/cbca79b95baa2b2cf39b72d0a0b2b3de0725959a/app/src/v4l2_sink.c
+          sed -i -e '/mkdir -p build/i \ \tcp ../v4l2_sink.c ./app/src/' PKGBUILD
+          cat PKGBUILD
+          chown builder -R ..
+          chown builder -R /tmp
+      - name: Build
+        run: |
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+      - uses: actions/upload-artifact@v3
+        with:
+          name: scrcpy
+          path: ${{ env.PKGDEST }}/*.pkg.tar.zst
+        
