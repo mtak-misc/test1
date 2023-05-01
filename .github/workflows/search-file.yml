@@ -16,5 +16,5 @@ jobs:
           chown builder -R ..
           chown builder -R /tmp
       - name: Search
-        run: su builder -c "pacman -Fy linuxefi"
+        run: pacman -Fy linuxefi
         
