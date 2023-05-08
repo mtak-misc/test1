@@ -19,6 +19,8 @@ jobs:
           curl -L https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=backscrub-git -o PKGBUILD
           sed -i 's/tensorflow\/tensorflow/tensorflow\/tensorflow#tag=v2.8.4/g' PKGBUILD
           sed -i 's/cmake \\/cmake -DCMAKE_VERBOSE_MAKEFILE=1 \\/g' PKGBUILD
+          sed -i '/cmake --build "${pkgname}/build"/i \ \t cat "${pkgname}/build/Makefile"' PKGBUILD
+          cat PKGBUILD
           chown builder -R ..
           chown builder -R /tmp
 #          pacman --noconfirm -U https://archive.archlinux.org/packages/g/gcc12/gcc12-12.2.1-1-x86_64.pkg.tar.zst
