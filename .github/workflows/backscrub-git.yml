@@ -5,6 +5,7 @@ on:
 
 env:
   PKGDEST: "/tmp"
+  VERBOSE: "1"
 
 jobs:
   build:
