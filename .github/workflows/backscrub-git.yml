@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Prepare for makepkg
         run: |
-          pacman -Syu --noconfirm base-devel sudo
+          pacman -Syu --noconfirm base-devel sudo git
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           curl -L https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=backscrub-git -o PKGBUILD
           chown builder -R ..
