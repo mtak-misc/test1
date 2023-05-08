@@ -16,7 +16,7 @@ jobs:
           pacman -Syu --noconfirm base-devel sudo git
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           curl -L https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=backscrub-git -o PKGBUILD
-          sed -i 's/tensorflow\/tensorflow/tensorflow\/tensorflow#tag=v2.8.0/g' PKGBUILD
+          sed -i 's/tensorflow\/tensorflow/tensorflow\/tensorflow#tag=v2.9.3/g' PKGBUILD
           chown builder -R ..
           chown builder -R /tmp
       - name: Build
