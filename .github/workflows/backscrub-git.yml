@@ -22,7 +22,7 @@ jobs:
           cat PKGBUILD
           chown builder -R ..
           chown builder -R /tmp
-          pacman --noconfirm -U https://archive.archlinux.org/packages/g/gcc/gcc-11.2.0-4-x86_64.pkg.tar.zst
+          pacman --noconfirm -U https://archive.archlinux.org/packages/g/gcc/gcc-11.2.0-4-x86_64.pkg.tar.zst https://archive.archlinux.org/packages/g/gcc-libs/gcc-libs-11.2.0-4-x86_64.pkg.tar.zst
       - name: Build
         run: |
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
