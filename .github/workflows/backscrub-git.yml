@@ -30,7 +30,7 @@ jobs:
           cat PKGBUILD
           chown builder -R ..
           chown builder -R /tmp
-          pacman --noconfirm -U https://archive.archlinux.org/packages/g/gcc/gcc-11.2.0-4-x86_64.pkg.tar.zst https://archive.archlinux.org/packages/g/gcc-libs/gcc-libs-11.2.0-4-x86_64.pkg.tar.zst https://archive.archlinux.org/packages/c/cmake/cmake-3.22.2-1-x86_64.pkg.tar.zst https://archive.archlinux.org/packages/o/opencv/opencv-4.5.5-3-x86_64.pkg.tar.zst
+          pacman --noconfirm -U https://archive.archlinux.org/packages/g/gcc/gcc-11.2.0-4-x86_64.pkg.tar.zst https://archive.archlinux.org/packages/g/gcc-libs/gcc-libs-11.2.0-4-x86_64.pkg.tar.zst https://archive.archlinux.org/packages/c/cmake/cmake-3.22.2-1-x86_64.pkg.tar.zst https://archive.archlinux.org/packages/o/opencv/opencv-4.5.5-3-x86_64.pkg.tar.zst https://archive.archlinux.org/packages/q/qt5-base/qt5-base-5.15.2%2Bkde%2Br297-2-x86_64.pkg.tar.zst
       - name: Build
         run: |
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
