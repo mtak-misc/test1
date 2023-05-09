@@ -22,7 +22,8 @@ jobs:
           sed -i '/cmake --build/i \ \ cat ${pkgname}/build/abseil-cpp/absl/synchronization/internal/graphcycles.h >> tmp.h' PKGBUILD
           sed -i '/cmake --build/i \ \ cat ${pkgname}/build/ruy/ruy/block_map.h >> tmp2.h' PKGBUILD
           sed -i '/cmake --build/i \ \ mv tmp.h ${pkgname}/build/abseil-cpp/absl/synchronization/internal/graphcycles.h' PKGBUILD
-          sed -i '/cmake --build/i \ \ mv tmp2.h ${pkgname}/build/ruy/ruy/block_map.h ' PKGBUILD
+          sed -i '/cmake --build/i \ \ mv tmp2.h ${pkgname}/build/ruy/ruy/block_map.h' PKGBUILD
+          sed -i '/cmake --build/i \ \ sed -i "s/CV_BGR2RGB/cv::COLOR_BGR2RGB/g" ${pkgname}/lib/libbackscrub.cc' PKGBUILD
           echo "#include <limits>" > tmp.h
           echo "#include <stdexcept>" >> tmp.h
           cp tmp.h tmp2.h
