@@ -35,11 +35,11 @@ jobs:
            mv aports/community/linux-edge /home/builder
            chown builder -R /home/builder
            cd /home/builder/linux-edge
-           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.3.5.xz
-           export NEW=$(sha512sum patch-6.3.5.xz)
+           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.3.6.xz
+           export NEW=$(sha512sum patch-6.3.6.xz)
            curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.3.4.xz
            export OLD=$(sha512sum patch-6.3.4.xz)
-           sed -i 's/6.3.4/6.3.5/g' APKBUILD
+           sed -i 's/6.3.4/6.3.6/g' APKBUILD
            sed -i 's/${OLD}/${NEW}/g' APKBUILD
            sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
       - name: Install packages
