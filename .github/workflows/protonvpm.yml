@@ -19,7 +19,7 @@ jobs:
           chown builder -R /tmp
       - name: Build
         run: |
-          su builder -c "git clone https://aur.archlinux.org/python-protonvpn-nm-lib.git"  
+          su builder -c "git clone https://aur.archlinux.org/openvpn-dco.git"  
           cd python-protonvpn-nm-lib
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           ls /tmp
