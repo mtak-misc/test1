@@ -56,7 +56,15 @@ jobs:
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
         env: 
-          PKGDEST: /tmp/mimejs-git             
+          PKGDEST: /tmp/mimejs-git
+      - name: Build python-protonvpn-nm-lib
+        run: |
+          su builder -c "git clone https://aur.archlinux.org/python-protonvpn-nm-lib.git"  
+          cd python-protonvpn-nm-lib
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+        env: 
+          PKGDEST: /tmp/python-protonvpn-nm-lib  
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: scrcpy
