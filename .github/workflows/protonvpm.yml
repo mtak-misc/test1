@@ -19,7 +19,7 @@ jobs:
           chown builder -R /tmp
       - name: Build
         run: |
-          su builder -c "https://aur.archlinux.org/openvpn-dco-dkms.git"  
+          su builder -c "git clone https://aur.archlinux.org/openvpn-dco-dkms.git"  
           cd openvpn-dco-dkms
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           ls /tmp
