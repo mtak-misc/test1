@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
 
 env:
+  PKGDEST: "/tmp"
   BUILDPKGS: "/tmp/packages"
 
 jobs:
@@ -25,8 +26,6 @@ jobs:
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
-        env: 
-          PKGDEST: /tmp/python-proton-client
       - name: Build python-protonvpn-nm-lib
         run: |
           su builder -c "git clone https://aur.archlinux.org/python-protonvpn-nm-lib.git"  
@@ -34,8 +33,6 @@ jobs:
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
-        env: 
-          PKGDEST: /tmp/python-protonvpn-nm-lib
       - name: Build protonvpn-cli
         run: |
           su builder -c "git clone https://aur.archlinux.org/protonvpn-cli.git"  
@@ -43,8 +40,6 @@ jobs:
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
-        env: 
-          PKGDEST: /tmp/protonvpn-cli
       - name: Build protonvpn-gui
         run: |
           su builder -c "git clone https://aur.archlinux.org/protonvpn-gui.git"  
@@ -52,8 +47,6 @@ jobs:
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
-        env: 
-          PKGDEST: /tmp/protonvpn-gui
       - name: Build protonvpn
         run: |
           su builder -c "git clone https://aur.archlinux.org/protonvpn.git"  
@@ -61,8 +54,6 @@ jobs:
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
-        env: 
-          PKGDEST: /tmp/protonvpn
       - uses: actions/upload-artifact@v3
         with:
           name: protonvpn
