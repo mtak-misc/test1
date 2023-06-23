@@ -40,7 +40,23 @@ jobs:
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
         env: 
-          PKGDEST: /tmp/python-proton-client          
+          PKGDEST: /tmp/python-proton-client
+      - name: Build opener
+        run: |
+          su builder -c "git clone https://aur.archlinux.org/opener.git"  
+          cd opener
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+        env: 
+          PKGDEST: /tmp/opener
+      - name: Build mimejs-git
+        run: |
+          su builder -c "git clone https://aur.archlinux.org/mimejs-git.git"  
+          cd mimejs-git
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+        env: 
+          PKGDEST: /tmp/mimejs-git             
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: scrcpy
