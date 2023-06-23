@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  PKGDEST: "/tmp/intel-media-driver"
+  PKGDEST: "/tmp"
 
 jobs:
   build:
