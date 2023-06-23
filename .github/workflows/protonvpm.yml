@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  PKGDEST: "/tmp"
+  BUILDPKGS: "/tmp/packages"
 
 jobs:
   build:
@@ -23,6 +23,7 @@ jobs:
           cd python-proton-client
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+          mv ${PKGDEST}/*.zst ${BUILDPKGS}
         env: 
           PKGDEST: /tmp/python-proton-client
       - name: Build python-protonvpn-nm-lib
@@ -31,6 +32,7 @@ jobs:
           cd python-protonvpn-nm-lib
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+          mv ${PKGDEST}/*.zst ${BUILDPKGS}
         env: 
           PKGDEST: /tmp/python-protonvpn-nm-lib
       - name: Build protonvpn-cli
@@ -39,6 +41,7 @@ jobs:
           cd protonvpn-cli
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+          mv ${PKGDEST}/*.zst ${BUILDPKGS}
         env: 
           PKGDEST: /tmp/protonvpn-cli
       - name: Build protonvpn-gui
@@ -47,6 +50,7 @@ jobs:
           cd protonvpn-gui
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+          mv ${PKGDEST}/*.zst ${BUILDPKGS}
         env: 
           PKGDEST: /tmp/protonvpn-gui
       - name: Build protonvpn
@@ -55,10 +59,10 @@ jobs:
           cd protonvpn
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+          mv ${PKGDEST}/*.zst ${BUILDPKGS}
         env: 
           PKGDEST: /tmp/protonvpn
-#      - uses: actions/upload-artifact@v3
-#        with:
-#          name: scrcpy
-#          path: ${{ env.PKGDEST }}/*.pkg.tar.zst
-        
+      - uses: actions/upload-artifact@v3
+        with:
+          name: protonvpn
+          path: ${{ env.BUILDPKGS }}/*.zst
