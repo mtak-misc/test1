@@ -64,7 +64,15 @@ jobs:
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
         env: 
-          PKGDEST: /tmp/python-protonvpn-nm-lib  
+          PKGDEST: /tmp/python-protonvpn-nm-lib
+      - name: Build protonvpn-cli
+        run: |
+          su builder -c "git clone https://aur.archlinux.org/protonvpn-cli.git"  
+          cd protonvpn-cli
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+        env: 
+          PKGDEST: /tmp/protonvpn-cli
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: scrcpy
