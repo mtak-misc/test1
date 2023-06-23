@@ -22,14 +22,14 @@ jobs:
           su builder -c "git clone https://aur.archlinux.org/openvpn-dco-dkms.git"  
           cd openvpn-dco-dkms
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
-          pacman -U $(ls /tmp/openvpn-dco-dkms*.zst)
+          pacman -U --noconfirm $(ls /tmp/openvpn-dco-dkms*.zst)
           rm $(ls /tmp/openvpn-dco-dkms*.zst)
       - name: Build openvpn-dco
         run: |
           su builder -c "git clone https://aur.archlinux.org/openvpn-dco.git"  
           cd openvpn-dco
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
-          pacman -U $(ls /tmp/openvpn-dco*.zst) 
+          pacman -U --noconfirm $(ls /tmp/openvpn-dco*.zst) 
           rm $(ls /tmp/openvpn-dco*.zst)
 #      - uses: actions/upload-artifact@v3
 #        with:
