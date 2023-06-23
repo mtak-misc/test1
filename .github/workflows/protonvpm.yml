@@ -17,22 +17,6 @@ jobs:
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           chown builder -R ..
           chown builder -R /tmp
-      - name: Build openvpn-dco-dkms
-        run: |
-          su builder -c "git clone https://aur.archlinux.org/openvpn-dco-dkms.git"  
-          cd openvpn-dco-dkms
-          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
-          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
-        env: 
-          PKGDEST: /tmp/openvpn-dco-dkms
-      - name: Build openvpn-dco
-        run: |
-          su builder -c "git clone https://aur.archlinux.org/openvpn-dco.git"  
-          cd openvpn-dco
-          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
-          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
-        env: 
-          PKGDEST: /tmp/openvpn-dco
       - name: Build python-proton-client
         run: |
           su builder -c "git clone https://aur.archlinux.org/python-proton-client.git"  
