@@ -29,7 +29,7 @@ jobs:
 #          cat /usr/lib/systemd/system/maldet.service
       - name: Undock container
         run: |
-          curl -LO https://github.com/crazy-max/undock/releases/download/v0.3.0/undock_0.3.0_linux_amd64.tar.gz
+          curl -LO https://github.com/crazy-max/undock/releases/download/v0.4.0/undock_0.4.0_linux_amd64.tar.gz
           tar zxf undock_0.3.0_linux_amd64.tar.gz
           ./undock --include / --rm-dist --all selenium/hub:latest /tmp/hub
           ./undock --include / --rm-dist --all selenium/node-chrome:latest /tmp/node-chrome
