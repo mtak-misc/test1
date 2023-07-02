@@ -22,8 +22,9 @@ jobs:
           curl -L https://gist.githubusercontent.com/joanbm/77f0650d45747b9a4dc8e330ade2bf5c/raw/688b612624945926676de28059fe749203b4b549/nvidia-470xx-fix-linux-6.4.patch -o ./nvidia-390xx-utils/kernel-6.4.patch 
           export NEW=\"$(b2sum ./nvidia-390xx-utils/kernel-6.4.patch | awk '{ print $1}')\"
           export OLD=$(b2sum ./nvidia-390xx-utils/kernel-6.3.patch | awk '{ print $1}')
-          sed -i -e '/\ \ \ \ \ \ \ \ kernel-6.3.patch/i \ \ \ \ \ \ \ \ kernel-6.4.patch' ./nvidia-390xx-utils/PKGBUILD
-          echo "sed -i -e '/${OLD}/i \ \ \ \ \ \ \ \ ${NEW}' ./nvidia-390xx-utils/PKGBUILD" | bash
+          sed -i -e '/\ \ \ \ \ \ \ \ kernel-6.3.patch/a \ \ \ \ \ \ \ \ kernel-6.4.patch' ./nvidia-390xx-utils/PKGBUILD
+          sed -i -e '/patch -Np1 -i ../../kernel-6.3.patch/a \ \ \ \ patch -Np1 -i ../../kernel-6.4.patch' ./nvidia-390xx-utils/PKGBUILD
+          echo "sed -i -e '/${OLD}/a \ \ \ \ \ \ \ \ ${NEW}' ./nvidia-390xx-utils/PKGBUILD" | bash
           cat ./nvidia-390xx-utils/PKGBUILD
           chown builder -R ..
           chown builder -R /tmp
@@ -31,7 +32,7 @@ jobs:
         run: |
           cd nvidia-390xx-utils
           su builder -c "yes '' | makepkg --noconfirm -sc"
-          pacman -U --noconfirm $PKGDEST/nvidia-390xx-utils-390.157-3-x86_64.pkg.tar.zst
+          pacman -U --noconfirm $PKGDEST/nvidia-390xx-utils-390.157-4-x86_64.pkg.tar.zst
       - name: Build settings
         run: |
           cd nvidia-390xx-settings
