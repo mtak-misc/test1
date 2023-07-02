@@ -23,7 +23,7 @@ jobs:
           export NEW=\"$(b2sum ./nvidia-390xx-utils/kernel-6.4.patch | awk '{ print $1}')\"
           export OLD=$(b2sum ./nvidia-390xx-utils/kernel-6.3.patch | awk '{ print $1}')
           sed -i -e '/\ \ \ \ \ \ \ \ kernel-6.3.patch/a \ \ \ \ \ \ \ \ kernel-6.4.patch' ./nvidia-390xx-utils/PKGBUILD
-          sed -i -e '/patch -Np1 -i ../../kernel-6.3.patch/a \ \ \ \ patch -Np1 -i ../../kernel-6.4.patch' ./nvidia-390xx-utils/PKGBUILD
+          sed -i -e '/patch -Np1 -i ..\/..\/kernel-6.3.patch/a \ \ \ \ patch -Np1 -i ..\/..\/kernel-6.4.patch' ./nvidia-390xx-utils/PKGBUILD
           echo "sed -i -e '/${OLD}/a \ \ \ \ \ \ \ \ ${NEW}' ./nvidia-390xx-utils/PKGBUILD" | bash
           cat ./nvidia-390xx-utils/PKGBUILD
           chown builder -R ..
