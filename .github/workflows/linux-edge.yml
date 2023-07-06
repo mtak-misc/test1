@@ -36,8 +36,6 @@ jobs:
            chown builder -R /home/builder
            cd /home/builder/linux-edge
            sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
-           sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_LOCK_MM_AND_FIND_VMA' APKBUILD
-           sed -i -e '/unset LDFLAGS/i \ \tscripts/config -d CONFIG_PER_VMA_LOCK' APKBUILD
            sed -i -e "/unset LDFLAGS/i \ \tsed -i 's/CONFIG_PER_VMA_LOCK=y/# CONFIG_PER_VMA_LOCK is not set/g' config-edge.x86_64" APKBUILD
            sed -i -e "/unset LDFLAGS/i \ \tsed -i '/# CONFIG_PER_VMA_LOCK_STATS is not set/d' config-edge.x86_64" APKBUILD
 #           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.4.xz
