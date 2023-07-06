@@ -11,7 +11,9 @@ jobs:
       - name: Install sdk
         run: |
           apk upgrade
-          apk add alpine-sdk sudo  
+          apk add alpine-sdk sudo
+      - name: Checkount repo
+        uses: actions/checkout@v3
       - name: Checkount aports repository
         uses: actions/checkout@v3  
         with:
@@ -36,14 +38,16 @@ jobs:
            chown builder -R /home/builder
            cd /home/builder/linux-edge
            sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
-           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.3.12.xz
-           export NEW=$(sha512sum patch-6.3.12.xz)
-           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.3.9.xz
-           export OLD=$(sha512sum patch-6.3.9.xz)
-           sed -i 's/6.3.9/6.3.12/g' APKBUILD
+           sed -i -e '/unset LDFLAGS/i \ \tpatch -Np1 -i ../../per_vma_lock.patch' APKBUILD
+           sed -i -e "/unset LDFLAGS/i \ \tsed -i 's/CONFIG_PER_VMA_LOCK=y/# CONFIG_PER_VMA_LOCK is not set/g' .config" APKBUILD
+           sed -i -e "/unset LDFLAGS/i \ \tsed -i '/# CONFIG_PER_VMA_LOCK_STATS is not set/d' .config" APKBUILD
+           
+#           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.3.12.xz
+#           export NEW=$(sha512sum patch-6.3.12.xz)
+#           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.3.9.xz
+#           export OLD=$(sha512sum patch-6.3.9.xz)
+#           sed -i 's/6.3.9/6.3.12/g' APKBUILD
 #           sed -i 's/${OLD}/${NEW}/g' APKBUILD           
-#           sed -i -e "/unset LDFLAGS/i \ \tsed -i 's/CONFIG_PER_VMA_LOCK=y/# CONFIG_PER_VMA_LOCK is not set/g' .config" APKBUILD
-#           sed -i -e "/unset LDFLAGS/i \ \tsed -i '/# CONFIG_PER_VMA_LOCK_STATS is not set/d' .config" APKBUILD
       - name: Install packages
         run: |
            cd /home/builder/linux-edge
