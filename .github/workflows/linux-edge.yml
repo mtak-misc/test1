@@ -37,17 +37,13 @@ jobs:
            curl -LO https://raw.githubusercontent.com/mtak-misc/pkgbuild-linux-xanmod/main/per_vma_lock.patch
            chown builder -R /home/builder
            cd /home/builder/linux-edge
-           sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
-           sed -i -e '/unset LDFLAGS/i \ \tpatch -Np1 -i ../../../per_vma_lock.patch' APKBUILD
-           sed -i -e "/unset LDFLAGS/i \ \tsed -i 's/CONFIG_PER_VMA_LOCK=y/# CONFIG_PER_VMA_LOCK is not set/g' .config" APKBUILD
-           sed -i -e "/unset LDFLAGS/i \ \tsed -i '/# CONFIG_PER_VMA_LOCK_STATS is not set/d' .config" APKBUILD
-           
-#           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.3.12.xz
-#           export NEW=$(sha512sum patch-6.3.12.xz)
-#           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.3.9.xz
-#           export OLD=$(sha512sum patch-6.3.9.xz)
-#           sed -i 's/6.3.9/6.3.12/g' APKBUILD
-#           sed -i 's/${OLD}/${NEW}/g' APKBUILD           
+           sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD           
+           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.4.3.xz
+           export NEW=$(sha512sum patch-6.4.3.xz)
+           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.4.2.xz
+           export OLD=$(sha512sum patch-6.4.2.xz)
+           sed -i 's/6.4.2/6.4.3/g' APKBUILD
+           sed -i 's/${OLD}/${NEW}/g' APKBUILD           
       - name: Install packages
         run: |
            cd /home/builder/linux-edge
