@@ -30,7 +30,7 @@ jobs:
           chgrp abuild /var/cache/distfiles
           chmod g+w /var/cache/distfiles
           su builder -c "abuild-keygen -a -i -n"
-          apk add bash
+          apk add bash git
       - name: Move repo directory
         run: |
            mv aports/community/linux-edge /home/builder
