@@ -38,7 +38,11 @@ jobs:
            curl -LO https://raw.githubusercontent.com/mtak-misc/pkgbuild-linux-xanmod/main/per_vma_lock.patch
            chown builder -R /home/builder
            cd /home/builder/linux-edge
-           sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD           
+           sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
+           sed -i -e '/unset LDFLAGS/i \ \t\tscripts/config -e CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL' APKBUILD
+           sed -i -e '/unset LDFLAGS/i \ \t\tscripts/config -d CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE' APKBUILD
+           sed -i -e '/unset LDFLAGSi \ \t\tscripts/config -e CONFIG_CPU_FREQ_GOV_CONSERVATIVE' APKBUILD
+           sed -i -e '/unset LDFLAGS/i \ \t\tscripts/config -e CONFIG_CPU_FREQ_GOV_SCHEDUTIL' APKBUILD
            curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.4.8.xz
            export NEW=$(sha512sum patch-6.4.8.xz)
            curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.4.7.xz
