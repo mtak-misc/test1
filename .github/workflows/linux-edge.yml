@@ -35,9 +35,14 @@ jobs:
         run: |
            mv aports/community/linux-edge /home/builder
            cd /home/builder
-           curl -LO https://raw.githubusercontent.com/mtak-misc/pkgbuild-linux-xanmod/main/per_vma_lock.patch
            chown builder -R /home/builder
            cd /home/builder/linux-edge
+           git clone -b 6.4.7-1341 https://github.com/clearlinux-pkgs/linux.git linux-clear
+           sed -i -e '/# first apply patches in specified order/i \ \tfor i in $(grep '^Patch' ../linux-clear/linux.spec |\\' APKBUILD
+           sed -i -e "/# first apply patches in specified order/i \ \t\ grep -Ev '^Patch0132|^Patch0118|^Patch0113|^Patch0138|^Patch0402' | sed -n 's/.*: //p'); do" APKBUILD
+           sed -i -e '/# first apply patches in specified order/i \ \t\techo "Applying patch ${i}..."' APKBUILD
+           sed -i -e '/# first apply patches in specified order/i \ \t\tpatch -Np1 -i "../linux-clear/${i}"' APKBUILD
+           sed -i -e '/# first apply patches in specified order/i \ \tdone' APKBUILD
            sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
            sed -i -e '/unset LDFLAGS/i \ \t\tscripts/config -e CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL' APKBUILD
            sed -i -e '/unset LDFLAGS/i \ \t\tscripts/config -d CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE' APKBUILD
