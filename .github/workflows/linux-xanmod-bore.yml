@@ -27,8 +27,8 @@ jobs:
       - name: Build
         run: |
           cd linux-xanmod-bore
-          su builder -c "yes '' | makepkg --noconfirm -sc"
-#          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
+#          su builder -c "yes '' | makepkg --noconfirm -sc"
       - uses: actions/upload-artifact@v3
         with:
           name: linux-xanmod-bore
