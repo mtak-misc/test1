@@ -27,6 +27,10 @@ jobs:
       - name: Build
         run: |
           cd linux-xanmod-bore
+          export OLD=$(sha256sum 0001-bore.patch | awk '{ print $1}')
+          curl -L https://raw.githubusercontent.com/firelzrd/bore-scheduler/main/bore-stable/0001-linux6.4.y-bore3.1.0.patch -o 0001-bore.patch
+          export NEW=$(sha256sum 0001-bore.patch | awk '{ print $1}')
+          echo "sed -i 's/${OLD}/${NEW}/g' PKGBUILD" | bash
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
 #          su builder -c "yes '' | makepkg --noconfirm -sc"
       - uses: actions/upload-artifact@v3
