@@ -64,8 +64,8 @@ jobs:
         run: |
            cd /home/builder/linux-edge
            su builder -c "abuild"        
-           cp $(find /home/builder -name linux-edge*.apk) /tmp
+           cp $(find /home/builder -name linux-clear*.apk) /tmp
       - uses: actions/upload-artifact@v3
         with:
-          name: linux-edge
+          name: linux-clear
           path: /tmp/*.apk
