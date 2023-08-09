@@ -50,6 +50,7 @@ jobs:
            sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_CPU_FREQ_GOV_CONSERVATIVE' APKBUILD
            sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_CPU_FREQ_GOV_SCHEDUTIL' APKBUILD
            sed -i -e 's/_flavor=edge/_flavor=clear/g' APKBUILD
+           sed -i -e 's/-config-edge/-config-clear/g' APKBUILD
            curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.4.9.xz
            export NEW=$(sha512sum patch-6.4.9.xz)
            curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.4.8.xz
