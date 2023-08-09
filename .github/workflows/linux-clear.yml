@@ -1,4 +1,4 @@
-name: build-linux-edge-clear
+name: build-linux-clear
 
 on:
   workflow_dispatch:
