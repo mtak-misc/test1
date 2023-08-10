@@ -16,8 +16,8 @@ jobs:
       - name: Diff between commits
         run: |
           cd linux
-          git log
-#      - uses: actions/upload-artifact@v3
-#        with:
-#          name: diff
-#          path: /tmp/commit.diff
+          git diff HEAD^ > /tmp/commit.diff
+      - uses: actions/upload-artifact@v3
+        with:
+          name: diff
+          path: /tmp/commit.diff
