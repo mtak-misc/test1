@@ -13,6 +13,7 @@ jobs:
           repository: ClangBuiltLinux/linux
           ref: srso-fixes
           path: linux
+          fetch-depth: 0
       - name: Diff between commits
         run: |
           cd linux
