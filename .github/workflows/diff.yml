@@ -1,0 +1,23 @@
+name: diff
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkount aports repository
+        uses: actions/checkout@v3  
+        with:
+          repository: ClangBuiltLinux/linux
+          ref: srso-fixes
+          path: linux
+      - name: Diff between commits
+        run: |
+          cd linux
+          git diff 8a9b1f65817e94281ed5922ccee877ab99add71e 150c42407f87463c27a2459e06845965291d9973 > /tmp/commit.diff
+      - uses: actions/upload-artifact@v3
+        with:
+          name: diff
+          path: /tmp/commit.diff
