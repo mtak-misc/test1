@@ -16,7 +16,7 @@ jobs:
       - name: Diff between commits
         run: |
           cd linux
-          git diff 8a9b1f65817e94281ed5922ccee877ab99add71e..150c42407f87463c27a2459e06845965291d9973 > /tmp/commit.diff
+          git diff 8a9b1f6..150c424 > /tmp/commit.diff
       - uses: actions/upload-artifact@v3
         with:
           name: diff
