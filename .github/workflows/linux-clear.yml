@@ -38,7 +38,7 @@ jobs:
            chown builder -R /home/builder
            cd /home/builder/linux-edge
            mv config-edge.x86_64 config-clear.x86_64
-           git clone -b 6.4.7-1341 https://github.com/clearlinux-pkgs/linux.git linux-clear
+           git clone -b 6.4.9-1345 https://github.com/clearlinux-pkgs/linux.git linux-clear
            sed -i -e '/# first apply patches in specified order/i \ \tfor i in $(grep '^Patch' ../../linux-clear/linux.spec |\\' APKBUILD
            sed -i -e "/# first apply patches in specified order/i \ \t\ grep -Ev '^Patch0132|^Patch0118|^Patch0113|^Patch0138|^Patch0402' | sed -n 's/.*: //p'); do" APKBUILD
            sed -i -e '/# first apply patches in specified order/i \ \t\techo "Applying patch ${i}..."' APKBUILD
