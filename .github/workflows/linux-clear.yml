@@ -2,6 +2,9 @@ name: build-linux-clear
 
 on:
   workflow_dispatch:
+  
+env:
+  CLEAR_BRANCH: "6.4.9-1345"
 
 jobs:
   build:
@@ -38,7 +41,7 @@ jobs:
            chown builder -R /home/builder
            cd /home/builder/linux-edge
            mv config-edge.x86_64 config-clear.x86_64
-           git clone -b 6.4.9-1345 https://github.com/clearlinux-pkgs/linux.git linux-clear
+           git clone -b ${CLEAR_BRANCH} https://github.com/clearlinux-pkgs/linux.git linux-clear
            sed -i -e '/# first apply patches in specified order/i \ \tfor i in $(grep '^Patch' ../../linux-clear/linux.spec |\\' APKBUILD
            sed -i -e "/# first apply patches in specified order/i \ \t\ grep -Ev '^Patch0132|^Patch0118|^Patch0113|^Patch0138|^Patch0402' | sed -n 's/.*: //p'); do" APKBUILD
            sed -i -e '/# first apply patches in specified order/i \ \t\techo "Applying patch ${i}..."' APKBUILD
@@ -55,7 +58,7 @@ jobs:
            sed -i -e 's/_package edge/_package clear/g' APKBUILD
            sed -i -e 's/linux-edge/linux-clear/g' APKBUILD
            export OLD=$(sha512sum config-clear.x86_64)
-           curl -L https://raw.githubusercontent.com/clearlinux-pkgs/linux/6.4.9-1345/config -o config-clear.x86_64
+           curl -L https://raw.githubusercontent.com/clearlinux-pkgs/linux/${CLEAR_BRANCH}/config -o config-clear.x86_64
            export NEW=$(sha512sum config-clear.x86_64)
            sed -i 's/${OLD}/${NEW}/g' APKBUILD
 #           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.4.9.xz
