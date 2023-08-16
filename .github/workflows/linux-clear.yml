@@ -65,7 +65,7 @@ jobs:
 #           sed -i 's/6.4.8/6.4.9/g' APKBUILD
 #           sed -i 's/${OLD}/${NEW}/g' APKBUILD           
         env:
-          CLEAR_BRANCH: "6.4.9-1345"
+          CLEAR_BRANCH: "6.4.10-1346"
       - name: Install packages
         run: |
            cd /home/builder/linux-edge
