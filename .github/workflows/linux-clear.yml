@@ -65,7 +65,7 @@ jobs:
 #           export NEW=$(sha512sum config-clear.x86_64)
 #           sed -i 's/${OLD}/${NEW}/g' APKBUILD
         env:
-          CLEAR_BRANCH: "6.4.11-1349"
+          CLEAR_BRANCH: "6.4.12-1350"
       - name: Install packages
         run: |
            cd /home/builder/linux-edge
