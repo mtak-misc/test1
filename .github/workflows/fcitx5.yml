@@ -47,7 +47,7 @@ jobs:
            su builder -c "abuild"
       - name: Install packages
         run: |
-           apk add --allow-untrusted $(find /home/builder -name fcitx5-dev*.apk)
+           apk add --allow-untrusted $(find /home/builder -name fcitx5-*.apk)
            cd /home/builder/fcitx5-qt
            su builder -c "abuild checksum"
            su builder -c "abuild deps"
