@@ -33,18 +33,25 @@ jobs:
       - name: Move repo directory
         run: |
            mv aports/testing/fcitx5 /home/builder
+           mv aports/testing/fcitx5-qt /home/builder
            chown builder -R /home/builder
       - name: Install packages
         run: |
            cd /home/builder/fcitx5
            su builder -c "abuild checksum"
            su builder -c "abuild deps"
-      - name: Build apk
+      - name: Build fcitx5
         run: |
            cd /home/builder/fcitx5
            su builder -c "abuild"
            cp $(find /home/builder -name *.apk) /tmp
+      - name: Build fcitx5-qt
+        run: |
+           cd apk add --allow-untrusted /tmp/fcitx5-dev-5.0.23-r0.apk
+           cd /home/builder/fcitx5-qt
+           su builder -c "abuild"
+           cp $(find /home/builder -name *.apk) /tmp           
       - uses: actions/upload-artifact@v3
         with:
           name: fcitx5
-          path: /tmp/fcitx5*.apk
+          path: /tmp/*.apk
