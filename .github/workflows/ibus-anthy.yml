@@ -36,13 +36,13 @@ jobs:
            chown builder -R /home/builder
       - name: Install packages
         run: |
-           cd /home/builder/ibus-anthy
-           su builder -c "abuild checksum"
-           su builder -c "abuild deps"
            su sed -i 's/v3.18/edge/g' /etc/apk/repositories
            su apk update
            su apk add libfaketime
            su sed -i 's/edgev/3.18/g' /etc/apk/repositories
+           cd /home/builder/ibus-anthy
+           su builder -c "abuild checksum"
+           su builder -c "abuild deps"
 #           sed -i 's/v3.17/edge/g' /etc/apk/repositories
 #           apk update
 #           apk add rust=$(apk list rust | grep -v installed | awk -F"[- ]" '{print $2"-"$3}') nss=$(apk list nss | grep -v installed | awk -F"[- ]" '{print $2"-"$3}')
