@@ -34,6 +34,7 @@ jobs:
         run: |
            mv aports/testing/fcitx5 /home/builder
            mv aports/testing/fcitx5-qt /home/builder
+           mv aports/testing/fcitx5-anthy /home/builder
            chown builder -R /home/builder
       - name: Install packages
         run: |
@@ -44,11 +45,15 @@ jobs:
         run: |
            cd /home/builder/fcitx5
            su builder -c "abuild"
-           cp $(find /home/builder -name *.apk) /tmp
       - name: Build fcitx5-qt
         run: |
-           cd apk add --allow-untrusted /tmp/fcitx5-dev-5.0.23-r0.apk
+           apk add --allow-untrusted $(find /home/builder -name fcitx5-dev*.apk)
            cd /home/builder/fcitx5-qt
+           su builder -c "abuild"
+      - name: Build fcitx5-anthy
+        run: |
+           apk add --allow-untrusted $(find /home/builder -name fcitx5-qt-dev*.apk)
+           cd /home/builder/fcitx5-anthy
            su builder -c "abuild"
            cp $(find /home/builder -name *.apk) /tmp           
       - uses: actions/upload-artifact@v3
