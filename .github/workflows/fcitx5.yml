@@ -45,14 +45,24 @@ jobs:
         run: |
            cd /home/builder/fcitx5
            su builder -c "abuild"
-      - name: Build fcitx5-qt
+      - name: Install packages
         run: |
            apk add --allow-untrusted $(find /home/builder -name fcitx5-dev*.apk)
            cd /home/builder/fcitx5-qt
+           su builder -c "abuild checksum"
+           su builder -c "abuild deps"
+      - name: Build fcitx5-qt
+        run: |
+           cd /home/builder/fcitx5-qt
            su builder -c "abuild"
-      - name: Build fcitx5-anthy
+      - name: Install packages
         run: |
            apk add --allow-untrusted $(find /home/builder -name fcitx5-qt-dev*.apk)
+           cd /home/builder/fcitx5-anthy
+           su builder -c "abuild checksum"
+           su builder -c "abuild deps"
+      - name: Build fcitx5-anthy
+        run: |
            cd /home/builder/fcitx5-anthy
            su builder -c "abuild"
            cp $(find /home/builder -name *.apk) /tmp           
