@@ -36,7 +36,7 @@ jobs:
            chown builder -R /home/builder
       - name: Install packages
         run: |
-           su sed -i 's/v3.18/edge/g' /etc/apk/repositories
+           sed -i 's/v3.18/edge/g' /etc/apk/repositories
            apk update
            apk add libfaketime
            sed -i 's/edgev/3.18/g' /etc/apk/repositories
