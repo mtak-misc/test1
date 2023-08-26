@@ -1,0 +1,54 @@
+name: build-ibus-anthy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: alpine:3.18    
+    steps:
+      - name: Install sdk
+        run: |
+          apk upgrade
+          apk add alpine-sdk sudo  
+      - name: Checkount aports repository
+        uses: actions/checkout@v3  
+        with:
+          repository: alpinelinux/aports
+#          ref: 3.18-stable
+          path: aports
+      - name: Prepare abuild
+#          echo "permit nopass :wheel" >> /etc/doas.d/doas.conf      
+        run: |
+          adduser builder -D -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          addgroup builder abuild
+          chown builder -R ..
+          chown builder -R /tmp
+          mkdir -p /var/cache/distfiles
+          chmod a+w /var/cache/distfiles
+          chgrp abuild /var/cache/distfiles
+          chmod g+w /var/cache/distfiles
+          su builder -c "abuild-keygen -a -i -n"
+      - name: Move repo directory
+        run: |
+           mv aports/community/ibus-anthy /home/builder
+           chown builder -R /home/builder
+      - name: Install packages
+        run: |
+           cd /home/builder/ibus-anthy
+           su builder -c "abuild checksum"
+           su builder -c "abuild deps"
+#           sed -i 's/v3.17/edge/g' /etc/apk/repositories
+#           apk update
+#           apk add rust=$(apk list rust | grep -v installed | awk -F"[- ]" '{print $2"-"$3}') nss=$(apk list nss | grep -v installed | awk -F"[- ]" '{print $2"-"$3}')
+#           sed -i 's/edge/v3.17/g' /etc/apk/repositories
+      - name: Build apk
+        run: |
+           cd /home/builder/ibus-anthy
+           su builder -c "abuild"        
+           cp $(find /home/builder -name *.apk) /tmp
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ibus-anthy
+          path: /tmp/*.apk
