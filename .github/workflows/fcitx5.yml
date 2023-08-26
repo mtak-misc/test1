@@ -35,6 +35,7 @@ jobs:
            mv aports/testing/fcitx5 /home/builder
            mv aports/testing/fcitx5-qt /home/builder
            mv aports/testing/fcitx5-anthy /home/builder
+           mv aports/testing/fcitx5-configtool /home/builder
            chown builder -R /home/builder
       - name: Install packages
         run: |
@@ -64,6 +65,15 @@ jobs:
       - name: Build fcitx5-anthy
         run: |
            cd /home/builder/fcitx5-anthy
+           su builder -c "abuild"
+      - name: Install packages
+        run: |
+           cd /home/builder/fcitx5-configtool
+           su builder -c "abuild checksum"
+           su builder -c "abuild deps"
+      - name: Build fcitx5-configtool
+        run: |
+           cd /home/builder/fcitx5-configtool
            su builder -c "abuild"
            cp $(find /home/builder -name *.apk) /tmp           
       - uses: actions/upload-artifact@v3
