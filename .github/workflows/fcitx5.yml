@@ -43,7 +43,7 @@ jobs:
         run: |
            cd /home/builder/fcitx5
            su builder -c "abuild"
-           cp $(find /home/builder -name fcitx5*.apk) /tmp
+           cp $(find /home/builder -name *.apk) /tmp
       - uses: actions/upload-artifact@v3
         with:
           name: fcitx5
