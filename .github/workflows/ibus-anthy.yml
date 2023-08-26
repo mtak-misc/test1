@@ -37,9 +37,9 @@ jobs:
       - name: Install packages
         run: |
            su sed -i 's/v3.18/edge/g' /etc/apk/repositories
-           su apk update
-           su apk add libfaketime
-           su sed -i 's/edgev/3.18/g' /etc/apk/repositories
+           apk update
+           apk add libfaketime
+           sed -i 's/edgev/3.18/g' /etc/apk/repositories
            cd /home/builder/ibus-anthy
            su builder -c "abuild checksum"
            su builder -c "abuild deps"
