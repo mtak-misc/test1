@@ -33,7 +33,6 @@ jobs:
       - name: Move repo directory
         run: |
            mv aports/community/sddm /home/builder
-           mv aports/community/sddm-breeze /home/builder
            mv aports/community/sddm-kcm /home/builder
            mv aports/community/sddm-openrc /home/builder
            chown builder -R /home/builder
@@ -46,18 +45,9 @@ jobs:
         run: |
            cd /home/builder/sddm
            su builder -c "abuild"
-      - name: Install packages for sddm-breeze
-        run: |
-           apk add $(find /home/builder -name sddm-*.apk) 
-           cd /home/builder/sddm-breeze
-           su builder -c "abuild checksum"
-           su builder -c "abuild deps"
-      - name: Build sddm-breeze
-        run: |
-           cd /home/builder/sddm-breeze
-           su builder -c "abuild"
       - name: Install packages for sddm-kcm
         run: |
+           apk add $(find /home/builder -name sddm-*.apk) 
            cd /home/builder/sddm-kcm
            su builder -c "abuild checksum"
            su builder -c "abuild deps"
