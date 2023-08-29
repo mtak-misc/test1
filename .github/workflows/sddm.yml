@@ -33,16 +33,47 @@ jobs:
       - name: Move repo directory
         run: |
            mv aports/community/sddm /home/builder
+           mv aports/community/sddm-breeze /home/builder
+           mv aports/community/sddm-kcm /home/builder
+           mv aports/community/sddm-openrc /home/builder
            chown builder -R /home/builder
-      - name: Install packages
+      - name: Install packages for sddm
         run: |
            cd /home/builder/sddm
            su builder -c "abuild checksum"
            su builder -c "abuild deps"
-      - name: Build apk
+      - name: Build sddm
         run: |
            cd /home/builder/sddm
-           su builder -c "abuild"        
+           su builder -c "abuild"
+      - name: Install packages for sddm-breeze
+        run: |
+           apk add $(find /home/builder -name sddm-*.apk) 
+           cd /home/builder/sddm-breeze
+           su builder -c "abuild checksum"
+           su builder -c "abuild deps"
+      - name: Build sddm-breeze
+        run: |
+           cd /home/builder/sddm-breeze
+           su builder -c "abuild"
+      - name: Install packages for sddm-kcm
+        run: |
+           cd /home/builder/sddm-kcm
+           su builder -c "abuild checksum"
+           su builder -c "abuild deps"
+      - name: Build sddm-kcm
+        run: |
+           cd /home/builder/sddm-kcm
+           su builder -c "abuild"
+      - name: Install packages for sddm-openrc
+        run: |
+           cd /home/builder/sddm-openrc
+           su builder -c "abuild checksum"
+           su builder -c "abuild deps"
+      - name: Build sddm-openrc
+        run: |
+           cd /home/builder/sddm-openrc
+           su builder -c "abuild"
            cp $(find /home/builder -name *.apk) /tmp
       - uses: actions/upload-artifact@v3
         with:
