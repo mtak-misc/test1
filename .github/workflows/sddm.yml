@@ -54,6 +54,7 @@ jobs:
         run: |
            cd /home/builder/sddm-kcm
            su builder -c "abuild"
+           cp $(find /home/builder -name *.apk) /tmp
       - uses: actions/upload-artifact@v3
         with:
           name: sddm
