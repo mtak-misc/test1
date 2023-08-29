@@ -34,7 +34,6 @@ jobs:
         run: |
            mv aports/community/sddm /home/builder
            mv aports/community/sddm-kcm /home/builder
-           mv aports/community/sddm-openrc /home/builder
            chown builder -R /home/builder
       - name: Install packages for sddm
         run: |
@@ -55,16 +54,6 @@ jobs:
         run: |
            cd /home/builder/sddm-kcm
            su builder -c "abuild"
-      - name: Install packages for sddm-openrc
-        run: |
-           cd /home/builder/sddm-openrc
-           su builder -c "abuild checksum"
-           su builder -c "abuild deps"
-      - name: Build sddm-openrc
-        run: |
-           cd /home/builder/sddm-openrc
-           su builder -c "abuild"
-           cp $(find /home/builder -name *.apk) /tmp
       - uses: actions/upload-artifact@v3
         with:
           name: sddm
