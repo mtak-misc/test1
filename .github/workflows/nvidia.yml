@@ -27,7 +27,7 @@ jobs:
         run: |
           cd nvidia-390xx-utils
           su builder -c "yes '' | makepkg --noconfirm -sc"
-          pacman -U --noconfirm $PKGDEST/nvidia-390xx-utils-390.157-4-x86_64.pkg.tar.zst
+          pacman -U --noconfirm $PKGDEST/nvidia-390xx-utils-390.157-5-x86_64.pkg.tar.zst
       - name: Build settings
         run: |
           cd nvidia-390xx-settings
