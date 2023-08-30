@@ -1,0 +1,155 @@
+diff -uNrb a/common/inc/nv-mm.h b/common/inc/nv-mm.h
+--- a/common/inc/nv-mm.h	2022-10-12 04:30:26.000000000 -0500
++++ b/common/inc/nv-mm.h	2023-08-29 23:15:03.330609288 -0500
+@@ -77,6 +77,25 @@
+     #if defined(NV_GET_USER_PAGES_HAS_WRITE_AND_FORCE_ARGS)
+         #define NV_GET_USER_PAGES get_user_pages
+     #else
++        #if defined(NV_GET_USER_PAGES_DROPPED_VMA)
++              #include <linux/mm.h>
++
++              static inline long NV_GET_USER_PAGES(unsigned long start,
++                                                   unsigned long nr_pages,
++                                                   int write,
++                                                   int force,
++                                                   struct page **pages)
++              {
++                  unsigned int flags = 0;
++
++                  if (write)
++                      flags |= FOLL_WRITE;
++                  if (force)
++                      flags |= FOLL_FORCE;
++
++                  return get_user_pages(start, nr_pages, flags, pages);
++              }
++        #else
+         #include <linux/mm.h>
+ 
+         static inline long NV_GET_USER_PAGES(unsigned long start,
+@@ -96,6 +115,7 @@
+             return get_user_pages(start, nr_pages, flags, pages, vmas);
+         }
+     #endif
++    #endif
+ #endif
+ 
+ /*
+diff -uNrb a/conftest.sh b/conftest.sh
+--- a/conftest.sh	2023-07-03 00:29:33.476927152 -0500
++++ b/conftest.sh	2023-08-29 22:49:00.991916583 -0500
+@@ -3056,7 +3056,6 @@
+             # write and force parameters AND that gup has task_struct and
+             # mm_struct as its first arguments.
+             # Return if available.
+-            # Fall through to default case if absent.
+ 
+             echo "$CONFTEST_PREAMBLE
+             #include <linux/mm.h>
+@@ -3080,6 +3079,31 @@
+                 return
+             fi
+ 
++            # Conftest #4: check if vma arg was dropped
++            # Return if available.
++            # Fall through to default case if absent.
++
++            echo "$CONFTEST_PREAMBLE
++            #include <linux/mm.h>
++            long get_user_pages(unsigned long start,
++                                unsigned long nr_pages,
++                                unsigned int gup_flags,
++                                struct page **pages) {
++                return 0;
++            }" > conftest$$.c
++
++            $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++            rm -f conftest$$.c
++
++            if [ -f conftest$$.o ]; then
++                echo "#define NV_GET_USER_PAGES_DROPPED_VMA" | append_conftest "functions"
++                echo "#undef NV_GET_USER_PAGES_HAS_WRITE_AND_FORCE_ARGS" | append_conftest "functions"
++                echo "#undef NV_GET_USER_PAGES_HAS_TASK_STRUCT" | append_conftest "functions"
++                  rm -f conftest$$.o
++                return
++            fi
++
++
+             echo "#define NV_GET_USER_PAGES_HAS_WRITE_AND_FORCE_ARGS" | append_conftest "functions"
+             echo "#define NV_GET_USER_PAGES_HAS_TASK_STRUCT" | append_conftest "functions"
+ 
+diff -uNrb a/nvidia/os-mlock.c b/nvidia/os-mlock.c
+--- a/nvidia/os-mlock.c	2022-10-12 04:30:26.000000000 -0500
++++ b/nvidia/os-mlock.c	2023-08-29 22:58:37.460094450 -0500
+@@ -127,8 +127,13 @@
+     }
+ 
+     nv_mmap_read_lock(mm);
++#if defined(NV_GET_USER_PAGES_DROPPED_VMA)
++    ret = NV_GET_USER_PAGES((unsigned long)address,
++                            page_count, write, force, user_pages);
++#else
+     ret = NV_GET_USER_PAGES((unsigned long)address,
+                             page_count, write, force, user_pages, NULL);
++#endif
+     nv_mmap_read_unlock(mm);
+     pinned = ret;
+ 
+diff -uNrb a/nvidia-drm/nvidia-drm-linux.c b/nvidia-drm/nvidia-drm-linux.c
+--- a/nvidia-drm/nvidia-drm-linux.c	2022-10-12 04:30:31.000000000 -0500
++++ b/nvidia-drm/nvidia-drm-linux.c	2023-08-29 22:52:59.712273031 -0500
+@@ -115,8 +115,13 @@
+ 
+     nv_mmap_read_lock(mm);
+ 
++#if defined(NV_GET_USER_PAGES_DROPPED_VMA)
++    pages_pinned = NV_GET_USER_PAGES(address, pages_count, write, force,
++		                     user_pages);
++#else
+     pages_pinned = NV_GET_USER_PAGES(address, pages_count, write, force,
+                                      user_pages, NULL);
++#endif
+     nv_mmap_read_unlock(mm);
+ 
+     if (pages_pinned < 0 || (unsigned)pages_pinned < pages_count) {
+diff -uNrb a/nvidia-uvm/uvm8_tools.c b/nvidia-uvm/uvm8_tools.c
+--- a/nvidia-uvm/uvm8_tools.c	2022-10-12 04:30:28.000000000 -0500
++++ b/nvidia-uvm/uvm8_tools.c	2023-08-29 22:55:54.618394874 -0500
+@@ -251,13 +251,37 @@
+     }
+ 
+     nv_mmap_read_lock(current->mm);
++#if defined(NV_GET_USER_PAGES_DROPPED_VMA)
++    ret = NV_GET_USER_PAGES(user_va, num_pages, 1, 0, *pages);
++#else
+     ret = NV_GET_USER_PAGES(user_va, num_pages, 1, 0, *pages, vmas);
++#endif
+     nv_mmap_read_unlock(current->mm);
+     if (ret != num_pages) {
+         status = NV_ERR_INVALID_ARGUMENT;
+         goto fail;
+     }
+ 
++#if defined(NV_GET_USER_PAGES_DROPPED_VMA)
++    struct vm_area_struct *vma;
++    unsigned long start;
++
++    nv_mmap_read_lock(current->mm);
++    start = user_va;
++    for (i = 0; i < num_pages; i++) {
++        vma = find_vma(current->mm, start);
++        if (!vma) {
++	    nv_mmap_read_unlock(current->mm);
++	    status = NV_ERR_INVALID_ARGUMENT;
++	    goto fail;
++	}
++
++        vmas[i] = vma;
++        start = (start + PAGE_SIZE) & PAGE_MASK;
++    }
++    nv_mmap_read_unlock(current->mm);
++#endif
++
+     for (i = 0; i < num_pages; i++) {
+         if (page_count((*pages)[i]) > MAX_PAGE_COUNT || uvm_file_is_nvidia_uvm(vmas[i]->vm_file)) {
+             status = NV_ERR_INVALID_ARGUMENT;
