@@ -20,7 +20,7 @@ jobs:
           git clone https://aur.archlinux.org/nvidia-390xx-settings.git
           git clone https://aur.archlinux.org/nvidia-390xx-utils.git
           mv ./kernel-6.5.patch ./nvidia-390xx-utils/
-          sed -i -e '/patch -Np1 -i ..\/kernel-6.4.patch/a \ \ \ \ patch -Np1 -i ..\/..\/kernel-6.5.patch' ./nvidia-390xx-utils/PKGBUILD
+          sed -i -e '/patch -Np1 -i ..\/kernel-6.4.patch/a \ \ \ \ cd kernel; patch -Np1 -i ..\/..\/kernel-6.5.patch' ./nvidia-390xx-utils/PKGBUILD
           chown builder -R ..
           chown builder -R /tmp
       - name: Build utils
