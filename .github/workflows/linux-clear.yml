@@ -58,7 +58,7 @@ jobs:
            export NEW=$(sha512sum patch-6.4.14.xz)
            curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.4.12.xz
            export OLD=$(sha512sum patch-6.4.12.xz)
-           sed -i 's/6.4.12/6.4.13/g' APKBUILD
+           sed -i 's/6.4.12/6.4.14/g' APKBUILD
            sed -i 's/${OLD}/${NEW}/g' APKBUILD           
 #           export OLD=$(sha512sum config-clear.x86_64)
 #           curl -L https://raw.githubusercontent.com/clearlinux-pkgs/linux/${CLEAR_BRANCH}/config -o config-clear.x86_64
