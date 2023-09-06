@@ -38,12 +38,6 @@ jobs:
            chown builder -R /home/builder
            cd /home/builder/linux-edge
            mv config-edge.x86_64 config-clear.x86_64
-           git clone -b ${CLEAR_BRANCH} https://github.com/clearlinux-pkgs/linux.git linux-clear
-           sed -i -e '/# first apply patches in specified order/i \ \tfor i in $(grep '^Patch' ../../linux-clear/linux.spec |\\' APKBUILD
-           sed -i -e "/# first apply patches in specified order/i \ \t\ grep -Ev '^Patch0132|^Patch0118|^Patch0113|^Patch0138|^Patch0402' | sed -n 's/.*: //p'); do" APKBUILD
-           sed -i -e '/# first apply patches in specified order/i \ \t\techo "Applying patch ${i}..."' APKBUILD
-           sed -i -e '/# first apply patches in specified order/i \ \t\tpatch -Np1 -i "../../linux-clear/${i}"' APKBUILD
-           sed -i -e '/# first apply patches in specified order/i \ \tdone' APKBUILD
            sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
            sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL' APKBUILD
            sed -i -e '/unset LDFLAGS/i \ \tscripts/config -d CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE' APKBUILD
@@ -54,12 +48,20 @@ jobs:
            sed -i -e 's/config-edge.x86_64/config-clear.x86_64/g' APKBUILD
            sed -i -e 's/_package edge/_package clear/g' APKBUILD
            sed -i -e 's/linux-edge/linux-clear/g' APKBUILD
-           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.4.14.xz
-           export NEW=$(sha512sum patch-6.4.14.xz)
-           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.4.12.xz
-           export OLD=$(sha512sum patch-6.4.12.xz)
-           sed -i 's/6.4.12/6.4.14/g' APKBUILD
-           sed -i 's/${OLD}/${NEW}/g' APKBUILD           
+           curl -LO https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-tkg-patches/6.5/0002-clear-patches.patch
+           sed -i -e '/# first apply patches in specified order/i \ \tpatch -Np1 -i ../0002-clear-patches.patch' APKBUILD
+#           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.4.14.xz
+#           export NEW=$(sha512sum patch-6.4.14.xz)
+#           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.4.12.xz
+#           export OLD=$(sha512sum patch-6.4.12.xz)
+#           sed -i 's/6.4.12/6.4.14/g' APKBUILD
+#           sed -i 's/${OLD}/${NEW}/g' APKBUILD
+#           git clone -b ${CLEAR_BRANCH} https://github.com/clearlinux-pkgs/linux.git linux-clear
+#           sed -i -e '/# first apply patches in specified order/i \ \tfor i in $(grep '^Patch' ../../linux-clear/linux.spec |\\' APKBUILD
+#           sed -i -e "/# first apply patches in specified order/i \ \t\ grep -Ev '^Patch0132|^Patch0118|^Patch0113|^Patch0138|^Patch0402' | sed -n 's/.*: //p'); do" APKBUILD
+#           sed -i -e '/# first apply patches in specified order/i \ \t\techo "Applying patch ${i}..."' APKBUILD
+#           sed -i -e '/# first apply patches in specified order/i \ \t\tpatch -Np1 -i "../../linux-clear/${i}"' APKBUILD
+#           sed -i -e '/# first apply patches in specified order/i \ \tdone' APKBUILD
 #           export OLD=$(sha512sum config-clear.x86_64)
 #           curl -L https://raw.githubusercontent.com/clearlinux-pkgs/linux/${CLEAR_BRANCH}/config -o config-clear.x86_64
 #           export NEW=$(sha512sum config-clear.x86_64)
