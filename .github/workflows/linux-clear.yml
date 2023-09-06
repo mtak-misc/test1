@@ -49,7 +49,7 @@ jobs:
            sed -i -e 's/_package edge/_package clear/g' APKBUILD
            sed -i -e 's/linux-edge/linux-clear/g' APKBUILD
            curl -LO https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-tkg-patches/6.5/0002-clear-patches.patch
-           sed -i -e '/# first apply patches in specified order/i \ \tpatch -Np1 -i ../0002-clear-patches.patch' APKBUILD
+           sed -i -e '/# first apply patches in specified order/i \ \tpatch -Np1 -i ../../0002-clear-patches.patch' APKBUILD
 #           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.4.14.xz
 #           export NEW=$(sha512sum patch-6.4.14.xz)
 #           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.4.12.xz
