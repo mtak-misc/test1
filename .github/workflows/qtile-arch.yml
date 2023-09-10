@@ -20,6 +20,8 @@ jobs:
           chown builder -R ..
           chown builder -R /tmp
           su builder -c "gpg --recv-keys 1F713A69C898ED88"
+          sed -i '/cd $pkgname"/a \ \ curl -L https://raw.githubusercontent.com/elParaguayo/qtile/a3992faa44ba88caac3742ef57327ace5904f7d0/libqtile/widget/statusnotifier.py -o ./libqtile/widget/statusnotifier.py' PKGBUILD
+          cat PKGBUILD
       - name: Build
         run: |
           cd qtile
