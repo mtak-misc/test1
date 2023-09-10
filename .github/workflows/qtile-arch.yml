@@ -19,7 +19,7 @@ jobs:
           git clone https://gitlab.archlinux.org/archlinux/packaging/packages/qtile.git
           chown builder -R ..
           chown builder -R /tmp
-          su builder -c "gpg --recv-keys 58A9AA7C86727DF7"
+          su builder -c "gpg --recv-keys 1F713A69C898ED88"
       - name: Build
         run: |
           cd qtile
