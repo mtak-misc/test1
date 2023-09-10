@@ -1,4 +1,4 @@
-name: build-qtile
+name: build-qtile-alpine
 
 on:
   workflow_dispatch:
