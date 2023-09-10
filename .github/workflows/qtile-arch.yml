@@ -14,12 +14,12 @@ jobs:
       - name: Prepare for makepkg
         run: |
           pacman -Syu --noconfirm base-devel sudo git
-          curl -L https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=qtile-extras -o PKGBUILD
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           git clone https://gitlab.archlinux.org/archlinux/packaging/packages/qtile.git
           chown builder -R ..
           chown builder -R /tmp
           su builder -c "gpg --recv-keys 1F713A69C898ED88"
+          cd qtile
           sed -i '/cd $pkgname"/a \ \ curl -L https://raw.githubusercontent.com/elParaguayo/qtile/a3992faa44ba88caac3742ef57327ace5904f7d0/libqtile/widget/statusnotifier.py -o ./libqtile/widget/statusnotifier.py' PKGBUILD
           cat PKGBUILD
       - name: Build
