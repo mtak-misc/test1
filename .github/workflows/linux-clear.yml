@@ -48,7 +48,7 @@ jobs:
            sed -i -e 's/config-edge.x86_64/config-clear.x86_64/g' APKBUILD
            sed -i -e 's/_package edge/_package clear/g' APKBUILD
            sed -i -e 's/linux-edge/linux-clear/g' APKBUILD
-           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.5.4 .xz
+           curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.5.4.xz
            export NEW=$(sha512sum patch-6.5.4.xz)
            curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-6.5.3.xz
            export OLD=$(sha512sum patch-6.5.3.xz)
