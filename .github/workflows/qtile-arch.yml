@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     container: archlinux:latest    
     steps:
+      - name: Checkount repo
+        uses: actions/checkout@v3    
       - name: Prepare for makepkg
         run: |
           pacman -Syu --noconfirm base-devel sudo git
@@ -21,6 +23,7 @@ jobs:
           su builder -c "gpg --recv-keys 1F713A69C898ED88"
           cd qtile
           sed -i '/cd $pkgname/a \ \ curl -L https://raw.githubusercontent.com/elParaguayo/qtile/fe69b8f8753d2b625f97d2abf1c2b2b16e47b9db/libqtile/widget/statusnotifier.py -o ./libqtile/widget/statusnotifier.py' PKGBUILD
+          sed -i '/cd $pkgname/a \ \ cp ../../*.py ./libqtile/backend/wayland' PKGBUILD
       - name: Build
         run: |
           cd qtile
