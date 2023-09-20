@@ -384,5 +384,6 @@ class Pointer(_Device):
                     libinput.libinput_device_config_tap_set_button_map(
                         handle, TAP_MAPS.get(config.tap_button_map)
                     )
+
         if config.send_events is not None:
             libinput.libinput_device_config_send_events_set_mode(handle, int(config.send_events)) 
