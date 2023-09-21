@@ -125,6 +125,12 @@ enum libinput_config_status
 libinput_device_config_dwt_set_enabled(struct libinput_device *device,
                                        enum libinput_config_dwt_state enable);
 
+enum libinput_config_send_events_mode {
+    LIBINPUT_CONFIG_SEND_EVENTS_ENABLED,
+    LIBINPUT_CONFIG_SEND_EVENTS_DISABLED,
+    LIBINPUT_CONFIG_SEND_EVENTS_DISABLED_ON_EXTERNAL_MOUSE,
+};
+
 enum libinput_config_status
 libinput_device_config_send_events_set_mode(struct libinput_device *device,
                                             uint32_t mode);
