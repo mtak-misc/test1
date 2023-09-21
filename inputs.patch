@@ -1,0 +1,31 @@
+--- a/libqtile/backend/wayland/inputs.py	2023-09-21 10:23:00.883413871 +0900
++++ b/libqtile/backend/wayland/inputs.py	2023-09-21 10:23:30.650314166 +0900
+@@ -117,6 +117,7 @@
+         ("kb_variant", None, "Keyboard variant i.e. ``XKB_DEFAULT_VARIANT``"),
+         ("kb_repeat_rate", 25, "Keyboard key repeats made per second"),
+         ("kb_repeat_delay", 600, "Keyboard delay in milliseconds before repeating"),
++        ("send_events", 'enabled', "``'enabled'``, ``'disabled'`` or ``'disabled_on_external_mouse'``"),
+     ]
+ 
+     def __init__(self, **config: Any) -> None:
+@@ -148,6 +149,11 @@
+         "on_button_down": libinput.LIBINPUT_CONFIG_SCROLL_ON_BUTTON_DOWN,
+     }
+ 
++    SENDEVENTS_MODE = {
++        "enabled": libinput.LIBINPUT_CONFIG_SEND_EVENTS_ENABLED ,
++        "disabled": libinput.LIBINPUT_CONFIG_SEND_EVENTS_DISABLED,
++        "disabled_on_external_mouse": libinput.LIBINPUT_CONFIG_SEND_EVENTS_DISABLED_ON_EXTERNAL_MOUSE,
++    }
+ 
+ class _Device(ABC, HasListeners):
+     def __init__(self, core: Core, wlr_device: InputDevice):
+@@ -383,3 +389,8 @@
+                     libinput.libinput_device_config_tap_set_button_map(
+                         handle, TAP_MAPS.get(config.tap_button_map)
+                     )
++
++        if config.send_events is not None:
++            libinput.libinput_device_config_send_events_set_mode(
++                handle, SENDEVENTS_MODE.get(config.send_events)
++            ) 
