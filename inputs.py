@@ -117,7 +117,7 @@ class InputConfig(configurable.Configurable):
         ("kb_variant", None, "Keyboard variant i.e. ``XKB_DEFAULT_VARIANT``"),
         ("kb_repeat_rate", 25, "Keyboard key repeats made per second"),
         ("kb_repeat_delay", 600, "Keyboard delay in milliseconds before repeating"),
-        ("send_events", None, "Send Events Mode"),
+        ("send_events", 'enabled', "``'enabled'``, ``'disabled'`` or ``'disabled_on_external_mouse'``"),
     ]
 
     def __init__(self, **config: Any) -> None:
@@ -149,6 +149,11 @@ if libinput:
         "on_button_down": libinput.LIBINPUT_CONFIG_SCROLL_ON_BUTTON_DOWN,
     }
 
+    SENDEVENTS_MODE = {
+        "enabled": libinput.LIBINPUT_CONFIG_SEND_EVENTS_ENABLED ,
+        "disabled": libinput.LIBINPUT_CONFIG_SEND_EVENTS_DISABLED,
+        "disabled_on_external_mouse": libinput.LIBINPUT_CONFIG_SEND_EVENTS_DISABLED_ON_EXTERNAL_MOUSE,
+    }
 
 class _Device(ABC, HasListeners):
     def __init__(self, core: Core, wlr_device: InputDevice):
@@ -386,4 +391,6 @@ class Pointer(_Device):
                     )
 
         if config.send_events is not None:
-            libinput.libinput_device_config_send_events_set_mode(handle, int(config.send_events)) 
+            libinput.libinput_device_config_send_events_set_mode(
+                handle, SENDEVENTS_MODE.get(config.send_events)
+            ) 
