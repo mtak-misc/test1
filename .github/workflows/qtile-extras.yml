@@ -19,6 +19,7 @@ jobs:
           chown builder -R ..
           chown builder -R /tmp
           su builder -c "gpg --recv-keys 58A9AA7C86727DF7"
+          sed -i '/cd "$pkgname"/a \ \ curl -L https://raw.githubusercontent.com/elParaguayo/qtile-extras/main/qtile_extras/widget/statusnotifier.py -o .widget/statusnotifier.py' PKGBUILD
       - name: Build
         run: |
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
