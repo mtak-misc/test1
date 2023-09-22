@@ -67,7 +67,7 @@ jobs:
 #           curl -LO https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-tkg-patches/6.5/0002-clear-patches.patch
 #           sed -i -e '/# first apply patches in specified order/i \ \tpatch -Np1 -i ../../0002-clear-patches.patch' APKBUILD
         env:
-          CLEAR_BRANCH: "6.5.3-1360"
+          CLEAR_BRANCH: "6.5.4-1363"
       - name: Install packages
         run: |
            cd /home/builder/linux-edge
