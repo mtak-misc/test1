@@ -33,6 +33,7 @@ jobs:
       - name: Build python-xcffib
         run: |
           curl -LO https://gitlab.archlinux.org/archlinux/packaging/packages/python-xcffib/-/raw/main/PKGBUILD
+          chown builder PKGBUILD
           sed -i 's/pkgver=1.2.0/pkgver=1.5.0/g' PKGBUILD
           sed -i 's/pkgrel=2/pkgrel=1/g' PKGBUILD
           sed -i 's/#commit=$_commit/#tag=v$pkgver/g' PKGBUILD
@@ -43,6 +44,7 @@ jobs:
       - name: Build python-cairocffi
         run: |
           curl -LO https://gitlab.archlinux.org/archlinux/packaging/packages/python-cairocffi/-/raw/main/PKGBUILD
+          chown builder PKGBUILD
           sed -i 's/ab3e552bbf0f7452a722a4739972f52de5c4bc83fbd0d1c53ce330cb3a42ce173be748cf8febb43fd7bd040f8d52afd7093efba60a42aa75c3945730693c25e7/SKIP/g' PKGBUILD
           sed -i 's/pkgver=1.5.0/pkgver=1.6.1/g' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
@@ -52,6 +54,7 @@ jobs:
       - name: Build pywlroots
         run: |
           curl -LO https://gitlab.archlinux.org/archlinux/packaging/packages/python-pywlroots/-/raw/main/PKGBUILD
+          chown builder PKGBUILD
           sed -i 's/65105d163ade1036d8db634bd30e0b42ad95149298b05accab22865b17a6055b20028271f9e07269aea97eb0028a8b66773005511d5c64602d532413203e3ebc/SKIP/g' PKGBUILD
           sed -i 's/a89099cd1aab761b06ba53a19b49b5ad66b8fcd19e7c9dea64ebffb3fc5e163076e6ea9b91b12c2f66cebfec9f0673268dd8bdebd29270a6786df3fe7b8037d0/SKIP/g' PKGBUILD
           sed -i 's/wlroots0.15 libwlroots.so=10/wlroots libwlroots.so=11/g' PKGBUILD
