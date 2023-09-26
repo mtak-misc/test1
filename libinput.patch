@@ -1,0 +1,17 @@
+--- a/libqtile/backend/wayland/cffi/libinput.py	2023-09-26 20:13:52.912623424 +0900
++++ b/libqtile/backend/wayland/cffi/libinput.py	2023-09-26 20:16:10.274888792 +0900
+@@ -129,4 +129,14 @@
+ enum libinput_config_status
+ libinput_device_config_dwt_set_enabled(struct libinput_device *device,
+                                        enum libinput_config_dwt_state enable);
++
++enum libinput_config_send_events_mode {
++    LIBINPUT_CONFIG_SEND_EVENTS_ENABLED,
++    LIBINPUT_CONFIG_SEND_EVENTS_DISABLED,
++    LIBINPUT_CONFIG_SEND_EVENTS_DISABLED_ON_EXTERNAL_MOUSE,
++};
++
++enum libinput_config_status
++libinput_device_config_send_events_set_mode(struct libinput_device *device,
++                                            uint32_t mode);
+ """
