@@ -22,9 +22,10 @@ jobs:
           chown builder -R /tmp
           su builder -c "gpg --recv-keys 1F713A69C898ED88"
           cd qtile
-          sed -i '/.\/scripts\/ffibuild/i \ \ curl -L https://raw.githubusercontent.com/elParaguayo/qtile/fe69b8f8753d2b625f97d2abf1c2b2b16e47b9db/libqtile/widget/statusnotifier.py -o ./libqtile/widget/statusnotifier.py' PKGBUILD
-          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../libinput_ffi_build.patch' PKGBUILD
-          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../inputs.patch' PKGBUILD
+          sed -i 's/0.22.1/0.23.0/g' PKGBUILD
+#          sed -i '/.\/scripts\/ffibuild/i \ \ curl -L https://raw.githubusercontent.com/elParaguayo/qtile/fe69b8f8753d2b625f97d2abf1c2b2b16e47b9db/libqtile/widget/statusnotifier.py -o ./libqtile/widget/statusnotifier.py' PKGBUILD
+#          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../libinput_ffi_build.patch' PKGBUILD
+#          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../inputs.patch' PKGBUILD
       - name: Build Qtile
         run: |
           cd qtile
@@ -34,11 +35,11 @@ jobs:
            pacman --noconfirm -U /tmp/qtile*.pkg.tar.zst
       - name: Prepare for makepkg
         run: |
-          curl -L https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=qtile-extras -o PKGBUILD
+          curl -L https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=qtile-extras-git -o PKGBUILD
           su builder -c "gpg --recv-keys 58A9AA7C86727DF7"
-          sed -i '/cd "$pkgname"/a \ \ curl -L https://github.com/elParaguayo/qtile-extras/raw/860818063771b0216cdae75f86dbeeb682c3dabb/qtile_extras/popup/menu.py -o ./qtile_extras/popup/menu.py' PKGBUILD
-          sed -i '/cd "$pkgname"/a \ \ curl -L https://github.com/elParaguayo/qtile-extras/raw/860818063771b0216cdae75f86dbeeb682c3dabb/qtile_extras/resources/dbusmenu/__init__.py -o ./qtile_extras/resources/dbusmenu/__init__.py' PKGBUILD
-          sed -i '/cd "$pkgname"/a \ \ curl -L https://github.com/elParaguayo/qtile-extras/raw/860818063771b0216cdae75f86dbeeb682c3dabb/qtile_extras/widget/statusnotifier.py -o ./qtile_extras/widget/statusnotifier.py' PKGBUILD          
+#          sed -i '/cd "$pkgname"/a \ \ curl -L https://github.com/elParaguayo/qtile-extras/raw/860818063771b0216cdae75f86dbeeb682c3dabb/qtile_extras/popup/menu.py -o ./qtile_extras/popup/menu.py' PKGBUILD
+#          sed -i '/cd "$pkgname"/a \ \ curl -L https://github.com/elParaguayo/qtile-extras/raw/860818063771b0216cdae75f86dbeeb682c3dabb/qtile_extras/resources/dbusmenu/__init__.py -o ./qtile_extras/resources/dbusmenu/__init__.py' PKGBUILD
+#          sed -i '/cd "$pkgname"/a \ \ curl -L https://github.com/elParaguayo/qtile-extras/raw/860818063771b0216cdae75f86dbeeb682c3dabb/qtile_extras/widget/statusnotifier.py -o ./qtile_extras/widget/statusnotifier.py' PKGBUILD          
       - name: Build Qtile-Extra
         run: |
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
