@@ -39,6 +39,7 @@ jobs:
       - name: Install packages
         run: |
            cd /home/builder/qtile
+           apk add py3-flit-core
            su builder -c "abuild checksum"
            su builder -c "abuild deps"
       - name: Build apk
