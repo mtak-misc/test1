@@ -57,6 +57,8 @@ jobs:
           sed -i 's/wlroots0.15 libwlroots.so=10/wlroots libwlroots.so=11/g' PKGBUILD
           sed -i 's/pkgver=0.15.24/pkgver=0.16.5/g' PKGBUILD
           sed -i 's/pkgrel=4/pkgrel=1/g' PKGBUILD
+          sed -i 's/export CFLAGS/#export CFLAGS/g' PKGBUILD
+          sed -i 's/export LDFLAGS/#export LDFLAGS/g' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
       - name : Install python-pywlroots
         run: |
