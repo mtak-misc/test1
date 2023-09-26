@@ -33,6 +33,6 @@
                      )
 +
 +        if config.send_events is not None:
-+            libinput.libinput_device_config_send_events_set_mode(
++            lib.libinput_device_config_send_events_set_mode(
 +                handle, SENDEVENTS_MODE.get(config.send_events)
 +            ) 
