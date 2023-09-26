@@ -29,6 +29,15 @@ jobs:
 #          sed -i '/.\/scripts\/ffibuild/i \ \ curl -L https://raw.githubusercontent.com/elParaguayo/qtile/fe69b8f8753d2b625f97d2abf1c2b2b16e47b9db/libqtile/widget/statusnotifier.py -o ./libqtile/widget/statusnotifier.py' PKGBUILD
 #          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../libinput_ffi_build.patch' PKGBUILD
 #          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../inputs.patch' PKGBUILD
+      - name: Build python-cairocffi
+        run: |
+          curl -LO https://gitlab.archlinux.org/archlinux/packaging/packages/python-cairocffi/-/raw/main/PKGBUILD
+          sed -i 's/ab3e552bbf0f7452a722a4739972f52de5c4bc83fbd0d1c53ce330cb3a42ce173be748cf8febb43fd7bd040f8d52afd7093efba60a42aa75c3945730693c25e7/SKIP/g' PKGBUILD
+          sed -i 's/pkgver=1.5.0/pkgver=1.6.1/g' PKGBUILD
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+      - name : Install python-cairocffi
+        run: |
+          pacman --noconfirm -U /tmp/python-cairocffi*.pkg.tar.zst
       - name: Build pywlroots
         run: |
           curl -LO https://gitlab.archlinux.org/archlinux/packaging/packages/python-pywlroots/-/raw/main/PKGBUILD
