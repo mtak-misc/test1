@@ -33,6 +33,7 @@ jobs:
         run: |
           curl -LO https://gitlab.archlinux.org/archlinux/packaging/packages/python-xcffib/-/raw/main/PKGBUILD
           sed -i 's/pkgver=1.2.0/pkgver=1.5.0/g' PKGBUILD
+          sed -i 's/pkgrel=2/pkgrel=1/g' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
       - name : Install python-xcffib
         run: |
