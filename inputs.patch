@@ -5,9 +5,9 @@
      }
  
 +    SENDEVENTS_MODE = {
-+        "enabled": libinput.LIBINPUT_CONFIG_SEND_EVENTS_ENABLED ,
-+        "disabled": libinput.LIBINPUT_CONFIG_SEND_EVENTS_DISABLED,
-+        "disabled_on_external_mouse": libinput.LIBINPUT_CONFIG_SEND_EVENTS_DISABLED_ON_EXTERNAL_MOUSE,
++        "enabled": lib.LIBINPUT_CONFIG_SEND_EVENTS_ENABLED ,
++        "disabled": lib.LIBINPUT_CONFIG_SEND_EVENTS_DISABLED,
++        "disabled_on_external_mouse": lib.LIBINPUT_CONFIG_SEND_EVENTS_DISABLED_ON_EXTERNAL_MOUSE,
 +    }
  
  class InputConfig(configurable.Configurable):
