@@ -22,6 +22,7 @@ jobs:
           chown builder -R /tmp
           cd qtile
           sed -i 's/0.22.1/0.23.0/g' PKGBUILD
+          sed -i 's/pkgrel=4/pkgrel=1/g' PKGBUILD
           sed -i 's/wlroots0.15/wlroots/g' PKGBUILD
           sed -i 's/libwlroots.so=10/libwlroots.so=11/g' PKGBUILD
           sed -i 's/export CFLAGS/#export CFLAGS/g' PKGBUILD
@@ -36,6 +37,7 @@ jobs:
           curl -LO https://gitlab.archlinux.org/archlinux/packaging/packages/python-xcffib/-/raw/main/PKGBUILD
           sed -i 's/pkgver=1.2.0/pkgver=1.5.0/g' PKGBUILD
           sed -i 's/pkgrel=2/pkgrel=1/g' PKGBUILD
+          sed -i 's/#commit=$_commit/#tag=v$pkgver/g' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
       - name : Install python-xcffib
         run: |
