@@ -24,6 +24,8 @@ jobs:
           sed -i 's/0.22.1/0.23.0/g' PKGBUILD
           sed -i 's/wlroots0.15/wlroots/g' PKGBUILD
           sed -i 's/libwlroots.so=10/libwlroots.so=11/g' PKGBUILD
+          sed -i 's/export CFLAGS/#export CFLAGS/g' PKGBUILD
+          sed -i 's/export LDFLAGS/#export LDFLAGS/g' PKGBUILD
           su builder -c "gpg --recv-keys 18D18F1BC464DCA3"
 #          su builder -c "gpg --recv-keys 1F713A69C898ED88"
 #          sed -i '/.\/scripts\/ffibuild/i \ \ curl -L https://raw.githubusercontent.com/elParaguayo/qtile/fe69b8f8753d2b625f97d2abf1c2b2b16e47b9db/libqtile/widget/statusnotifier.py -o ./libqtile/widget/statusnotifier.py' PKGBUILD
