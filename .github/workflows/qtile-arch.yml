@@ -23,11 +23,24 @@ jobs:
           cd qtile
           sed -i 's/0.22.1/0.23.0/g' PKGBUILD
           sed -i 's/wlroots0.15/wlroots/g' PKGBUILD
+          sed -i 's/libwlroots.so=10/libwlroots.so=11/g' PKGBUILD
           su builder -c "gpg --recv-keys 18D18F1BC464DCA3"
 #          su builder -c "gpg --recv-keys 1F713A69C898ED88"
 #          sed -i '/.\/scripts\/ffibuild/i \ \ curl -L https://raw.githubusercontent.com/elParaguayo/qtile/fe69b8f8753d2b625f97d2abf1c2b2b16e47b9db/libqtile/widget/statusnotifier.py -o ./libqtile/widget/statusnotifier.py' PKGBUILD
 #          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../libinput_ffi_build.patch' PKGBUILD
 #          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../inputs.patch' PKGBUILD
+      - name: Build pywlroots
+        run: |
+          curl -LO https://gitlab.archlinux.org/archlinux/packaging/packages/python-pywlroots/-/raw/main/PKGBUILD
+          sed -i 's/65105d163ade1036d8db634bd30e0b42ad95149298b05accab22865b17a6055b20028271f9e07269aea97eb0028a8b66773005511d5c64602d532413203e3ebc/SKIP/g' PKGBUILD
+          sed -i 's/a89099cd1aab761b06ba53a19b49b5ad66b8fcd19e7c9dea64ebffb3fc5e163076e6ea9b91b12c2f66cebfec9f0673268dd8bdebd29270a6786df3fe7b8037d0/SKIP/g' PKGBUILD
+          sed -i 's/wlroots0.15 libwlroots.so=10/wlroots libwlroots.so=11/g' PKGBUILD
+          sed -i 's/pkgver=0.15.24/pkgver=0.16.5/g' PKGBUILD
+          sed -i 's/pkgrel=4/pkgrel=1/g' PKGBUILD
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+      - name : Install python-pywlroots
+        run: |
+           pacman --noconfirm -U /tmp/python-pywlroots*.pkg.tar.zst
       - name: Build Qtile
         run: |
           cd qtile
