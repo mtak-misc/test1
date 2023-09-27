@@ -39,7 +39,6 @@ jobs:
       - name: Install packages
         run: |
            cd /home/builder/qtile
-           apk add py3-gpep517 py3-gpep517-pyc
            su builder -c "abuild checksum"
            su builder -c "abuild deps"
       - name: Build apk
