@@ -44,6 +44,7 @@ jobs:
            sed -i 's/edge/v3.18/g' /etc/apk/repositories
            apk update
            apk add py3-cairocffi*.apk py3-xcffib*.apk
+           cp py3-cairocffi*.apk py3-xcffib*.apk /tmp
            cd /home/builder/qtile
            su builder -c "abuild checksum"
            su builder -c "abuild deps"
@@ -55,4 +56,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: qtile
-          path: /tmp/qtile*.apk
+          path: /tmp/*.apk
