@@ -17,19 +17,6 @@ jobs:
         run: |
           pacman -Syu --noconfirm base-devel sudo git python-flit-core 
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-          git clone https://gitlab.archlinux.org/archlinux/packaging/packages/qtile.git
-          chown builder -R ..
-          chown builder -R /tmp
-          cd qtile
-          sed -i 's/0.22.1/0.23.0/g' PKGBUILD
-          sed -i 's/pkgrel=4/pkgrel=1/g' PKGBUILD
-          sed -i 's/wlroots0.15/wlroots/g' PKGBUILD
-          sed -i 's/libwlroots.so=10/libwlroots.so=11/g' PKGBUILD
-          sed -i 's/export CFLAGS/#export CFLAGS/g' PKGBUILD
-          sed -i 's/export LDFLAGS/#export LDFLAGS/g' PKGBUILD
-          su builder -c "gpg --recv-keys 18D18F1BC464DCA3"
-          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../libinput.patch' PKGBUILD
-          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../inputs.patch' PKGBUILD
       - name: Build python-xcffib
         run: |
           curl -LO https://gitlab.archlinux.org/archlinux/packaging/packages/python-xcffib/-/raw/main/PKGBUILD
@@ -68,7 +55,19 @@ jobs:
            pacman --noconfirm -U /tmp/python-pywlroots*.pkg.tar.zst
       - name: Build Qtile
         run: |
+          git clone https://gitlab.archlinux.org/archlinux/packaging/packages/qtile.git
+          chown builder -R ..
+          chown builder -R /tmp
           cd qtile
+          sed -i 's/0.22.1/0.23.0/g' PKGBUILD
+          sed -i 's/pkgrel=4/pkgrel=1/g' PKGBUILD
+          sed -i 's/wlroots0.15/wlroots/g' PKGBUILD
+          sed -i 's/libwlroots.so=10/libwlroots.so=11/g' PKGBUILD
+          sed -i 's/export CFLAGS/#export CFLAGS/g' PKGBUILD
+          sed -i 's/export LDFLAGS/#export LDFLAGS/g' PKGBUILD
+          su builder -c "gpg --recv-keys 18D18F1BC464DCA3"
+          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../libinput.patch' PKGBUILD
+          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../inputs.patch' PKGBUILD        
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm --nocheck -sc"
       - name : Install Qtile
         run: |
