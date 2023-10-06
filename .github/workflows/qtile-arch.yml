@@ -23,7 +23,7 @@ jobs:
         run: |
           curl -LO https://gitlab.archlinux.org/archlinux/packaging/packages/python-xcffib/-/raw/main/PKGBUILD
           chown builder PKGBUILD
-          sed -i 's/pkgver=1.2.0/pkgver=1.5.0/g' PKGBUILD
+          sed -i 's/pkgver=1.4.0/pkgver=1.5.0/g' PKGBUILD
           sed -i 's/pkgrel=2/pkgrel=1/g' PKGBUILD
           sed -i 's/#commit=$_commit/#tag=v$pkgver/g' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
@@ -35,7 +35,7 @@ jobs:
           curl -LO https://gitlab.archlinux.org/archlinux/packaging/packages/python-cairocffi/-/raw/main/PKGBUILD
           chown builder PKGBUILD
           sed -i 's/ab3e552bbf0f7452a722a4739972f52de5c4bc83fbd0d1c53ce330cb3a42ce173be748cf8febb43fd7bd040f8d52afd7093efba60a42aa75c3945730693c25e7/SKIP/g' PKGBUILD
-          sed -i 's/pkgver=1.5.0/pkgver=1.6.1/g' PKGBUILD
+          sed -i 's/pkgver=1.6.0/pkgver=1.6.1/g' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
       - name : Install python-cairocffi
         run: |
