@@ -48,7 +48,7 @@ jobs:
           su builder -c "gpg --recv-keys 18D18F1BC464DCA3"
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../libinput.patch' PKGBUILD
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../inputs.patch' PKGBUILD        
-          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm --nocheck -sc"
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
       - name : Install Qtile
         run: |
            pacman --noconfirm -U /tmp/qtile*.pkg.tar.zst
