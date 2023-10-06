@@ -56,8 +56,6 @@ jobs:
         run: |
           curl -L https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=qtile-extras -o PKGBUILD
           chown builder PKGBUILD
-          sed -i 's/0.22.1/0.23.0/g' PKGBUILD
-          sed -i 's/pkgrel=5/pkgrel=1/g' PKGBUILD
           su builder -c "gpg --recv-keys 58A9AA7C86727DF7"
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
       - uses: actions/upload-artifact@v3
