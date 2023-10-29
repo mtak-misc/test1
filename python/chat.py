@@ -1,4 +1,5 @@
 import os
+import sys
 import gradio as gr
 import copy
 import time
@@ -6,6 +7,10 @@ from llama_cpp import Llama
 
 model_name_or_path = "mmnga/japanese-stablelm-instruct-gamma-7b-gguf"
 model_basename = "japanese-stablelm-instruct-gamma-7b-q8_0.gguf" 
+
+if len(sys.argv) > 2:
+    model_name_or_path = sys.argv[1]
+    model_basename = sys.argv[2]
 
 from huggingface_hub import hf_hub_download
 
