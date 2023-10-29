@@ -5,8 +5,8 @@ import copy
 import time
 from llama_cpp import Llama
 
-model_name_or_path = "mmnga/japanese-stablelm-instruct-gamma-7b-gguf"
-model_basename = "japanese-stablelm-instruct-gamma-7b-q8_0.gguf" 
+model_name_or_path = "TheBloke/Mistral-7B-Instruct-v0.1-GGUF"
+model_basename = "mistral-7b-instruct-v0.1.Q8_0.gguf" 
 
 if len(sys.argv) > 2:
     model_name_or_path = sys.argv[1]
