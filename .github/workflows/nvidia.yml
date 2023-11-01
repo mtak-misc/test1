@@ -16,7 +16,7 @@ jobs:
           pacman -Syu --noconfirm base-devel sudo git
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           git clone --depth 1 https://aur.archlinux.org/nvidia-390xx-utils.git
-          curl -LO https://github.com/mtak-misc/test1/raw/main/kernel-6.6.patch
+          curl -L 'https://s3.opensuse-project.net/paste-o-o/ckle7yoyyqq6fvjfjxmrzhrdvrne?response-content-disposition=attachment%3B%20filename%3D%22a15c37f8237a9cddae2f4268ee781773.diff%22%3B%20filename%2A%3DUTF-8%27%27a15c37f8237a9cddae2f4268ee781773.diff&response-content-type=text%2Fx-diff&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=YI5KOnADj6WdQSae%2F20231101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231101T082419Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=f813cdd394c42fbfbde925ce531da843eb8eb39cd7d26c42428d8759909138cc' -o kernel-6.6.patch
           mv ./kernel-6.6.patch ./nvidia-390xx-utils/
           sed -i -e '/patch -Np1 -i ..\/kernel-6.5.patch/a \ \ \ \ patch -Np1 -i ..\/..\/kernel-6.6.patch' ./nvidia-390xx-utils/PKGBUILD
           chown builder -R ..
