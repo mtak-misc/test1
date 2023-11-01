@@ -30,6 +30,10 @@ system_message = """
 SYSTEM: You are an Assistant, a helpful, respectful, honest and highly intelligent assistant.
 """
 
+system_message = """
+あなたはAIアシスタントです。
+"""
+
 def generate_text(message, history):
     temp = ""
     input_prompt = f"{system_message}"
