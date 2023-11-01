@@ -1,6 +1,6 @@
 diff --ignore-space-change --unified --recursive --no-dereference a/nvidia-drm/nvidia-drm-drv.c b/nvidia-drm/nvidia-drm-drv.c
---- a/nvidia-drm/nvidia-drm-drv.c  
-+++ b/nvidia-drm/nvidia-drm-drv.c  
+--- a/kernel/nvidia-drm/nvidia-drm-drv.c  
++++ b/kernel/nvidia-drm/nvidia-drm-drv.c  
 @@ -700,8 +700,11 @@
  
      .ioctls                 = nv_drm_ioctls,
