@@ -74,5 +74,5 @@ demo = gr.ChatInterface(
     undo_btn="Remove last",
     clear_btn="Clear all",
 )
-demo.queue(max_size=5)
+demo.queue(concurrency_count=1, max_size=5)
 demo.launch(debug=True, share=True)
