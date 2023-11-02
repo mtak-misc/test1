@@ -30,7 +30,7 @@ system_message = """
 SYSTEM: You are an Assistant, a helpful, respectful, honest and highly intelligent assistant.
 """
 
-system_message_tmp = """
+system_message = """
 あなたはAIアシスタントです。
 """
 
