@@ -46,8 +46,8 @@ def generate_text(message, history):
         temperature=0.7,
         top_p=0.3,
         top_k=40,
-#        repeat_penalty=1.1,
-        repeat_penalty=1.8,
+        repeat_penalty=1.1,
+#        repeat_penalty=1.8,
         max_tokens=1024,
         stop=[
             "ASSISTANT:",
