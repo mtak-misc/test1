@@ -50,7 +50,7 @@ jobs:
            sed -i -e 's/linux-edge/linux-clear/g' APKBUILD
            git clone -b ${CLEAR_BRANCH} https://github.com/clearlinux-pkgs/linux.git linux-clear
            sed -i -e '/# first apply patches in specified order/i \ \tfor i in $(grep '^Patch' ../../linux-clear/linux.spec |\\' APKBUILD
-           sed -i -e "/# first apply patches in specified order/i \ \t\ grep -Ev '^Patch0132|^Patch0118|^Patch0113|^Patch0138' | sed -n 's/.*: //p'); do" APKBUILD
+           sed -i -e "/# first apply patches in specified order/i \ \t\ grep -Ev '^Patch0132|^Patch0118|^Patch0113|^Patch0138|^Patch0139'' | sed -n 's/.*: //p'); do" APKBUILD
            sed -i -e '/# first apply patches in specified order/i \ \t\techo "Applying patch ${i}..."' APKBUILD
            sed -i -e '/# first apply patches in specified order/i \ \t\tpatch -Np1 -i "../../linux-clear/${i}"' APKBUILD
            sed -i -e '/# first apply patches in specified order/i \ \tdone' APKBUILD
@@ -67,7 +67,7 @@ jobs:
 #           curl -LO https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-tkg-patches/6.5/0002-clear-patches.patch
 #           sed -i -e '/# first apply patches in specified order/i \ \tpatch -Np1 -i ../../0002-clear-patches.patch' APKBUILD
         env:
-          CLEAR_BRANCH: "6.5.7-1371"
+          CLEAR_BRANCH: "6.6.1-1384"
       - name: Install packages
         run: |
            cd /home/builder/linux-edge
