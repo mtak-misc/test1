@@ -19,17 +19,66 @@ jobs:
           mkdir ${BUILDPKGS}
           chown builder -R ..
           chown builder -R /tmp
-      - name: Build python-proton-client
+      - name: Build python-proton-vpn-session
         run: |
-          su builder -c "git clone https://aur.archlinux.org/python-proton-client.git"  
-          cd python-proton-client
+          su builder -c "git clone https://aur.archlinux.org/python-proton-vpn-session.git"  
+          cd python-proton-vpn-session
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
-      - name: Build python-protonvpn-nm-lib
+      - name: Build python-proton-vpn-network-manager 
         run: |
-          su builder -c "git clone https://aur.archlinux.org/python-protonvpn-nm-lib.git"  
-          cd python-protonvpn-nm-lib
+          su builder -c "git clone https://aur.archlinux.org/python-proton-vpn-network-manager.git"  
+          cd python-proton-vpn-network-manager 
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+          mv ${PKGDEST}/*.zst ${BUILDPKGS}
+      - name: Build python-proton-vpn-network-manager-openvpn 
+        run: |
+          su builder -c "git clone https://aur.archlinux.org/python-proton-vpn-network-manager-openvpn.git"  
+          cd python-proton-vpn-network-manager-openvpn
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+          mv ${PKGDEST}/*.zst ${BUILDPKGS}
+      - name: Build python-proton-vpn-api-core
+        run: |
+          su builder -c "git clone https://aur.archlinux.org/python-proton-vpn-api-core.git"  
+          cd python-proton-vpn-api-core
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+          mv ${PKGDEST}/*.zst ${BUILDPKGS}
+      - name: Build python-proton-core
+        run: |
+          su builder -c "git clone https://aur.archlinux.org/python-proton-core.git"  
+          cd python-proton-core
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+          mv ${PKGDEST}/*.zst ${BUILDPKGS}
+      - name: Build python-proton-vpn-logger 
+        run: |
+          su builder -c "git clone https://aur.archlinux.org/python-proton-vpn-logger.git"  
+          cd python-proton-vpn-logger
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+          mv ${PKGDEST}/*.zst ${BUILDPKGS}
+      - name: Build python-proton-vpn-killswitch
+        run: |
+          su builder -c "git clone https://aur.archlinux.org/python-proton-vpn-killswitch.git"  
+          cd python-proton-vpn-killswitch
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+          mv ${PKGDEST}/*.zst ${BUILDPKGS}
+      - name: Build python-proton-vpn-killswitch-network-manager 
+        run: |
+          su builder -c "git clone https://aur.archlinux.org/python-proton-vpn-killswitch-network-manager.git"  
+          cd python-proton-vpn-killswitch-network-manager 
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+          mv ${PKGDEST}/*.zst ${BUILDPKGS}
+      - name: Build python-proton-keyring-linux
+        run: |
+          su builder -c "git clone https://aur.archlinux.org/python-proton-keyring-linux.git"  
+          cd python-proton-keyring-linux
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
@@ -40,17 +89,17 @@ jobs:
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
-      - name: Build protonvpn-gui
+      - name: Build python-proton-keyring-linux-secretservice
         run: |
-          su builder -c "git clone https://aur.archlinux.org/protonvpn-gui.git"  
-          cd protonvpn-gui
+          su builder -c "git clone https://aur.archlinux.org/python-proton-keyring-linux-secretservice.git"  
+          cd python-proton-keyring-linux-secretservice
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
-      - name: Build protonvpn
+      - name: Build proton-vpn-gtk-app
         run: |
-          su builder -c "git clone https://aur.archlinux.org/protonvpn.git"  
-          cd protonvpn
+          su builder -c "git clone https://aur.archlinux.org/proton-vpn-gtk-app.git"  
+          cd proton-vpn-gtk-app
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
