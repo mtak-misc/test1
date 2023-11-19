@@ -19,6 +19,13 @@ jobs:
           mkdir ${BUILDPKGS}
           chown builder -R ..
           chown builder -R /tmp
+      - name: Build python-proton-vpn-connection
+        run: |
+          su builder -c "git clone https://aur.archlinux.org/python-proton-vpn-connection.git"  
+          cd python-proton-vpn-connection
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+          mv ${PKGDEST}/*.zst ${BUILDPKGS}
       - name: Build python-proton-vpn-session
         run: |
           su builder -c "git clone https://aur.archlinux.org/python-proton-vpn-session.git"  
