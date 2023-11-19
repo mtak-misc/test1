@@ -82,13 +82,6 @@ jobs:
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
-      - name: Build protonvpn-cli
-        run: |
-          su builder -c "git clone https://aur.archlinux.org/protonvpn-cli.git"  
-          cd protonvpn-cli
-          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
-          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
-          mv ${PKGDEST}/*.zst ${BUILDPKGS}
       - name: Build python-proton-keyring-linux-secretservice
         run: |
           su builder -c "git clone https://aur.archlinux.org/python-proton-keyring-linux-secretservice.git"  
