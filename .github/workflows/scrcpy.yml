@@ -20,9 +20,9 @@ jobs:
           curl -LO https://gitlab.archlinux.org/archlinux/packaging/packages/scrcpy/-/raw/main/PKGBUILD
           chown builder -R ..
           chown builder -R /tmp
-          sed -i -e 's/pkgver=2.1.1/pkgver=2.2/g' PKGBUILD
-          sed -i -e 's/3d1ec3829cc08d36a6b42f7429749000ea5a4aaf2b8501167fe03b68fb722ec9351da9f287aef752fbceebf04db1484071c4fdf3b84bc5d9eb3805f635502951/SKIP/g' PKGBUILD
-          sed -i -e 's/6a089ca33025873f48d62389b17ba6fb6249c007ef7d7fd21883351e7724c3207dce1cea8b655cb949361d26210f5bb6115a2f5f9895c8a3b129652a77848c3d/SKIP/g' PKGBUILD
+          sed -i -e 's/pkgver=2.2/pkgver=2.3/g' PKGBUILD
+          sed -i -e 's/6f11dbde6900ef818dbd3e5f1edb169d8acc2a4940675a2cadaec362c1a56c409fe8bcdeab7fcd208c5b4c038d2ddb5da5b0092d5743b27f3719d0970d5553e5/SKIP/g' PKGBUILD
+          sed -i -e 's/65f53a9b931ab076f06de174c1212077d5961a28881237967894ca5f9f59006b4974c4fd6c1e878df9fa7804b848a92b03689f07e27fa32489e66dede5220363/SKIP/g' PKGBUILD
 #          curl -LO https://raw.githubusercontent.com/archlinux/svntogit-community/packages/scrcpy/trunk/PKGBUILD
 #          curl -LO https://raw.githubusercontent.com/Genymobile/scrcpy/cbca79b95baa2b2cf39b72d0a0b2b3de0725959a/app/src/v4l2_sink.c
 #          sed -i -e '/mkdir -p build/i \ \ cp ../v4l2_sink.c ./scrcpy-2.0/app/src/' PKGBUILD
