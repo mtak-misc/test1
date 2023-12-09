@@ -30,9 +30,6 @@ jobs:
         run: |
           su builder -c "git clone https://aur.archlinux.org/python-proton-vpn-session.git"  
           cd python-proton-vpn-session
-          sed -i 's/419b25bd1823f78d1219dc4cc441eeaf37646068/c7205f9a802280d57112b2658ae8dac3336cc3d8/g' PKGBUILD
-          sed -i 's/pkgver=0.6.2/pkgver=0.6.4/' PKGBUILD
-          sed -i 's/pkgrel=3/pkgrel=1/g' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
@@ -54,9 +51,6 @@ jobs:
         run: |
           su builder -c "git clone https://aur.archlinux.org/python-proton-vpn-api-core.git"  
           cd python-proton-vpn-api-core
-          sed -i 's/9c03fc30d3ff08559cab3644eadde027b029375d/59a1cf008333ae357ada2fc7128694c2288b88da/g' PKGBUILD
-          sed -i 's/pkgver=0.20.1/pkgver=0.20.2/g' PKGBUILD
-          sed -i 's/pkgrel=5/pkgrel=1/g' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
@@ -64,9 +58,6 @@ jobs:
         run: |
           su builder -c "git clone https://aur.archlinux.org/python-proton-core.git"  
           cd python-proton-core
-          sed -i 's/5e795e04094dff67c03c56f2f3de03ff43514cc4/f5038d94dc0d8f8ea7a8075bcdc092e27862624b/g' PKGBUILD
-          sed -i 's/pkgrel=3/pkgrel=4/g' PKGBUILD
-          sed -i 's/pkgver=0.1.15/pkgver=0.1.16/g' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
@@ -109,9 +100,6 @@ jobs:
         run: |
           su builder -c "git clone https://aur.archlinux.org/proton-vpn-gtk-app.git"  
           cd proton-vpn-gtk-app
-          sed -i 's/713324e9e4ee9f030c8115072cae379eb3340c42/1177067f7162e8e529942489fe7714d7b28ce295/g' PKGBUILD
-          sed -i 's/pkgver=4.1.0/pkgver=4.1.3/g' PKGBUILD
-          sed -i 's/pkgrel=10/pkgrel=1/g' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
