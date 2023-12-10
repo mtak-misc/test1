@@ -2,6 +2,11 @@ name: build-linux-clear
 
 on:
   workflow_dispatch:
+    inputs:
+      clear_branch:
+        type: string
+        required: true
+        description: "Clear patch branch"
   
 jobs:
   build:
@@ -48,7 +53,7 @@ jobs:
            sed -i -e 's/config-edge.x86_64/config-clear.x86_64/g' APKBUILD
            sed -i -e 's/_package edge/_package clear/g' APKBUILD
            sed -i -e 's/linux-edge/linux-clear/g' APKBUILD
-           git clone -b ${CLEAR_BRANCH} https://github.com/clearlinux-pkgs/linux.git linux-clear
+           git clone -b ${{ clear_branch }} https://github.com/clearlinux-pkgs/linux.git linux-clear
            sed -i -e '/# first apply patches in specified order/i \ \tfor i in $(grep '^Patch' ../../linux-clear/linux.spec |\\' APKBUILD
            sed -i -e "/# first apply patches in specified order/i \ \t\ grep -Ev '^Patch0132|^Patch0118|^Patch0113|^Patch0138|^Patch0139' | sed -n 's/.*: //p'); do" APKBUILD
            sed -i -e '/# first apply patches in specified order/i \ \t\techo "Applying patch ${i}..."' APKBUILD
@@ -66,8 +71,8 @@ jobs:
 #           sed -i 's/${OLD}/${NEW}/g' APKBUILD
 #           curl -LO https://raw.githubusercontent.com/Frogging-Family/linux-tkg/master/linux-tkg-patches/6.5/0002-clear-patches.patch
 #           sed -i -e '/# first apply patches in specified order/i \ \tpatch -Np1 -i ../../0002-clear-patches.patch' APKBUILD
-        env:
-          CLEAR_BRANCH: "6.6.4-1389"
+#        env:
+#          CLEAR_BRANCH: ${{ clear_branch }}
       - name: Install packages
         run: |
            cd /home/builder/linux-edge
