@@ -37,8 +37,11 @@ jobs:
            sed -i 's/pkgrel=2/pkgrel=1/g' /home/builder/qtile/APKBUILD
            sed -i '/0001-use-xcffib-1.4.0-s-new-in-line-APIs.patch/d' /home/builder/qtile/APKBUILD
            chown builder -R /home/builder
-#      - name: Install packages
-#        run: |
+      - name: Install packages
+        run: |
+           cd /home/builder/qtile
+           su builder -c "abuild checksum"
+           su builder -c "abuild deps"
 #           sed -i 's/v3.18/edge/g' /etc/apk/repositories
 #           apk update
 #           apk fetch py3-cairocffi py3-cairocffi-pyc py3-xcffib py3-xcffib-pyc
@@ -46,9 +49,6 @@ jobs:
 #           apk update
 #           apk add py3-cairocffi*.apk py3-xcffib*.apk
 #           cp py3-cairocffi*.apk py3-xcffib*.apk /tmp
-#           cd /home/builder/qtile
-#           su builder -c "abuild checksum"
-#           su builder -c "abuild deps"
       - name: Build apk
         run: |
            cd /home/builder/qtile
