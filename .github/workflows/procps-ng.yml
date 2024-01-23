@@ -18,6 +18,7 @@ jobs:
           git clone --depth 1 https://gitlab.archlinux.org/archlinux/packaging/packages/procps-ng.git
           chown builder -R ..
           chown builder -R /tmp
+          su builder -c "gpg --recv 022166C0FF3C84E3"
       - name: Apply patches
         run: |
           sed -i -e '/--disable-kill/i \ \ \ \ --disable-numa\\' procps-ng/PKGBUILD          
