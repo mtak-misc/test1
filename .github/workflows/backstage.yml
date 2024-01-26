@@ -1,0 +1,31 @@
+name: llvm-build
+
+on:
+  workflow_dispatch:
+#  schedule:
+#    - cron: '0 18 24 1 *'
+env:
+  PKGDEST: "/tmp/linux-lqx"
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+#    container: archlinux:latest
+    steps:
+#      - name: Check out repository
+#        uses: actions/checkout@v4
+      - name: Check out backstage repository
+        uses: actions/checkout@v4
+        with:
+          repository: backstage/backstage
+          path: backstage
+      - name: Prepare for build
+        run: |
+          sudo apt update
+          sudo apt install yarn
+      - name: Build app
+        run: |
+#      - uses: actions/upload-artifact@v4
+#        with:
+#          name: linux-lqx
+#          path: ${{ env.PKGDEST }}/*.pkg.tar.zst
