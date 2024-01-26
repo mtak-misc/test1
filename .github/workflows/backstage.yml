@@ -2,8 +2,6 @@ name: build-backstage
 
 on:
   workflow_dispatch:
-env:
-  PKGDEST: "/tmp/backstage"
   
 jobs:
   build:
@@ -31,7 +29,9 @@ jobs:
         run: |
           cd backstage
           docker image build . -f packages/backend/Dockerfile --tag backstage
-#      - uses: actions/upload-artifact@v4
-#        with:
-#          name: linux-lqx
-#          path: ${{ env.PKGDEST }}/*.pkg.tar.zst
+          docker images
+          docker save backstage > /tmp/backstage.tar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: backstage
+          path: /tmp/backstage.tar
