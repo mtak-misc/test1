@@ -29,12 +29,13 @@ jobs:
 #          cd app
       - name: Build container image
         run: |
-          cd app
+          cd backstage
           sed -i 's/, "--config", "app-config.production.yaml"/ /g' packages/backend/Dockerfile
           cat packages/backend/Dockerfile
           docker image build . -f packages/backend/Dockerfile --tag backstage
           docker images
           docker save backstage > /tmp/backstage.tar
+#          cd app
       - uses: actions/upload-artifact@v4
         with:
           name: backstage
