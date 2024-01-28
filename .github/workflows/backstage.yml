@@ -6,32 +6,33 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-#    container: archlinux:latest
     steps:
-#      - name: Check out repository
+#      - name: Check out backstage repository
 #        uses: actions/checkout@v4
-      - name: Check out backstage repository
-        uses: actions/checkout@v4
-        with:
-          repository: backstage/backstage
-          path: backstage
+#        with:
+#          repository: backstage/backstage
+#          ref: v1.22.2
+#          path: backstage
       - name: Prepare for build
         run: |
           sudo apt update
           sudo apt install yarn
+          sudo apt install nodejs
+          sudo apt install npm
       - name: Build app
         run: |
-          cd backstage
-          yarn install
-          yarn tsc
-          yarn build:backend
-      - name: Build Container Image
-        run: |
-          cd backstage
-          docker image build . -f packages/backend/Dockerfile --tag backstage
-          docker images
-          docker save backstage > /tmp/backstage.tar
-      - uses: actions/upload-artifact@v4
-        with:
-          name: backstage
-          path: /tmp/backstage.tar
+          npx @backstage/create-app@latest
+#          cd backstage
+#          yarn install
+#          yarn tsc
+#          yarn build:backend
+#      - name: Build Container Image
+#        run: |
+#          cd backstage
+#          docker image build . -f packages/backend/Dockerfile --tag backstage
+#          docker images
+#          docker save backstage > /tmp/backstage.tar
+#      - uses: actions/upload-artifact@v4
+#        with:
+#          name: backstage
+#          path: /tmp/backstage.tar
