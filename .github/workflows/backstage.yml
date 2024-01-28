@@ -17,17 +17,16 @@ jobs:
         run: |
           echo "app" | npx @backstage/create-app@latest
           cd app
-          cat app-config.yaml
-#          yarn install --frozen-lockfile
-#          yarn tsc
-#          yarn build:backend --config ../../app-config.yaml
-#      - name: Build container image
-#        run: |
-#          cd app
-#          docker image build . -f packages/backend/Dockerfile --tag backstage
-#          docker images
-#          docker save backstage > /tmp/backstage.tar
-#      - uses: actions/upload-artifact@v4
-#        with:
-#          name: backstage
-#          path: /tmp/backstage.tar
+          yarn install --frozen-lockfile
+          yarn tsc
+          yarn build:backend --config ../../app-config.yaml
+      - name: Build container image
+        run: |
+          cd app
+          docker image build . -f packages/backend/Dockerfile --tag backstage
+          docker images
+          docker save backstage > /tmp/backstage.tar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: backstage
+          path: /tmp/backstage.tar
