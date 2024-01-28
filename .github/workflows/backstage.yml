@@ -21,8 +21,11 @@ jobs:
           sudo apt install npm
       - name: Build app
         run: |
-          echo "my-backstage-app" | npx @backstage/create-app@latest
-          find .
+          echo "app" | npx @backstage/create-app@latest
+          cd app
+          yarn install --frozen-lockfile
+          yarn tsc
+          yarn build:backend --config ../../app-config.yaml
 #          yarn install
 #          yarn tsc
 #          yarn build:backend
