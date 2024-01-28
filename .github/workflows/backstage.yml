@@ -20,7 +20,7 @@ jobs:
           yarn install --frozen-lockfile
           yarn tsc
           yarn build:backend --config ../../app-config.yaml
-      - name: Build Container Image
+      - name: Build container image
         run: |
           cd app
           docker image build . -f packages/backend/Dockerfile --tag backstage
