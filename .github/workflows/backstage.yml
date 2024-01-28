@@ -22,7 +22,7 @@ jobs:
       - name: Build app
         run: |
           echo "my-backstage-app" | npx @backstage/create-app@latest
-#          cd backstage
+          ls -l
 #          yarn install
 #          yarn tsc
 #          yarn build:backend
