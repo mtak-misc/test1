@@ -11,7 +11,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: backstage/backstage
-          ref: v1.22.2
+#          ref: v1.22.2
+          ref: v1.21.1
           path: backstage
       - name: Prepare for build
         run: |
@@ -22,15 +23,16 @@ jobs:
       - name: Build app
         run: |
           cd backstage
+          yarn set version 1.22.19
+          echo "app" | npx @backstage/create-app@latest
+          cd app
           yarn install --frozen-lockfile
           yarn tsc
           yarn build:backend --config ../../app-config.yaml
-#          yarn set version 1.22.19
-#          echo "app" | npx @backstage/create-app@latest
-#          cd app
       - name: Build container image
         run: |
-          cd backstage
+          cd backstage/app
+          yarn set version 1.22.19
           docker image build . -f packages/backend/Dockerfile --tag backstage
           docker images
           docker save backstage > /tmp/backstage.tar
