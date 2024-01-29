@@ -16,13 +16,13 @@ jobs:
       - name: Prepare for build
         run: |
           sudo apt update
-          sudo apt install yarn
-          yarn set version 1.22.19
           sudo apt install nodejs
           sudo apt install npm
+          sudo apt install yarn
       - name: Build app
         run: |
           cd backstage
+          yarn set version 1.22.19
           echo "app" | npx @backstage/create-app@latest
           cd app
           yarn install --frozen-lockfile
