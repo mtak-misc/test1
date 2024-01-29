@@ -31,7 +31,7 @@ jobs:
           yarn build:backend --config ../../app-config.yaml
       - name: Build container image
         run: |
-          cd backstage
+          cd backstage/app
           docker image build . -f packages/backend/Dockerfile --tag backstage
           docker images
           docker save backstage > /tmp/backstage.tar
