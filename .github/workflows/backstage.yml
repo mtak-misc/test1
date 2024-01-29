@@ -16,6 +16,7 @@ jobs:
           path: backstage
       - name: Prepare for build
         run: |
+          sudo apt remove nodejs
           sudo apt update
           curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - 
           sudo apt install nodejs
