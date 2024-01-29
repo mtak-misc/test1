@@ -30,11 +30,9 @@ jobs:
       - name: Build container image
         run: |
           cd backstage
-          yarn build-image
+          docker image build . -f packages/backend/Dockerfile --tag backstage
           docker images
-#          docker image build . -f packages/backend/Dockerfile --tag backstage
-#          docker images
-#          docker save backstage > /tmp/backstage.tar
+          docker save backstage > /tmp/backstage.tar
 #          cd app
 #          sed -i 's/, "--config", "app-config.production.yaml"/ /g' packages/backend/Dockerfile
 #      - uses: actions/upload-artifact@v4
