@@ -24,6 +24,7 @@ jobs:
           yarn set version 1.22.19
           echo "app" | npx @backstage/create-app@latest
           cd app
+          yarn set version 1.22.19
           yarn install --frozen-lockfile
           yarn tsc
           yarn build:backend --config ../../app-config.yaml
