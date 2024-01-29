@@ -17,6 +17,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install yarn
+          yarn set version 1.22.19
           sudo apt install nodejs
           sudo apt install npm
       - name: Build app
