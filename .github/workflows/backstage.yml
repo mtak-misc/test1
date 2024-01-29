@@ -16,9 +16,7 @@ jobs:
           path: backstage
       - name: Prepare for build
         run: |
-          sudo apt remove nodejs -y
           sudo apt update
-          curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - 
           sudo apt install nodejs
           node -v
           sudo apt install npm
@@ -27,14 +25,14 @@ jobs:
         run: |
           cd backstage
           yarn set version 1.22.19
-          echo "app" | npx @backstage/create-app@latest
-          cd app
           yarn install --frozen-lockfile
           yarn tsc
           yarn build:backend --config ../../app-config.yaml
+#          echo "app" | npx @backstage/create-app@latest
+#          cd app
       - name: Build container image
         run: |
-          cd backstage/app
+          cd backstage
           yarn set version 1.22.19
           docker image build . -f packages/backend/Dockerfile --tag backstage
           docker images
