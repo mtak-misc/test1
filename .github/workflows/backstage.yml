@@ -7,12 +7,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-#      - name: Check out backstage repository
-#        uses: actions/checkout@v4
-#        with:
-#          repository: backstage/backstage
-#          ref: v1.22.2
-#          path: backstage
+      - name: Check out backstage repository
+        uses: actions/checkout@v4
+        with:
+          repository: backstage/backstage
+          ref: v1.22.2
+          path: backstage
       - name: Prepare for build
         run: |
           sudo apt update
@@ -21,6 +21,7 @@ jobs:
           sudo apt install yarn
       - name: Build app
         run: |
+          cd backstage
           yarn set version 1.22.19
           echo "app" | npx @backstage/create-app@latest
           cd app
@@ -32,7 +33,7 @@ jobs:
 #          cd app
       - name: Build container image
         run: |
-          cd app
+          cd backstage/app
           yarn set version 1.22.19
           docker image build . -f packages/backend/Dockerfile --tag backstage
           docker images
