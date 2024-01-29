@@ -16,7 +16,10 @@ jobs:
       - name: Prepare for build
         run: |
           sudo apt update
+          curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
+          sudo bash /tmp/nodesource_setup.sh
           sudo apt install nodejs
+          node -v
           sudo apt install npm
           sudo apt install yarn
       - name: Build app
@@ -32,6 +35,7 @@ jobs:
         run: |
           cd backstage/app
           yarn set version 1.22.19
+          sed -i 's/node:18/node:16/g' ./packages/backend/Dockerfile
           docker image build . -f packages/backend/Dockerfile --tag backstage
           docker images
           docker save backstage > /tmp/backstage.tar
