@@ -23,9 +23,6 @@ jobs:
         run: |
           cd backstage
           yarn set version 1.22.19
-          echo "app" | npx @backstage/create-app@latest
-          cd app
-          yarn set version 1.22.19
           yarn install --frozen-lockfile
           yarn tsc
           yarn build:backend --config ../../app-config.yaml
@@ -33,7 +30,7 @@ jobs:
 #          cd app
       - name: Build container image
         run: |
-          cd backstage/app
+          cd backstage
           yarn set version 1.22.19
           docker image build . -f packages/backend/Dockerfile --tag backstage
           docker images
