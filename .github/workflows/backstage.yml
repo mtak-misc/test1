@@ -11,12 +11,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: backstage/backstage
-#          ref: v1.22.2
-          ref: v1.13.2
+          ref: v1.22.2
+#          ref: v1.13.2
           path: backstage
       - name: Prepare for build
         run: |
           sudo apt update
+          curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - 
           sudo apt install nodejs
           node -v
           sudo apt install npm
