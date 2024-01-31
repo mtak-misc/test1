@@ -23,6 +23,7 @@ jobs:
       - name: Build app
         run: |
           cd backstage
+          sed -i 's/Backstage Example App/Backstage Example App2/g' app-conifg.yaml
           yarn install --immutable
           yarn tsc
           yarn build:backend --config ../../app-config.yaml
