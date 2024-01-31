@@ -23,10 +23,9 @@ jobs:
       - name: Build app
         run: |
           cd backstage
-          sed -i 's/Backstage Example App/Backstage Example App2/g' app-config.yaml
           yarn install --immutable
           yarn tsc
-          yarn build:backend --config ../../app-config.yaml
+          yarn build:backend
 #          yarn set version 1.22.19
 #          echo "app" | npx @backstage/create-app@latest
 #          cd app
