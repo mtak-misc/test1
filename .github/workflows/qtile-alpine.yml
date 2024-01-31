@@ -13,7 +13,7 @@ jobs:
           apk upgrade
           apk add alpine-sdk sudo  
       - name: Checkount aports repository
-        uses: actions/checkout@v3  
+        uses: actions/checkout@v4
         with:
           repository: alpinelinux/aports
           ref: 3.19-stable
@@ -54,7 +54,7 @@ jobs:
            cd /home/builder/qtile
            su builder -c "abuild"
            cp $(find /home/builder -name qtile*.apk) /tmp
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: qtile
           path: /tmp/*.apk
