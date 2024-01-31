@@ -23,6 +23,8 @@ jobs:
       - name: Build app
         run: |
           cd backstage
+          sed -i 's/http:\/\/localhost/http:\/\/192.168.122.172/g' app-config.yaml
+          cat app-config.yaml
           yarn install --immutable
           yarn tsc
           yarn build:backend
