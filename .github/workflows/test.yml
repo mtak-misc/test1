@@ -25,17 +25,6 @@ jobs:
           df -h
           pwd
           free -h
-          echo node
-          docker image ls -q --filter "reference=node*"
-          echo buildpack
-          docker image ls -q --filter "reference=buildpack*"
-          echo debian
-          docker image ls -q --filter "reference=debian*"
-          echo alpine
-          docker image ls -q --filter "reference=alpine*"
-          echo ubuntu
-          docker image ls -q --filter "reference=ubuntu:20.04"
-
       - name: Cleanup
         run: |
           docker images
