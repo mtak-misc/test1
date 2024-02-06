@@ -15,7 +15,7 @@ jobs:
         - /workspace:/workspace
     steps:
       - name: Checkount repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with: 
           repository: archlinux/svntogit-packages
           ref: packages/libva
