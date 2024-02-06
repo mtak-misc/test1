@@ -9,8 +9,17 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: archlinux:latest    
+    container: 
+      image: archlinux:latest
+      volumes:
+        - /workspace
     steps:
-      - name: Build
+      - name: Checkount repo
+        uses: actions/checkout@v3
+        with: 
+          repository: archlinux/svntogit-packages
+          ref: packages/libva
+          path: libva
+      - name: Test
         run: |
-          pwd        
+          df   
