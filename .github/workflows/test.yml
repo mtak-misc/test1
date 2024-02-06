@@ -1,0 +1,16 @@
+name: test
+
+on:
+  workflow_dispatch:
+
+env:
+  PKGDEST: "/tmp/libva"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest    
+    steps:
+      - name: Build
+        run: |
+          pwd        
