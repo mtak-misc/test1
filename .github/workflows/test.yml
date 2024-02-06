@@ -12,7 +12,7 @@ jobs:
     container: 
       image: archlinux:latest
       volumes:
-        - /workspace
+        - /workspace:/workspace
     steps:
       - name: Checkount repo
         uses: actions/checkout@v3
