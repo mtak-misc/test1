@@ -22,4 +22,5 @@ jobs:
           path: libva
       - name: Test
         run: |
-          df   
+          df -h
+          pwd
