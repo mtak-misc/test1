@@ -9,10 +9,10 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: 
-      image: archlinux:latest
-      volumes:
-        - /workspace:/workspace
+#    container: 
+#      image: archlinux:latest
+#      volumes:
+#        - /workspace:/workspace
     steps:
       - name: Checkount repo
         uses: actions/checkout@v4
@@ -24,3 +24,4 @@ jobs:
         run: |
           df -h
           pwd
+          free -h
