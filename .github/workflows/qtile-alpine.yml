@@ -54,7 +54,8 @@ jobs:
            cd /home/builder/qtile
            su builder -c "abuild"
            cp $(find /home/builder -name qtile*.apk) /tmp
-      - uses: actions/upload-artifact@v4
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
         with:
           name: qtile
           path: /tmp/*.apk
