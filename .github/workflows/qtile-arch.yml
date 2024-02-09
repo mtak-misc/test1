@@ -58,7 +58,8 @@ jobs:
           chown builder PKGBUILD
           su builder -c "gpg --recv-keys 58A9AA7C86727DF7"
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
-      - uses: actions/upload-artifact@v4
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
         with:
           name: qtile
           path: ${{ env.PKGDEST }}/*.pkg.tar.zst
