@@ -23,7 +23,8 @@ jobs:
         run: cd /home/builder ; su builder -c "git clone --depth 1 https://aur.archlinux.org/libcotp.git"
       - name: Build libcotp
         run: cd /home/builder/libcotp ; su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
-      - uses: actions/upload-artifact@v3
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
         with:
           name: libcotp
           path: ${{ env.PKGDEST }}/libcotp*.pkg.tar.zst
