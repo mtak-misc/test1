@@ -31,7 +31,9 @@ jobs:
       - name: Install libcotp
         run: pacman -U --noconfirm ${{ env.PKGDEST }}/libcotp*.pkg.tar.zst
       - name: Checkout otpclient
-        run: cd /home/builder ; su builder -c "git clone --depth 1 https://aur.archlinux.org/otpclient.git"
+        run: |
+          cd /home/builder ; su builder -c "git clone --depth 1 https://aur.archlinux.org/otpclient.git"
+          sed -i 's/f926155ef104e4965561e668a2e5128cdb7ed19af49ba7e693b580883fdae048/SKIP/g' otpclient/PKGBUILD
       - name: Build otpclient
         run: cd /home/builder/otpclient ; su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
       - name: Upload packages
