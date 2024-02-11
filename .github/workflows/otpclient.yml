@@ -20,7 +20,7 @@ jobs:
       - name: Import key
         run: su builder -c "gpg --recv 4EC1EA64"
       - name: Checkout libcottp
-        run: cd /home/builder ; su builder -c "git clone https://aur.archlinux.org/libcotp.git"
+        run: cd /home/builder ; su builder -c "git clone --depth 1 https://aur.archlinux.org/libcotp.git"
       - name: Build libcotp
         run: cd /home/builder/libcotp ; su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
       - uses: actions/upload-artifact@v3
@@ -30,10 +30,11 @@ jobs:
       - name: Install libcotp
         run: pacman -U --noconfirm ${{ env.PKGDEST }}/libcotp*.pkg.tar.zst
       - name: Checkout otpclient
-        run: cd /home/builder ; su builder -c "git clone https://aur.archlinux.org/otpclient.git"
+        run: cd /home/builder ; su builder -c "git clone --depth 1 https://aur.archlinux.org/otpclient.git"
       - name: Build otpclient
         run: cd /home/builder/otpclient ; su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
-      - uses: actions/upload-artifact@v3
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
         with:
           name: otpclient
           path: ${{ env.PKGDEST }}/otpclient*.pkg.tar.zst        
