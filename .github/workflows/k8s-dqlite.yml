@@ -22,9 +22,8 @@ jobs:
         run: |
           cd k8s-dqlite
           env CGO_LDFLAGS_ALLOW="-Wl,-z,now" go build -o k8s-dqlite -tags libsqlite3,dqlite k8s-dqlite.go
-          ls -lh
-#      - name: Upload binary
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: k8s-dqlite
-#          path: /tmp/k8s-dqlite
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: k8s-dqlite
+          path: ${{ github.workspace }}/k8s-dqlite/k8s-dqlite
