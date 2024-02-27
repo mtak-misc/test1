@@ -23,7 +23,7 @@ jobs:
         run: |
           go version
           cd k8s-dqlite
-          env CGO_LDFLAGS_ALLOW="-Wl,-z,now" CGO_ENABLED=0 go build -o k8s-dqlite -tags libsqlite3,dqlite -ldflags '-s -w -linkmode "external" -extldflags "-static"' k8s-dqlite.go
+          env CGO_LDFLAGS_ALLOW="-Wl,-z,now" CGO_ENABLED=0 go build -o k8s-dqlite -tags libsqlite3,dqlite -ldflags '-s -w -linkmode external -extldflags -static' k8s-dqlite.go
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
