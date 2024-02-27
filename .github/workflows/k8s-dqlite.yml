@@ -1,0 +1,30 @@
+name: build-k8s-dqlite
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out k8s-dqlite repository
+        uses: actions/checkout@v4
+        with:
+          repository: canonical/k8s-dqlite
+          ref: v1.1.2
+          path: k8s-dqlite
+      - name: Prepare for build
+        run: |
+          sudo add-apt-repository ppa:dqlite/dev
+          sudo apt-get update
+          sudo apt-get install -y golang-go libraft-dev libsqlite-dev libdqlite-dev
+      - name: Build
+        run: |
+          cd k8s-dqlite
+          env CGO_LDFLAGS_ALLOW="-Wl,-z,now" go build -o k8s-dqlite -tags libsqlite3,dqlite k8s-dqlite.go
+          ls -lh
+#      - name: Upload binary
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: k8s-dqlite
+#          path: /tmp/k8s-dqlite
