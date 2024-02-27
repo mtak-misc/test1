@@ -20,6 +20,7 @@ jobs:
           sudo apt-get install -y golang-go libraft-canonical-dev libsqlite-dev libdqlite-dev
       - name: Build
         run: |
+          go version
           cd k8s-dqlite
           env CGO_LDFLAGS_ALLOW="-Wl,-z,now" go build -o k8s-dqlite -tags libsqlite3,dqlite k8s-dqlite.go
       - name: Upload binary
