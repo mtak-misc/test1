@@ -21,7 +21,7 @@ jobs:
           chown builder -R /tmp
       - name: Build python-proton-vpn-connection
         run: |
-          su builder -c "git clone https://aur.archlinux.org/python-proton-vpn-connection.git"  
+          su builder -c "git clone --depth 1 https://aur.archlinux.org/python-proton-vpn-connection.git"  
           cd python-proton-vpn-connection
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
@@ -35,7 +35,7 @@ jobs:
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
       - name: Build python-proton-vpn-network-manager 
         run: |
-          su builder -c "git clone --depth 1 ttps://aur.archlinux.org/python-proton-vpn-network-manager.git"  
+          su builder -c "git clone --depth 1 https://aur.archlinux.org/python-proton-vpn-network-manager.git"  
           cd python-proton-vpn-network-manager 
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
