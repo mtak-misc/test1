@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4  
         with:
           repository: alpinelinux/aports
-#          ref: 3.19-stable
+          ref: 3.19-stable
           path: aports
       - name: Prepare abuild
 #          echo "permit nopass :wheel" >> /etc/doas.d/doas.conf      
