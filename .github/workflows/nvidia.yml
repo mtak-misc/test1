@@ -22,7 +22,7 @@ jobs:
 #          mv ./kernel-6.6.patch ./nvidia-390xx-utils/
 #          sed -i -e 's/pkgrel=6/pkgrel=6.3/g' ./nvidia-390xx-utils/PKGBUILD
 #          sed -i -e '/patch -Np1 -i ..\/kernel-6.5.patch/a \ \ \ \ patch -Np1 -i ..\/..\/kernel-6.6.patch' ./nvidia-390xx-utils/PKGBUILD
-      - name: Build dkms
+      - name: Build
         run: |
           cd nvidia-390xx-utils
           su builder -c "yes '' | makepkg --noconfirm -sc"
