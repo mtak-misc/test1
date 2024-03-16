@@ -54,7 +54,8 @@ jobs:
            sed -i -e 's/linux-edge/linux-pf/g' APKBUILD
            sed -i -e 's|https://cdn.kernel.org/pub/linux/kernel/v${pkgver%%.*}.x/linux-$_kernver.tar.xz|https://codeberg.org/pf-kernel/linux/archive/v6.8-pf1.tar.gz|g' APKBUILD
            sed -i -e '/*.*.*)  source="$source/d' APKBUILD
-           sed -i -e 's/https:\/\/cdn.kernel.org\/pub\/linux\/kernel\/v${pkgver%%.*}.x\/patch-$pkgver.xz" ;;/*.*.*)\tsource="$source";;/g' APKBUILD
+           sed -i -e '/https:\/\/cdn.kernel.org\/pub\/linux\/kernel\/v${pkgver%%.*}.x\/patch-$pkgver.xz"/d' APKBUILD
+           sed -i -e 's/*.*.0)	source="$source";;/*.*.*)	source="$source";;/g' APKBUILD
            sed -i -e '/patch-6.8.1.xz/d' APKBUILD
            curl -LO https://codeberg.org/pf-kernel/linux/archive/v6.8-pf1.tar.gz
            export NEW=$(sha512sum v6.8-pf1.tar.gz | awk '{ print $1}')
