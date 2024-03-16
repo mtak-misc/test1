@@ -1,0 +1,76 @@
+name: build-linux-pf
+on:
+  workflow_dispatch:
+#    inputs:
+#      pf_branch:
+#        type: string
+#        required: true
+#        description: "pf kernel branch"
+        
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: alpine:3.19
+    steps:
+      - name: Install sdk
+        run: |
+          apk upgrade
+          apk add alpine-sdk sudo
+      - name: Checkount aports repository
+        uses: actions/checkout@v4  
+        with:
+          repository: alpinelinux/aports
+          ref: 3.19-stable
+          path: aports
+      - name: Prepare abuild
+#          echo "permit nopass :wheel" >> /etc/doas.d/doas.conf      
+        run: |
+          adduser builder -D -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          addgroup builder abuild
+          chown builder -R ..
+          chown builder -R /tmp
+          mkdir -p /var/cache/distfiles
+          chmod a+w /var/cache/distfiles
+          chgrp abuild /var/cache/distfiles
+          chmod g+w /var/cache/distfiles
+          su builder -c "abuild-keygen -a -i -n"
+          apk add bash git
+      - name: Move repo directory
+        run: |
+           mv aports/community/linux-edge /home/builder
+           cd /home/builder
+           chown builder -R /home/builder
+           cd /home/builder/linux-edge
+           mv config-edge.x86_64 config-pf.x86_64
+           sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
+           sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL' APKBUILD
+           sed -i -e '/unset LDFLAGS/i \ \tscripts/config -d CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE' APKBUILD
+           sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_CPU_FREQ_GOV_CONSERVATIVE' APKBUILD
+           sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_CPU_FREQ_GOV_SCHEDUTIL' APKBUILD
+           sed -i -e 's/_flavor=edge/_flavor=pf/g' APKBUILD
+           sed -i -e 's/-config-edge/-config-pf/g' APKBUILD
+           sed -i -e 's/config-edge.x86_64/config-pf.x86_64/g' APKBUILD
+           sed -i -e 's/_package edge/_package pf/g' APKBUILD
+           sed -i -e 's/linux-edge/linux-pf/g' APKBUILD
+           sed -i -e 's|https://cdn.kernel.org/pub/linux/kernel/v${pkgver%%.*}.x/linux-$_kernver.tar.xz|https://codeberg.org/pf-kernel/linux/archive/v6.8-pf1.tar.gz|g' APKBUILD
+           sed -i -e '/*.*.*)  source="$source/d' APKBUILD
+           sed -i -e 's/https:\/\/cdn.kernel.org\/pub\/linux\/kernel\/v${pkgver%%.*}.x\/patch-$pkgver.xz" ;;/*.*.*)\tsource="$source";;/g' APKBUILD
+           sed -i -e '/patch-6.8.1.xz/d' APKBUILD
+           curl -LO https://codeberg.org/pf-kernel/linux/archive/v6.8-pf1.tar.gz
+           export NEW=$(sha512sum v6.8-pf1.tar.gz | awk '{ print $1}')
+           echo "sed -i -e 's/5c4eb4aa1d3f7d1ea01c0f7ddeadacdece6e144fd4bdfc16b2b925d3e10dc04de3a6db69320b79a96c3560052616f001d2c09e7a1bb4f7b731e2380a7ecce068  linux-6.8.tar.xz/${NEW}  v6.8-pf1.tar.gz/g' APKBUILD" | bash
+      - name: Install packages
+        run: |
+           cd /home/builder/linux-edge
+           su builder -c "abuild checksum"
+           su builder -c "abuild deps"                
+      - name: Build apk
+        run: |
+           cd /home/builder/linux-edge
+           su builder -c "abuild"        
+           cp $(find /home/builder -name linux-pf*.apk) /tmp
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-pf
+          path: /tmp/*.apk
