@@ -1,6 +1,8 @@
 #!/bin/sh
 
 USERID=$1
+apk upgrade
+apk add alpine-sdk sudo
 
 adduser -u ${USERID} builder -D -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 addgroup builder abuild
