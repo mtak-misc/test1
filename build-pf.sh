@@ -20,4 +20,4 @@ su builder -c "abuild checksum"
 su builder -c "abuild deps" 
 
 su builder -c "abuild"        
-cp $(find ./ -name linux-pf*.apk) ./
+cp $(find /home/builder -name linux-pf*.apk) ../
