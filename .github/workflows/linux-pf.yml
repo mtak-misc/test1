@@ -77,6 +77,8 @@ jobs:
           sudo apt-get autoremove -y >/dev/null 2>&1 || true
           sudo apt-get autoclean -y >/dev/null 2>&1 || true
           df -h
+      - name: Checkount repo
+        uses: actions/checkout@v4
       - name: Checkount aports repository
         uses: actions/checkout@v4  
         with:
