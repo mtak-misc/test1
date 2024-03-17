@@ -62,6 +62,8 @@ jobs:
            sed -i -e 's/linux-${_kernver}/linux/g' APKBUILD
            sed -i -e '/unxz/d' APKBUILD
            sed -i -e '/Applying patch/d' APKBUILD
+           sed -i -e '/cp "$srcdir"\/$_config/d' APKBUILD
+           cat APKBUILD
       - name: Install packages
         run: |
            cd /home/builder/linux-edge
