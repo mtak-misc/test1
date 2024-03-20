@@ -110,10 +110,10 @@ jobs:
            sed -i -e 's/linux-${_kernver}/linux/g' APKBUILD
            sed -i -e '/unxz/d' APKBUILD
            sed -i -e '/Applying patch/d' APKBUILD
-#           export OLD=$(sha512sum config-pf.x86_64 | awk '{ print $1}')
-#           curl -L https://aur.archlinux.org/cgit/aur.git/plain/config?h=linux-pf -o config-pf.x86_64
-#           export NEW=$(sha512sum config-pf.x86_64 | awk '{ print $1}')
-#           echo "sed -i -e 's/${OLD}/${NEW}/g' APKBUILD" | bash
+           export OLD=$(sha512sum config-pf.x86_64 | awk '{ print $1}')
+           curl -L https://aur.archlinux.org/cgit/aur.git/plain/config?h=linux-pf -o config-pf.x86_64
+           export NEW=$(sha512sum config-pf.x86_64 | awk '{ print $1}')
+           echo "sed -i -e 's/${OLD}/${NEW}/g' APKBUILD" | bash
       - name: Set UserID
         run: |
           echo "USERID=$(id -u $(whoami))" >> $GITHUB_ENV
