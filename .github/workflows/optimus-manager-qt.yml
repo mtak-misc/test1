@@ -1,0 +1,32 @@
+name: build-optimus-manager
+
+on:
+  workflow_dispatch:
+
+env:
+  PKGDEST: "/tmp/optimus-manager-qt"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest    
+    steps:
+      - name: Checkount repo
+        uses: actions/checkout@v4
+      - name: Prepare for makepkg
+        run: |
+          pacman -Syu --noconfirm base-devel sudo git
+          useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          git clone --depth 1 https://aur.archlinux.org/optimus-manager-qt.git
+          chown builder -R ..
+          chown builder -R /tmp
+      - name: Build
+        run: |
+          cd optimus-manager-qt
+          su builder -c "yes '' | makepkg --noconfirm -sc"
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: optimus-manager-qt
+          path: ${{ env.PKGDEST }}/*.pkg.tar.zst
+        
