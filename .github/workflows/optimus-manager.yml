@@ -12,7 +12,7 @@ jobs:
     container: archlinux:latest    
     steps:
       - name: Checkount repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Prepare for makepkg
         run: |
           pacman -Syu --noconfirm base-devel sudo git
@@ -24,7 +24,8 @@ jobs:
         run: |
           cd optimus-manager
           su builder -c "yes '' | makepkg --noconfirm -sc"
-      - uses: actions/upload-artifact@v3
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
         with:
           name: optimus-manager
           path: ${{ env.PKGDEST }}/*.pkg.tar.zst
