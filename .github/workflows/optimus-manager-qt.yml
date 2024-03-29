@@ -1,4 +1,4 @@
-name: build-optimus-manager
+name: build-optimus-manager-qt
 
 on:
   workflow_dispatch:
