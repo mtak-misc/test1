@@ -55,6 +55,7 @@ jobs:
       - name: Build Qtile-Extra
         run: |
           curl -L https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=qtile-extras -o PKGBUILD
+          sed -i 's/pkgver=0.24.0/pkgver=0.25.0g/' PKGBUILD
           chown builder PKGBUILD
           su builder -c "gpg --recv-keys 58A9AA7C86727DF7"
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
