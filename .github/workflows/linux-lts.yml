@@ -1,0 +1,55 @@
+name: build-linux-lts
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: alpine:3.19
+    steps:
+      - name: Install sdk
+        run: |
+          apk upgrade
+          apk add alpine-sdk sudo
+      - name: Checkount aports repository
+        uses: actions/checkout@v4  
+        with:
+          repository: alpinelinux/aports
+          ref: 3.19-stable
+          path: aports
+      - name: Prepare abuild
+#          echo "permit nopass :wheel" >> /etc/doas.d/doas.conf      
+        run: |
+          adduser builder -D -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          addgroup builder abuild
+          chown builder -R ..
+          chown builder -R /tmp
+          mkdir -p /var/cache/distfiles
+          chmod a+w /var/cache/distfiles
+          chgrp abuild /var/cache/distfiles
+          chmod g+w /var/cache/distfiles
+          su builder -c "abuild-keygen -a -i -n"
+          apk add bash git
+      - name: Move repo directory
+        run: |
+           mv aports/main/linux-lts /home/builder
+           cd /home/builder
+           chown builder -R /home/builder
+           cd /home/builder/linux-lts
+           sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
+      - name: Install packages
+        run: |
+           cd /home/builder/linux-lts
+           su builder -c "abuild checksum"
+           su builder -c "abuild deps"                
+      - name: Build apk
+        run: |
+           cd /home/builder/linux-lts
+           su builder -c "abuild"        
+           cp $(find /home/builder -name linux-lts*.apk) /tmp
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-lts
+          path: /tmp/*.apk
