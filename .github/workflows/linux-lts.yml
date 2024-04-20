@@ -24,9 +24,14 @@ jobs:
            mv aports/main/linux-lts .              
       - name: Build apk
         run: |
-           cd /home/builder/linux-lts
-           su builder -c "abuild"        
-           cp $(find /home/builder -name linux-lts*.apk) /tmp
+           echo "USERID=$(id -u $(whoami))" >> $GITHUB_ENV
+        env: 
+          USERID: ''          
+      - name: Build
+        uses: docker://archlinux:latest
+        with:
+          entrypoint: '/bin/sh'
+          args: ./build-linux-lts.sh ${{ env.USERID }} 
       - name: Upload packages
         uses: actions/upload-artifact@v4
         with:
