@@ -17,7 +17,7 @@ su builder -c "abuild-keygen -a -i -n"
 apk add bash git
 
 cd linux-lts
-sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
+sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_config -m CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
 
 su builder -c "abuild checksum"
 su builder -c "abuild deps"                
