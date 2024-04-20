@@ -17,9 +17,9 @@ su builder -c "abuild-keygen -a -i -n"
 apk add bash git
 
 cd linux-lts
-cp ../config.lts .
+cp ../config.lts /home/builder
 
-sed -i -e '/unset LDFLAGS/a \ \tcp ../config.lts "$srcdir"/$_flavor.$_arch.config' APKBUILD
+sed -i -e '/unset LDFLAGS/a \ \tcp /home/builder/config.lts "$srcdir"/$_flavor.$_arch.config' APKBUILD
 # sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_TRACKPOINT' APKBUILD
 # sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_TOUCHKIT' APKBUILD
 # sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_SYNAPTICS_SMBUS' APKBUILD
