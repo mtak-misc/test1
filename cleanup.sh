@@ -20,7 +20,6 @@ sudo rm -rf "/usr/local/sqlpackage" || true
 docker rmi $(docker image ls -q --filter "reference=node*")
 docker rmi $(docker image ls -q --filter "reference=debian*")
 docker rmi $(docker image ls -q --filter "reference=alpine*")
-docker pull alpine:3.19
 docker rmi $(docker image ls -q --filter "reference=ubuntu:20.04")
 sudo npm uninstall bazel
 rustup self uninstall -y
