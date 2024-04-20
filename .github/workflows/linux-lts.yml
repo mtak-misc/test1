@@ -28,7 +28,7 @@ jobs:
         env: 
           USERID: ''          
       - name: Build
-        uses: docker://archlinux:latest
+        uses: docker://alpine:3.19
         with:
           entrypoint: '/bin/sh'
           args: ./build-linux-lts.sh ${{ env.USERID }} 
