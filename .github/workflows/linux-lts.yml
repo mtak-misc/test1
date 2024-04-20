@@ -6,8 +6,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: alpine:3.19
+#    container: alpine:3.19
     steps:
+      - name: Checkount repo
+        uses: actions/checkout@v4
+      - name: Cleanup
+        run: |
+          sh ./cleanup.sh
       - name: Install sdk
         run: |
           apk upgrade
