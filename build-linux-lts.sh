@@ -17,18 +17,19 @@ su builder -c "abuild-keygen -a -i -n"
 apk add bash git
 
 cd linux-lts
-sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_TRACKPOINT' APKBUILD
-sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_TOUCHKIT' APKBUILD
-sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_SYNAPTICS_SMBUS' APKBUILD
-sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_SYNAPTICS' APKBUILD
-sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_SMBUS' APKBUILD
-sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
-sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_LOGIPS2PP' APKBUILD
-sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_LIFEBOOK' APKBUILD
-sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_FOCALTECH' APKBUILD
-sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_ELANTECH_SMBUS' APKBUILD
-sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_CYPRESS' APKBUILD
-sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_ALPS' APKBUILD
+sed -i -e '/unset LDFLAGS/a \ \tcp ../config.lts "$srcdir"/$_flavor.$_arch.config' APKBUILD
+# sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_TRACKPOINT' APKBUILD
+# sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_TOUCHKIT' APKBUILD
+# sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_SYNAPTICS_SMBUS' APKBUILD
+# sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_SYNAPTICS' APKBUILD
+# sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_SMBUS' APKBUILD
+# sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
+# sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_LOGIPS2PP' APKBUILD
+# sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_LIFEBOOK' APKBUILD
+# sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_FOCALTECH' APKBUILD
+# sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_ELANTECH_SMBUS' APKBUILD
+# sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_CYPRESS' APKBUILD
+# sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_ALPS' APKBUILD
 # sed -i -e '/CONFIG_MOUSE_PS2=m/a CONFIG_MOUSE_PS2_SENTELIC=y' lts.x86_64.config
 # sed -i -e '/d792b0b606374ff6a09302fdd0c8d8fda3944c278018cd1162510613d1f306714654890875a4eda3da2fc2afe180e7e20cf825bcb942157efeb40a0fe0cfd4c2/d' APKBUILD
 
