@@ -21,13 +21,11 @@ jobs:
           path: aports
       - name: Move repo directory
         run: |
-           mv aports/main/linux-lts .              
-      - name: Build apk
-        run: |
+           mv aports/main/linux-lts .
            echo "USERID=$(id -u $(whoami))" >> $GITHUB_ENV
         env: 
           USERID: ''          
-      - name: Build
+      - name: Build apk
         uses: docker://alpine:3.19
         with:
           entrypoint: '/bin/sh'
