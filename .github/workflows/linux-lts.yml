@@ -37,8 +37,8 @@ jobs:
            cd /home/builder
            chown builder -R /home/builder
            cd /home/builder/linux-lts
-           sed -i -e '/build-$i.$CARCH/a \ \t\t../scripts/config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
-#           sed -i -e '/unset LDFLAGS/i \ \tscripts/config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
+           sed -i -e '/CONFIG_MOUSE_PS2=m/a CONFIG_MOUSE_PS2_SENTELIC=m' lts.x86_64.config
+#           sed -i -e '/build-$i.$CARCH/a \ \t\t../scripts/config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
       - name: Install packages
         run: |
            cd /home/builder/linux-lts
