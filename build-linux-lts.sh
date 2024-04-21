@@ -19,13 +19,13 @@ apk add bash git
 cd linux-lts
 cp ../config.lts /home/builder
 
-sed -i -e '/unset LDFLAGS/a \ \tcp /home/builder/config.lts "$srcdir"/$_flavor.$_arch.config' APKBUILD
+# sed -i -e '/unset LDFLAGS/a \ \tcp /home/builder/config.lts "$srcdir"/$_flavor.$_arch.config' APKBUILD
 # sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_TRACKPOINT' APKBUILD
 # sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_TOUCHKIT' APKBUILD
 # sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_SYNAPTICS_SMBUS' APKBUILD
 # sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_SYNAPTICS' APKBUILD
 # sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_SMBUS' APKBUILD
-# sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
+sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/virt.x86_64.config -e CONFIG_MOUSE_PS2_SENTELIC' APKBUILD
 # sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_LOGIPS2PP' APKBUILD
 # sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_LIFEBOOK' APKBUILD
 # sed -i -e '/unset LDFLAGS/a \ \tscripts/config --file "$srcdir"/$_flavor.$_arch.config -e CONFIG_MOUSE_PS2_FOCALTECH' APKBUILD
