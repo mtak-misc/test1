@@ -25,7 +25,7 @@ jobs:
           cd optimus-manager
           su builder -c "yes '' | makepkg --noconfirm -sc"
           cd /tmp/optimus-manager-qt
-          pacman -U --nonconfirm optimus-manager-*.pkg.tar.zst
+          pacman -U --noconfirm optimus-manager-*.pkg.tar.zst
           rm optimus-manager-*.pkg.tar.zst
       - name: Prepare for makepkg
         run: |
