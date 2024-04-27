@@ -15,7 +15,6 @@ jobs:
       - name: Prepare for makepkg
         run: |
           pacman -Syu --noconfirm base-devel sudo git
-          pacman -U --noconfirm https://archive.archlinux.org/packages/p/python/python-3.11.8-1-x86_64.pkg.tar.zst
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           mkdir ${BUILDPKGS}
           chown builder -R ..
