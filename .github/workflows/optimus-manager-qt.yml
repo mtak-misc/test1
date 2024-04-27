@@ -15,15 +15,23 @@ jobs:
         uses: actions/checkout@v4
       - name: Prepare for makepkg
         run: |
-          pacman -Syu --noconfirm base-devel sudo git github-cli
-          gh run download -n optimus-manager
-          pacman -U --nonconfirm optimus-manager-*.pkg.tar.zst
+          pacman -Syu --noconfirm base-devel sudo git
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          git clone https://gitlab.manjaro.org/packages/community/optimus-manager.git
+          chown builder -R ..
+          chown builder -R /tmp
+      - name: Build
+        run: |
+          cd optimus-manager
+          su builder -c "yes '' | makepkg --noconfirm -sc"
+          cd /tmp/optimus-manager-qt
+          pacman -U --nonconfirm optimus-manager-*.pkg.tar.zst
+          rm optimus-manager-*.pkg.tar.zst
+      - name: Prepare for makepkg
+        run: |
           git clone --depth 1 https://aur.archlinux.org/optimus-manager-qt.git
           chown builder -R ..
           chown builder -R /tmp
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build
         run: |
           cd optimus-manager-qt
