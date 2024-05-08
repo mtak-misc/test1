@@ -14,6 +14,13 @@ jobs:
       - name: Prepare for makepkg
         run: |
           pacman -Syu --noconfirm base-devel sudo git
+          cp pacman.conf.patch /tmp
+          cd /etc
+          cp pacman.conf pacman.conf.orig
+          patch -Np1 -i pacman.conf.patch
+          pacman -Syu --noconfirm gcc
+          cp pacman.conf.orig pacman.conf
+          cd
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           git clone --depth 1 https://aur.archlinux.org/nvidia-390xx-utils.git
           chown builder -R ..
