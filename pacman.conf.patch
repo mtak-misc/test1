@@ -1,0 +1,21 @@
+--- aa/pacman.conf	2024-05-08 23:42:19.485720281 +0900
++++ bb/pacman.conf	2024-05-08 23:42:57.674865629 +0900
+@@ -72,14 +72,14 @@
+ # repo name header and Include lines. You can add preferred servers immediately
+ # after the header, and they will be used before the default mirrors.
+ 
+-#[core-testing]
+-#Include = /etc/pacman.d/mirrorlist
++[core-testing]
++Include = /etc/pacman.d/mirrorlist
+ 
+ [core]
+ Include = /etc/pacman.d/mirrorlist
+ 
+-#[extra-testing]
+-#Include = /etc/pacman.d/mirrorlist
++[extra-testing]
++Include = /etc/pacman.d/mirrorlist
+ 
+ [extra]
+ Include = /etc/pacman.d/mirrorlist
