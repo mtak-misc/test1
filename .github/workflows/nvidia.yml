@@ -17,7 +17,7 @@ jobs:
           cp pacman.conf.patch /tmp
           cd /etc
           cp pacman.conf pacman.conf.orig
-          patch -Np1 -i pacman.conf.patch
+          patch -Np1 -i /tmp/pacman.conf.patch
           pacman -Syu --noconfirm gcc
           cp pacman.conf.orig pacman.conf
           cd
