@@ -19,6 +19,7 @@ jobs:
           cd /tmp
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           git clone --depth 1 https://aur.archlinux.org/nvidia-390xx-utils.git
+          sed -i -e '/patch -Np1 -i ..\/kernel-6.8.patch/a \ \ \ \ patch -Np1 -i ..\/..\/gcc-14.patch' ./nvidia-390xx-utils/PKGBUILD
           chown builder -R /tmp
 #          chown builder -R ..
 #          curl -LO https://github.com/mtak-misc/test1/raw/main/kernel-6.6.patch
