@@ -51,7 +51,6 @@ jobs:
         run: |
           su builder -c "git clone --depth 1 https://aur.archlinux.org/python-proton-vpn-api-core.git"  
           cd python-proton-vpn-api-core
-          sed -i 's/pkgver=0.23.1/pkgver=0.24.4/g' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
@@ -79,9 +78,7 @@ jobs:
       - name: Build python-proton-vpn-killswitch-network-manager 
         run: |
           su builder -c "git clone --depth 1 https://aur.archlinux.org/python-proton-vpn-killswitch-network-manager.git"  
-          cd python-proton-vpn-killswitch-network-manager 
-          sed -i 's/pkgver=0.4.3/pkgver=0.4.4/g' PKGBUILD
-          sed -i 's/pkgrel=3/pkgrel=1/g' PKGBUILD
+          cd python-proton-vpn-killswitch-network-manager
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
@@ -103,8 +100,6 @@ jobs:
         run: |
           su builder -c "git clone --depth 1 https://aur.archlinux.org/proton-vpn-gtk-app.git"  
           cd proton-vpn-gtk-app
-          sed -i 's/pkgver=4.3.1/pkgver=4.3.2/g' PKGBUILD
-          sed -i 's/pkgrel=2/pkgrel=1/g' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
