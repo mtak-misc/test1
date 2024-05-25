@@ -1,78 +1,91 @@
 import os
-import sys
-import gradio as gr
-import copy
-import time
-from llama_cpp import Llama
+from langchain_google_genai import ChatGoogleGenerativeAI
 
-model_name_or_path = "mmnga/japanese-stablelm-instruct-ja_vocab-beta-7b-gguf"
-model_basename = "japanese-stablelm-instruct-ja_vocab-beta-7b-q5_K_M.gguf" 
+from langchain.agents import tool
 
-if len(sys.argv) > 2:
-    model_name_or_path = sys.argv[1]
-    model_basename = sys.argv[2]
+@tool
+def calc(expression: str) -> str:
+    """Calculate math expression."""
+    return eval(expression)
 
-from huggingface_hub import hf_hub_download
 
-model_path = hf_hub_download(repo_id=model_name_or_path, filename=model_basename)
+tools = [calc]
 
-llm = Llama(
-    model_path=model_path,
-    n_threads=2, # CPU cores
-    n_batch=512, # Should be between 1 and n_ctx, consider the amount of VRAM in your GPU.
-    n_gpu_layers=43, # Change this value based on your model and your GPU VRAM pool.
-    n_ctx=4096, # Context window
+from langchain_core.messages import HumanMessage
+
+from langgraph.prebuilt import chat_agent_executor
+
+# response = agent_executor.invoke(
+#    {"messages": [HumanMessage(content="1+1は？")]}
+# )
+# print(response["messages"])
+
+async def initialize_llm(model, temperature):
+    return ChatGoogleGenerativeAI(model=model, temperature=temperature)
+
+import asyncio
+
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+llm = loop.run_until_complete(initialize_llm('gemini-1.5-flash', 0.0))
+
+from langgraph.checkpoint import MemorySaver
+
+memory = MemorySaver()
+agent_executor = chat_agent_executor.create_tool_calling_executor(
+	model = llm, 
+	tools = tools,
+	checkpointer=memory		
 )
 
-history = []
+config = {"configurable": {"thread_id": "abc123"}}
 
-system_message = """
-SYSTEM: You are an Assistant, a helpful, respectful, honest and highly intelligent assistant.
-"""
+async def stream_tokens(agent_executor, input, config):
+    async for event in agent_executor.astream_events(
+        {"messages": [HumanMessage(content=input)]}, version="v1",config=config,
+    ):
+        kind = event["event"]
+        if kind == "on_chain_start":
+            if (
+                event["name"] == "LangGraph"
+            ):  # Was assigned when creating the agent with `.with_config({"run_name": "Agent"})`
+                print(
+                    f"Starting agent: {event['name']} with input: {event['data'].get('input').get('messages')[0].content}"
+                )
+        elif kind == "on_chain_end":
+            if (
+                event["name"] == "LangGraph"
+            ):  # Was assigned when creating the agent with `.with_config({"run_name": "Agent"})`
+                print()
+                print("--")
+                print(
+                    f"Done agent: {event['name']} with output: {event['data'].get('output').get('agent').get('messages')[-1].content}"
+                )
+        if kind == "on_chat_model_stream":
+            content = event["data"]["chunk"].content
+            if content:
+                # Empty content in the context of OpenAI means
+                # that the model is asking for a tool to be invoked.
+                # So we only print non-empty content
+                print(content, end="", flush=True)
+        elif kind == "on_tool_start":
+            print("--")
+            print(
+                f"Starting tool: {event['name']} with inputs: {event['data'].get('input')}"
+            )
+        elif kind == "on_tool_end":
+            print(f"Done tool: {event['name']}")
+            print(f"Tool output was: {event['data'].get('output')}")
+            print("--")
 
-system_message_tmp = """
-あなたはAIアシスタントです。
-"""
+input = "6400*3200は？"
 
-def generate_text(message, history):
-    temp = ""
-    input_prompt = f"{system_message}"
-    for interaction in history:
-        input_prompt = input_prompt + "\nUSER: " + str(interaction[0]) + "\nASSISTANT: " + str(interaction[1])
-    input_prompt = input_prompt + "\nUSER: " + str(message) + "\nASSISTANT: "
+# for chunk in agent_executor.stream(
+#     {"messages": [HumanMessage(content=input)]}
+# ):
+#     print(chunk)
+#     print("----")
 
-    output = llm.create_completion(
-        input_prompt,
-        temperature=0.7,
-        top_p=0.3,
-        top_k=40,
-        repeat_penalty=1.1,
-#        repeat_penalty=1.8,
-        max_tokens=1024,
-        stop=[
-            "ASSISTANT:",
-            "USER:",
-            "SYSTEM:",
-        ],
-        stream=True,
-    )
-    for out in output:
-        stream = copy.deepcopy(out)
-        temp += stream["choices"][0]["text"]
-        yield temp
-
-    history = ["init", input_prompt]
-
-
-demo = gr.ChatInterface(
-    generate_text,
-    title="Japanese chatbot using llama-cpp-python",
-    description="",
-    examples=["日本の四国にある県名を挙げてください。"],
-    cache_examples=True,
-    retry_btn=None,
-    undo_btn="Remove last",
-    clear_btn="Clear all",
-)
-demo.queue(max_size=5)
-demo.launch(debug=True, share=True)
+import asyncio
+loop.run_until_complete(stream_tokens(agent_executor=agent_executor, input=input, config=config))
+loop.close()
