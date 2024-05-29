@@ -1,0 +1,30 @@
+name: build-python-pulsectl-asyncio
+
+on:
+  workflow_dispatch:
+
+env:
+  PKGDEST: "/tmp/python-pulsectl-asyncio"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest    
+    steps:
+      - name: Prepare for makepkg
+        run: |
+          pacman -Syu --noconfirm base-devel sudo git
+          useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          chown builder -R ..
+          cd /tmp
+          git clone --depth 1 https://aur.archlinux.org/python-pulsectl-asyncio.git
+          chown builder -R /tmp
+      - name: Build
+        run: |
+          cd /tmp/python-pulsectl-asyncio
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: python-pulsectl-asyncio
+          path: ${{ env.PKGDEST }}/*.pkg.tar.zst
+        
