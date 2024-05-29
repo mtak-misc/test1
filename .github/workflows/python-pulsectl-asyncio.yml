@@ -24,7 +24,7 @@ jobs:
         run: |
           cd /tmp/python-pulsectl
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
-          pacman -U --noconfirm /tmp/python-pulsectl*.pkg.tar.zst
+          pacman -U --noconfirm /tmp/python-pulsectl-asyncio/python-pulsectl*.pkg.tar.zst
           cd /tmp/python-pulsectl-asyncio
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
       - uses: actions/upload-artifact@v3
