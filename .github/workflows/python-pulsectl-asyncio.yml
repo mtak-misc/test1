@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  PKGDEST: "/tmp/python-pulsectl-asyncio"
+  PKGDEST: "/tmp/"
 
 jobs:
   build:
@@ -24,11 +24,13 @@ jobs:
         run: |
           cd /tmp/python-pulsectl
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
-          pacman -U --noconfirm /tmp/python-pulsectl-asyncio/python-pulsectl*.pkg.tar.zst
+          pacman -U --noconfirm /tmp/python-pulsectl*.pkg.tar.zst
           cd /tmp/python-pulsectl-asyncio
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
+          cd /tmp
+          zip *.pkg.tar.zst
       - uses: actions/upload-artifact@v3
         with:
           name: python-pulsectl-asyncio
-          path: ${{ env.PKGDEST }}/*.pkg.tar.zst
+          path: ${{ env.PKGDEST }}/*.zip
         
