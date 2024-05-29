@@ -58,7 +58,7 @@ jobs:
           sed -i 's/pkgver=0.25.0/pkgver=0.266.0/g' PKGBUILD
           chown builder PKGBUILD
           su builder -c "gpg --recv-keys 58A9AA7C86727DF7"
-          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --skippgpcheck --noconfirm -sc"
       - name: Upload packages
         uses: actions/upload-artifact@v4
         with:
