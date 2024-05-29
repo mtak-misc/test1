@@ -17,10 +17,14 @@ jobs:
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           chown builder -R ..
           cd /tmp
+          git clone --depth 1 https://aur.archlinux.org/python-pulsectl.git
           git clone --depth 1 https://aur.archlinux.org/python-pulsectl-asyncio.git
           chown builder -R /tmp
       - name: Build
         run: |
+          cd /tmp/python-pulsectl
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
+          pacman -U --noconfirm /tmp/python-pulsectl*.pkg.tar.zst
           cd /tmp/python-pulsectl-asyncio
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
       - uses: actions/upload-artifact@v3
