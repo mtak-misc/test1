@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Prepare for makepkg
         run: |
-          pacman -Syu --noconfirm base-devel sudo git
+          pacman -Syu --noconfirm base-devel sudo git zip
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           chown builder -R ..
           cd /tmp
