@@ -28,7 +28,7 @@ jobs:
           cd /tmp/python-pulsectl-asyncio
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
           cd /tmp
-          zip python-pulsectl-asyncio.zip *.pkg.tar.zst
+          zip archive.zip *.pkg.tar.zst
       - uses: actions/upload-artifact@v4
         with:
           name: python-pulsectl-asyncio
