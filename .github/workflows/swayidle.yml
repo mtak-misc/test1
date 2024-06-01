@@ -21,6 +21,7 @@ jobs:
           chown builder -R /tmp
       - name: Build
         run: |
+          su builder -c "gpg --recv 0FDE7BE0E88F5E48"
           cd /tmp/swayidle
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
           pacman -U --noconfirm /tmp/python-pulsectl*.pkg.tar.zst
