@@ -1,0 +1,31 @@
+name: build-swayidle
+
+on:
+  workflow_dispatch:
+
+env:
+  PKGDEST: "/tmp/"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest    
+    steps:
+      - name: Prepare for makepkg
+        run: |
+          pacman -Syu --noconfirm base-devel sudo git
+          useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          chown builder -R ..
+          cd /tmp
+          git clone --depth 1 https://gitlab.archlinux.org/archlinux/packaging/packages/swayidle
+          chown builder -R /tmp
+      - name: Build
+        run: |
+          su builder -c "gpg --recv 0FDE7BE0E88F5E48"
+          cd /tmp/swayidle
+          sed -e -i '/build()/a \\t sed -e "/strcmp(interface, ext_idle_notifier_v1_interface.name)/a printf(\"[Deubg]: %s, %s\\n\", interface, ext_idle_notifier_v1_interface.name);" main.c' PKGBUILD
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: swayidle
+          path: ${{ env.PKGDEST }}/*.pkg.tar.zst
