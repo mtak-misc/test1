@@ -24,10 +24,6 @@ jobs:
           su builder -c "gpg --recv 0FDE7BE0E88F5E48"
           cd /tmp/swayidle
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
-          pacman -U --noconfirm /tmp/python-pulsectl*.pkg.tar.zst
-          cd /tmp/python-pulsectl-asyncio
-          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
-          cd /tmp
       - uses: actions/upload-artifact@v4
         with:
           name: swayidle
