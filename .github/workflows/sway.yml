@@ -23,7 +23,7 @@ jobs:
         run: |
           su builder -c "gpg --recv 0FDE7BE0E88F5E48"
           cd /tmp/swayidle
-          sed -i -e '/build()/a \\t sed -i -e "/strcmp(interface, org_kde_kwin_idle_interface.name)/i printf(\\\"[Debug]: %s, %s\\\\\\n\\\", interface, ext_idle_notifier_v1_interface.name);" ./swayidle-1.8.0/main.c' PKGBUILD
+          sed -i -e '/build()/a \\t sed -i -e "/strcmp(interface, org_kde_kwin_idle_interface.name)/i printf(\\\"[Debug]: %s, %s, %s\\\\\\n\\\", interface, ext_idle_notifier_v1_interface.name, org_kde_kwin_idle_interface.name);" ./swayidle-1.8.0/main.c' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc" 
       - uses: actions/upload-artifact@v4
         with:
