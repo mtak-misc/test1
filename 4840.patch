@@ -1,0 +1,51 @@
+From 58d46aff15f5f031b24658afe03d77202c0612c4 Mon Sep 17 00:00:00 2001
+From: Tycho Andersen <tycho@tycho.pizza>
+Date: Sun, 26 May 2024 12:06:30 -0600
+Subject: [PATCH] bar: don't recreate the drawer on resize
+
+...instead, just resize it. If we re-create it, we'll leak the resources
+attached, and that's bad.
+
+This is another leak that I found while looking for the source of #4821.
+
+Signed-off-by: Tycho Andersen <tycho@tycho.pizza>
+---
+ libqtile/bar.py | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/libqtile/bar.py b/libqtile/bar.py
+index fd6ab175db..39566bdd4e 100644
+--- a/libqtile/bar.py
++++ b/libqtile/bar.py
+@@ -32,7 +32,7 @@
+     import asyncio
+     from typing import Any
+ 
+-    from libqtile.backend.base import Internal, WindowType
++    from libqtile.backend.base import Drawer, Internal, WindowType
+     from libqtile.command.base import ItemT
+     from libqtile.config import Screen
+     from libqtile.core.manager import Qtile
+@@ -200,6 +200,7 @@ def __init__(self, widgets: list[_Widget], size: int, **config: Any) -> None:
+         # bar as python is referring to the same list.
+         self.widgets = widgets.copy()
+         self.window: Internal | None = None
++        self.drawer: Drawer
+         self._configured = False
+         self._draw_queued = False
+         self.future: asyncio.Handle | None = None
+@@ -323,9 +324,11 @@ def _configure(self, qtile: Qtile, screen: Screen, reconfigure: bool = False) ->
+             self.window.process_pointer_motion = self.process_pointer_motion
+             self.window.process_key_press = self.process_key_press
+ 
+-        # We create a new drawer even if there's already a window to ensure the
+-        # drawer is the right size.
+-        self.drawer = self.window.create_drawer(width, height)
++        if hasattr(self, "drawer"):
++            self.drawer.width = width
++            self.drawer.height = height
++        else:
++            self.drawer = self.window.create_drawer(width, height)
+         self.drawer.clear(self.background)
+ 
+         crashed_widgets: set[_Widget] = set()
