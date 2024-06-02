@@ -49,6 +49,7 @@ jobs:
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../libinput.patch' PKGBUILD
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../inputs.patch' PKGBUILD
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../4842.patch' PKGBUILD
+          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../32ce136.patch' PKGBUILD
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../4845.patch' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
       - name : Install Qtile
