@@ -34,6 +34,7 @@ jobs:
           docker run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer -v android debug
       - name: Check artifact
         run: |
+          cd sample
           ls -l
 #      - name: Upload packages
 #        uses: actions/upload-artifact@v4
