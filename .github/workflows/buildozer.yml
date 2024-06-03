@@ -18,7 +18,8 @@ jobs:
       - name: Prepare for build
         run: |
           cd buildozer
-          echo "sed -i 's/useradd/useradd -u $(id -u)/g' Dockerfile" | bash 
+          echo "sed -i 's/useradd/useradd -u $(id -u)/g' Dockerfile" | bash
+          sed -i 's/ubuntu:20.04/ubuntu:22.04/g' Dockerfile
           docker build --tag=kivy/buildozer .
           cd ..
           docker run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer --version
