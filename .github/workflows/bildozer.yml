@@ -27,7 +27,10 @@ jobs:
 #          apt autoclean
       - name: Build
         run : |
-            docker run -u $(id -u):$(id -g) --volume "$(pwd)":/home/user/hostcwd --entrypoint "bash" kivy/buildozer ./apkbuild.sh sample 
+          cd sample
+          docker run -u $(id -u):$(id -g) --volume "$(pwd)":/home/user/hostcwd kivy/buildozer init
+          echo "android.accept_android_licenses = True" >> buildozer.spec
+          docker run -u $(id -u):$(id -g) --volume "$(pwd)":/home/user/hostcwd kivy/buildozer -v android debug
       - name: Check artifact
         run: |
           ls -l
