@@ -17,13 +17,13 @@ jobs:
           path: buildozer
       - name: Prepare for build
         run: |
-          sudo apt update
-          sudo apt upgrade -y
-          apt autoremove
-          apt autoclean
           cd buildozer
           docker build --tag=kivy/buildozer .
           docker images
+#          sudo apt update
+#          sudo apt upgrade -y
+#          apt autoremove
+#          apt autoclean
 #      - name: Build
 #        uses: docker://archlinux:latest
 #        with:
