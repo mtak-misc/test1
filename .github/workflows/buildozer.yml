@@ -18,6 +18,7 @@ jobs:
       - name: Prepare for build
         run: |
           cd buildozer
+          curl -LO https://raw.githubusercontent.com/kivy/buildozer/master/Dockerfile
           echo "sed -i 's/useradd/useradd -u $(id -u)/g' Dockerfile" | bash
           docker build --tag=kivy/buildozer .
           cd ..
