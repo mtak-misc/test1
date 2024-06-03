@@ -19,7 +19,6 @@ jobs:
         run: |
           cd buildozer
           docker build --tag=kivy/buildozer .
-          docker images
           docker run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer --version
 #          sudo apt update
 #          sudo apt upgrade -y
