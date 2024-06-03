@@ -17,6 +17,7 @@ jobs:
           path: buildozer
       - name: Prepare for build
         run: |
+          chmod u+x apkbuild.sh
           cd buildozer
           docker build --tag=kivy/buildozer .
           cd ..
