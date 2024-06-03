@@ -1,0 +1,36 @@
+name: build-linux-xanmod-bore
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkount repo
+        uses: actions/checkout@v4 
+      - name: Checkount buildozer
+        uses: actions/checkout@v4
+        with: 
+          repository: kivy/buildozer
+          ref: 1.5.0
+          path: buildozer
+      - name: Prepare for build
+        run: |
+          sudo apt update
+          sudo apt upgrade -y
+          apt autoremove
+          apt autoclean
+          cd buildozer
+          docker build --tag=kivy/buildozer .
+          docker images
+#      - name: Build
+#        uses: docker://archlinux:latest
+#        with:
+#          entrypoint: '/bin/sh'
+#          args: ./apk-build.sh ${{ env.USERID }} 
+#      - name: Upload packages
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: apk
+#          path: ${{ github.workspace }}/linux-xanmod-bore/*.pkg.tar.zst
