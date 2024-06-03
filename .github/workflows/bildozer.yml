@@ -19,7 +19,7 @@ jobs:
         run: |
           cd buildozer
           docker build --tag=kivy/buildozer .
-          cd ../sample
+          cd ..
           docker run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer --version
 #          sudo apt update
 #          sudo apt upgrade -y
@@ -29,7 +29,7 @@ jobs:
         uses: docker://kivy/buildozer:latest
         with:
           entrypoint: '/bin/sh'
-          args: ./apkbuild.sh
+          args: ./apkbuild.sh sample
       - name: Check artifact
         run: |
           ls -l
