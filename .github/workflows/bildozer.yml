@@ -26,10 +26,8 @@ jobs:
 #          apt autoremove
 #          apt autoclean
       - name: Build
-        uses: docker://kivy/buildozer:latest
-        with:
-          entrypoint: '/bin/sh'
-          args: ./apkbuild.sh sample
+        run : |
+            coekr run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer /bin/sh -c "./apkbuild.sh"
       - name: Check artifact
         run: |
           ls -l
