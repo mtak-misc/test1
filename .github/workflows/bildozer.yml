@@ -17,7 +17,6 @@ jobs:
           path: buildozer
       - name: Prepare for build
         run: |
-          chmod u+x apkbuild.sh
           cd buildozer
           docker build --tag=kivy/buildozer .
           cd ..
@@ -28,7 +27,7 @@ jobs:
 #          apt autoclean
       - name: Build
         run : |
-            docker run --volume "$(pwd)":/home/user/hostcwd --entrypoint "bash" kivy/buildozer ./apkbuild.sh sample 
+            docker run -u $(id -u):$(id -g) --volume "$(pwd)":/home/user/hostcwd --entrypoint "bash" kivy/buildozer ./apkbuild.sh sample 
       - name: Check artifact
         run: |
           ls -l
