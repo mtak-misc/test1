@@ -30,10 +30,6 @@ jobs:
         run : |
           cd sample
           docker run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer init
-          echo "android.accept_sdk_license = True" >> buildozer.spec
-          echo "android.skip_update = False" >> buildozer.spec
-          ls -l
-          cat buildozer.spec
           yes | docker run -i --volume "$(pwd)":/home/user/hostcwd kivy/buildozer -v android debug
       - name: Check artifact
         run: |
