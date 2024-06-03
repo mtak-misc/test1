@@ -34,7 +34,7 @@ jobs:
           echo "android.skip_update = False" >> buildozer.spec
           ls -l
           cat buildozer.spec
-          echo 'y' | docker run -i --volume "$(pwd)":/home/user/hostcwd kivy/buildozer -v android debug
+          yes | docker run -i --volume "$(pwd)":/home/user/hostcwd kivy/buildozer -v android debug
       - name: Check artifact
         run: |
           cd sample
