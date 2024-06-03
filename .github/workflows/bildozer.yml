@@ -27,7 +27,7 @@ jobs:
 #          apt autoclean
       - name: Build
         run : |
-            docker run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer bash -c "./apkbuild.sh sample" 
+            docker run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer --entrypoint=/bin/sh -c "./apkbuild.sh sample" 
       - name: Check artifact
         run: |
           ls -l
