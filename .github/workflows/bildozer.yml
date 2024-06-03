@@ -1,4 +1,4 @@
-name: build-linux-xanmod-bore
+name: build-buildozer
 
 on:
   workflow_dispatch:
