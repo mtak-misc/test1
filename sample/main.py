@@ -1,40 +1,34 @@
 from kivy.app import App
-
-from kivy.uix.widget import Widget
-from kivy.clock import Clock
 from jnius import autoclass
+from kivy.clock import Clock
 from android.runnable import run_on_ui_thread
-
+from kivy.uix.widget import Widget
 
 WebView = autoclass('android.webkit.WebView')
 WebViewClient = autoclass('android.webkit.WebViewClient')
-#activity = autoclass('org.renpy.android.PythonActivity').mActivity
 activity = autoclass('org.kivy.android.PythonActivity').mActivity
 
+@run_on_ui_thread
+def create_webview(*args):
+        webview = WebView(activity)
+        webview.getSettings().setJavaScriptEnabled(True)
+        wvc = WebViewClient();
+        webview.setWebViewClient(wvc);
+        activity.setContentView(webview)
+        webview.loadUrl('https://www.google.com/')
 
 class Wv(Widget):
-    def __init__(self, **kwargs):
-        super(Wv, self).__init__(**kwargs)
-        Clock.schedule_once(self.create_webview, 0)
+        def __init__(self, **kwargs):
+                super().__init__(**kwargs)
+                self.__functionstable__ = {}
+                Clock.schedule_once(create_webview, 0)
 
-    @run_on_ui_thread
-    def create_webview(self, *args):
-        webview = WebView(activity)
-        settings = webview.getSettings()
-        settings.setJavaScriptEnabled(True)
-        settings.setUseWideViewPort(True) # enables viewport html meta tags
-        settings.setLoadWithOverviewMode(True) # uses viewport
-        settings.setSupportZoom(True) # enables zoom
-        settings.setBuiltInZoomControls(True) # enables zoom controls
-        wvc = WebViewClient()
-        webview.setWebViewClient(wvc)
-        activity.setContentView(webview)
-        webview.loadUrl('https:/www.google.com/')
 
 class ServiceApp(App):
-    def build(self):
-        return Wv()
+        def build(self):
+                return Wv()
 
+# https://github.com/kivy/python-for-android/issues/1908
 
-if __name__ == '__main__':
+if __name__ == '__main__':                                                                      
     ServiceApp().run()
