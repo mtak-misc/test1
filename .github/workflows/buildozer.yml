@@ -31,6 +31,7 @@ jobs:
         run : |
           cd sample
           docker run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer init
+          echo "android.permissions = android.permission.INTERNET" >> buildozer.spec
           yes | docker run -i --volume "$(pwd)":/home/user/hostcwd kivy/buildozer -v android debug
           mv bin/*.apk ..
       - name: Upload packages
