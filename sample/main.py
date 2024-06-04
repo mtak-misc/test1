@@ -1,27 +1,13 @@
-from kivy.uix.widget import Widget
-from kivymd.app import MDApp
-from webview import WebView
-from kivy.lang.builder import Builder
-from kivymd.uix.button import MDFlatButton
-from kivymd.uix.screen import MDScreen
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.garden.webview import WebView
 
-Builder.load_string("""
-<MyWebView>
-    MDFlatButton:
-        text: "Push"
-        pos_hint: {"center_x": .5, "center_y": .4}
-        on_press: root.Push()
-""")
-
-class MyWebView(MDScreen):
-    def Push(self):
-        WebView("https://www.google.com")
-
-
-class MyWebApp(MDApp):
+class WebViewApp(App):
     def build(self):
-        return MyWebView()
-
+        layout = BoxLayout(orientation='vertical')
+        webview = WebView(url='https://www.example.com')
+        layout.add_widget(webview)
+        return layout
 
 if __name__ == '__main__':
-    MyWebApp().run()
+    WebViewApp().run()
