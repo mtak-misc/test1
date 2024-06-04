@@ -31,4 +31,8 @@ class ServiceApp(App):
 # https://github.com/kivy/python-for-android/issues/1908
 
 if __name__ == '__main__':
+    from kivy.utils import platform
+    if platform == "android":
+        from android.permissions import request_permissions, Permission
+        request_permissions([Permission.INTERNET])
     ServiceApp().run()
