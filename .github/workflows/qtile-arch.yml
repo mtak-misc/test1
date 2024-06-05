@@ -44,12 +44,10 @@ jobs:
         run: |
           git clone https://gitlab.archlinux.org/archlinux/packaging/packages/qtile.git
           chown builder -R ./qtile
-          curl -L https://github.com/qtile/qtile/compare/d6253321a884887ba48f58b91486fa788faa7c1e..26749db2cfad6c7a9e77363bac5a2b97fce6c135.patch -o 4845_2.patch
           cd qtile
           su builder -c "gpg --recv-keys 18D18F1BC464DCA3"
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../libinput.patch' PKGBUILD
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../inputs.patch' PKGBUILD
-          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../4845_2.patch' PKGBUILD
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../4845.patch' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
 #          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../4842.patch' PKGBUILD
