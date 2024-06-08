@@ -29,5 +29,39 @@ class ServiceApp(App):
 
 # https://github.com/kivy/python-for-android/issues/1908
 
+async def generate_text(message, history):
+    temp = ""
+    temp += 'Echo: ' + message
+    yield temp 
+
+def gradio_worker(app):
+    uvicorn.run(app, host="127.0.0.1", port=8080, log_level="info")
+
+
 if __name__ == '__main__':
+    import gradio as gr
+    demo = gr.ChatInterface(
+        fn=generate_text,
+        title="LangChain Agent Sample",
+    #    description="",
+    #    examples=["1+1は？"],
+        cache_examples=False,
+        retry_btn=None,
+        undo_btn="Remove last",
+        clear_btn="Clear all",
+    )
+
+    from fastapi import FastAPI
+    app = FastAPI()
+
+    app = gr.mount_gradio_app(app, demo, path='/')
+
+    import uvicorn
+
+    from threading import Thread
+
+    thread = Thread(target=gradio_worker, args=(app,))
+    thread.daemon = True
+    thread.start()
+    
     ServiceApp().run()
