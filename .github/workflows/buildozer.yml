@@ -34,8 +34,6 @@ jobs:
           sed -i "s/requirements = python3,kivy/requirements = python3,kivy,android/g" buildozer.spec
           grep -v '^#' buildozer.spec | sed '/\[app\]/a android.permissions = android.permission.INTERNET' > tmp.spec
           mv tmp.spec buildozer.spec
-          grep -v '^#' buildozer.spec | sed '/\[app\]/a android.extra_manifest_xml = ./extra_manifest.xml' > tmp.spec
-          mv tmp.spec buildozer.spec
           cat buildozer.spec
           yes | docker run -i --volume "$(pwd)":/home/user/hostcwd kivy/buildozer -v android debug
           mv bin/*.apk ..
