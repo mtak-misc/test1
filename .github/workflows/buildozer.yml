@@ -34,9 +34,8 @@ jobs:
           sed -i "s/requirements = python3,kivy/requirements = python3,kivy,android/g" buildozer.spec
           grep -v '^#' buildozer.spec | sed '/\[app\]/a android.permissions = android.permission.INTERNET' > tmp.spec
           mv tmp.spec buildozer.spec
-          sed -i '/\[app\]/a android.extra_manifest_xml = ./extra_manifest.xml' buildozer.spec
           cat buildozer.spec
-          yes | docker run -i --volume "$(pwd)":/home/user/hostcwd kivy/buildozer -v android debug
+          yes | docker run -i --volume "$(pwd)":/home/user/hostcwd kivy/buildozer --extra-manifest-application-arguments="android:usesCleartextTraffic=\"true\"" -v android debug
           mv bin/*.apk ..
       - name: Upload packages
         uses: actions/upload-artifact@v4
