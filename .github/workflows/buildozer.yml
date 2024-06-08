@@ -35,10 +35,11 @@ jobs:
           grep -v '^#' buildozer.spec | sed '/\[app\]/a android.permissions = android.permission.INTERNET' > tmp.spec
           mv tmp.spec buildozer.spec
           cat buildozer.spec
-          yes | docker run -i --volume "$(pwd)":/home/user/hostcwd kivy/buildozer --extra-manifest-application-arguments="android:usesCleartextTraffic=\"true\"" -v android debug
-          mv bin/*.apk ..
-      - name: Upload packages
-        uses: actions/upload-artifact@v4
-        with:
-          name: apk
-          path: ${{ github.workspace }}/*.apk
+          ls -a
+#          yes | docker run -i --volume "$(pwd)":/home/user/hostcwd kivy/buildozer -v android debug
+#          mv bin/*.apk ..
+#      - name: Upload packages
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: apk
+#          path: ${{ github.workspace }}/*.apk
