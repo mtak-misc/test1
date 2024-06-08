@@ -1,16 +1,33 @@
 from kivy.app import App
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.label import Label
-from kivy.uix.webview import WebView
+from jnius import autoclass
+from kivy.clock import Clock
+from android.runnable import run_on_ui_thread
+from kivy.uix.widget import Widget
 
-class WebViewApp(App):
-    def build(self):
-        layout = BoxLayout(orientation='vertical')
-        label = Label(text='WebView Example')
-        webview = WebView(url='https://www.google.com')
-        layout.add_widget(label)
-        layout.add_widget(webview)
-        return layout
+WebView = autoclass('android.webkit.WebView')
+WebViewClient = autoclass('android.webkit.WebViewClient')
+activity = autoclass('org.kivy.android.PythonActivity').mActivity
+
+@run_on_ui_thread
+def create_webview(*args):
+        webview = WebView(activity)
+        webview.getSettings().setJavaScriptEnabled(True)
+        wvc = WebViewClient();
+        webview.setWebViewClient(wvc);
+        activity.setContentView(webview)
+        webview.loadUrl('http://httpbin.org/delay/3')
+
+class Wv(Widget):
+        def __init__(self, **kwargs):
+                super().__init__(**kwargs)
+                self.__functionstable__ = {}
+                Clock.schedule_once(create_webview, 0)
+
+class ServiceApp(App):
+        def build(self):
+                return Wv()
+
+# https://github.com/kivy/python-for-android/issues/1908
 
 if __name__ == '__main__':
-    WebViewApp().run()
+    ServiceApp().run()
