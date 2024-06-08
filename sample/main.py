@@ -15,7 +15,7 @@ def create_webview(*args):
         wvc = WebViewClient();
         webview.setWebViewClient(wvc);
         activity.setContentView(webview)
-        webview.loadUrl('http://127.0.0.1/')
+        webview.loadUrl('https://www.google.com/')
 
 class Wv(Widget):
         def __init__(self, **kwargs):
@@ -31,8 +31,8 @@ class ServiceApp(App):
 # https://github.com/kivy/python-for-android/issues/1908
 
 if __name__ == '__main__':
-    from kivy.utils import platform
-    if platform == "android":
-        from android.permissions import request_permissions, Permission
-        request_permissions([Permission.INTERNET])
+#    from kivy.utils import platform
+#    if platform == "android":
+#        from android.permissions import request_permissions, Permission
+#        request_permissions([Permission.INTERNET])
     ServiceApp().run()
