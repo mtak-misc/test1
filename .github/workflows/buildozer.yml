@@ -15,12 +15,12 @@ jobs:
           repository: kivy/buildozer
           ref: 1.5.0
           path: buildozer
-#      - name: Checkount python-for-android
-#        uses: actions/checkout@v4
-#        with: 
-#          repository: kivy/python-for-android
-#          ref: release-2024.01.21
-#          path: python-for-android
+      - name: Checkount python-for-android
+        uses: actions/checkout@v4
+        with: 
+          repository: kivy/python-for-android
+          ref: release-2024.01.21
+          path: python-for-android
       - name: Prepare for build
         run: |
           cd buildozer
@@ -36,6 +36,7 @@ jobs:
       - name: Build
         run : |
           cd sample
+          mv ../python-for-android .
           docker run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer init
           sed -i "s/requirements = python3,kivy/requirements = webviewjni,python3,kivy,android/g" buildozer.spec
           grep -v '^#' buildozer.spec | sed '/\[app\]/a android.permissions = android.permission.INTERNET' > tmp.spec
