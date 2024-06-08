@@ -42,11 +42,11 @@ jobs:
           sed -i "s/requirements = python3,kivy/requirements = webviewjni,python3,kivy,android/g" buildozer.spec
           grep -v '^#' buildozer.spec | sed '/\[app\]/a android.permissions = android.permission.INTERNET' > tmp.spec
           mv tmp.spec buildozer.spec
-          sed -i '/\[app\]/a p4a.source_dir = ./python-for-android' buildozer.spec
           cat buildozer.spec
           yes | docker run -i --volume "$(pwd)":/home/user/hostcwd kivy/buildozer -v android debug
           find .
           mv bin/*.apk ..
+#          sed -i '/\[app\]/a p4a.source_dir = ./python-for-android' buildozer.spec
       - name: Upload packages
         uses: actions/upload-artifact@v4
         with:
