@@ -15,12 +15,12 @@ jobs:
           repository: kivy/buildozer
           ref: 1.5.0
           path: buildozer
-      - name: Checkount python-for-android
-        uses: actions/checkout@v4
-        with: 
-          repository: kivy/python-for-android
-          ref: release-2024.01.21
-          path: python-for-android
+#      - name: Checkount python-for-android
+#        uses: actions/checkout@v4
+#        with: 
+#          repository: kivy/python-for-android
+#          ref: release-2024.01.21
+#          path: python-for-android
       - name: Prepare for build
         run: |
           cd buildozer
