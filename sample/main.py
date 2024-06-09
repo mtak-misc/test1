@@ -15,7 +15,7 @@ def create_webview(*args):
     wvc = WebViewClient();
     webview.setWebViewClient(wvc);
     activity.setContentView(webview)
-    webview.loadUrl('http://127.0.0.1:8080')
+    webview.loadUrl('http://httpbin.org/delay/3')
 
 class Wv(Widget):
     def __init__(self, **kwargs):
