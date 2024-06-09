@@ -39,7 +39,7 @@ jobs:
           mv ../python-for-android .
           sed -i 's/<application android:label/<application android:usesCleartextTraffic="true" android:label/g' ./python-for-android/pythonforandroid/bootstraps/sdl2/build/templates/AndroidManifest.tmpl.xml
           docker run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer init
-          sed -i "s/requirements = python3,kivy/requirements = python3,kivy,android,gradio,fastapi,uvicorn/g" buildozer.spec
+          sed -i "s/requirements = python3,kivy/requirements = python3,kivy,android,gradio,gradio_client/g" buildozer.spec
           grep -v '^#' buildozer.spec | sed '/\[app\]/a android.permissions = android.permission.INTERNET' > tmp.spec
           mv tmp.spec buildozer.spec
           sed -i '/\[app\]/a p4a.source_dir = ./python-for-android' buildozer.spec
