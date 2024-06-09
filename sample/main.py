@@ -44,7 +44,7 @@ def gradio_worker(app):
 if __name__ == '__main__':
     demo = gr.ChatInterface(
         fn=generate_text,
-        title="LangChain Agent Sample",
+        title="Gradio Sample",
     #    description="",
     #    examples=["1+1は？"],
         cache_examples=False,
