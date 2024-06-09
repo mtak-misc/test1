@@ -36,7 +36,7 @@ jobs:
           docker run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer --version
           curl -LO https://raw.githubusercontent.com/kivy/python-for-android/develop/pythonforandroid/recipe.py
           mv recipe.py ./python-for-android/pythonforandroid/
-          sed -i 's/1.10.4/2.7.3/g' ./pythonforandroid/recipes/pydantic/__init__.py
+          sed -i 's/1.10.4/2.7.3/g' ./python-for-android/pythonforandroid/recipes/pydantic/__init__.py
           cd ./python-for-android/pythonforandroid/recipes
           mkdir orjson
 #          sudo apt update
