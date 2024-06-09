@@ -15,7 +15,8 @@ def create_webview(*args):
     wvc = WebViewClient();
     webview.setWebViewClient(wvc);
     activity.setContentView(webview)
-    webview.loadUrl('http://httpbin.org/delay/3')
+#    webview.loadUrl('http://httpbin.org/delay/3')
+    webview.loadUrl('http://127.0.0.1:8080')
 
 class Wv(Widget):
     def __init__(self, **kwargs):
@@ -28,7 +29,6 @@ class ServiceApp(App):
         return Wv()
 
 # https://github.com/kivy/python-for-android/issues/1908
-
 
 if __name__ == '__main__':    
     ServiceApp().run()
