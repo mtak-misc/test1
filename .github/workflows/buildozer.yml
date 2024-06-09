@@ -29,8 +29,8 @@ jobs:
           echo "sed -i 's/useradd/useradd -u $(id -u)/g' Dockerfile" | bash
           sed -i 's/autoconf/autoconf curl autopoint/g' Dockerfile
           sed -i '/ENTRYPOINT/i RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y' Dockerfile
-          sed -i '/ENTRYPOINT/i ENV PATH="/root/.cargo/bin:${PATH}"' Dockerfile
-          sed -i '/ENTRYPOINT/i RUN find /home/user/.cargo/bin' Dockerfile
+          sed -i '/ENTRYPOINT/i ENV PATH="${HOME_DIR}/.cargo/bin:${PATH}"' Dockerfile
+          sed -i '/ENTRYPOINT/i RUN rustup show' Dockerfile
           docker build --tag=kivy/buildozer .
           cd ..
           docker run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer --version
