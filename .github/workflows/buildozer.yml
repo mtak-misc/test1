@@ -30,7 +30,7 @@ jobs:
           docker build --tag=kivy/buildozer .
           cd ..
           docker run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer --version
-          cd ../python-for-android/pythonforandroid/recipes
+          cd ./python-for-android/pythonforandroid/recipes
           mkdir orjson
 #          sudo apt update
 #          sudo apt upgrade -y
