@@ -30,6 +30,7 @@ jobs:
           sed -i 's/autoconf/autoconf curl autopoint/g' Dockerfile
           sed -i '/ENTRYPOINT/i RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y' Dockerfile
           sed -i '/ENTRYPOINT/i ENV PATH="/root/.cargo/bin:${PATH}"' Dockerfile
+          sed -i '/ENTRYPOINT/i rustup show' Dockerfile
           docker build --tag=kivy/buildozer .
           cd ..
           docker run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer --version
