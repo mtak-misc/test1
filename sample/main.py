@@ -12,6 +12,14 @@ WebView = autoclass('android.webkit.WebView')
 WebViewClient = autoclass('android.webkit.WebViewClient')
 activity = autoclass('org.kivy.android.PythonActivity').mActivity
 
+async def generate_text(message, history):
+    temp = ""
+    temp += 'Echo: ' + message
+    yield temp 
+
+def gradio_worker(app):
+    uvicorn.run(app, host="127.0.0.1", port=8080, log_level="info")
+
 @run_on_ui_thread
 def create_webview(*args):
     webview = WebView(activity)
@@ -24,6 +32,22 @@ def create_webview(*args):
 class Wv(Widget):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        demo = gr.ChatInterface(
+            fn=generate_text,
+            title="Gradio Sample",
+            cache_examples=False,
+            retry_btn=None,
+            undo_btn="Remove last",
+            clear_btn="Clear all",
+        )
+
+        app = FastAPI()
+        app = gr.mount_gradio_app(app, demo, path='/')
+
+        thread = Thread(target=gradio_worker, args=(app,))
+        thread.daemon = True
+        thread.start()
+        
         self.__functionstable__ = {}
         Clock.schedule_once(create_webview, 0)
 
@@ -33,32 +57,6 @@ class ServiceApp(App):
 
 # https://github.com/kivy/python-for-android/issues/1908
 
-async def generate_text(message, history):
-    temp = ""
-    temp += 'Echo: ' + message
-    yield temp 
 
-def gradio_worker(app):
-    uvicorn.run(app, host="127.0.0.1", port=8080, log_level="info")
-
-if __name__ == '__main__':
-    demo = gr.ChatInterface(
-        fn=generate_text,
-        title="Gradio Sample",
-    #    description="",
-    #    examples=["1+1は？"],
-        cache_examples=False,
-        retry_btn=None,
-        undo_btn="Remove last",
-        clear_btn="Clear all",
-    )
-
-    app = FastAPI()
-
-    app = gr.mount_gradio_app(app, demo, path='/')
-
-    thread = Thread(target=gradio_worker, args=(app,))
-    thread.daemon = True
-    thread.start()
-    
+if __name__ == '__main__':    
     ServiceApp().run()
