@@ -3,6 +3,7 @@ from jnius import autoclass
 from kivy.clock import Clock
 from android.runnable import run_on_ui_thread
 from kivy.uix.widget import Widget
+import gradio as gr
 
 WebView = autoclass('android.webkit.WebView')
 WebViewClient = autoclass('android.webkit.WebViewClient')
@@ -38,7 +39,6 @@ def gradio_worker(app):
     uvicorn.run(app, host="127.0.0.1", port=8080, log_level="info")
 
 if __name__ == '__main__':
-    import gradio as gr
     demo = gr.ChatInterface(
         fn=generate_text,
         title="LangChain Agent Sample",
