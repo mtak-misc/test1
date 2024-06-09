@@ -19,7 +19,8 @@ jobs:
         uses: actions/checkout@v4
         with: 
           repository: kivy/python-for-android
-          ref: release-2024.01.21
+#          ref: release-2024.01.21
+          ref: develop
           path: python-for-android
       - name: Prepare for build
         run: |
