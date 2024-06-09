@@ -47,7 +47,6 @@ jobs:
           yes | docker run -i --volume "$(pwd)":/home/user/hostcwd kivy/buildozer -v android debug
           find .
           mv bin/*.apk ..
-#          sed -i '/\[app\]/a p4a.source_dir = ./python-for-android' buildozer.spec
       - name: Upload packages
         uses: actions/upload-artifact@v4
         with:
