@@ -4,6 +4,9 @@ from kivy.clock import Clock
 from android.runnable import run_on_ui_thread
 from kivy.uix.widget import Widget
 import gradio as gr
+from fastapi import FastAPI
+import uvicorn
+from threading import Thread
 
 WebView = autoclass('android.webkit.WebView')
 WebViewClient = autoclass('android.webkit.WebViewClient')
@@ -50,14 +53,9 @@ if __name__ == '__main__':
         clear_btn="Clear all",
     )
 
-    from fastapi import FastAPI
     app = FastAPI()
 
     app = gr.mount_gradio_app(app, demo, path='/')
-
-    import uvicorn
-
-    from threading import Thread
 
     thread = Thread(target=gradio_worker, args=(app,))
     thread.daemon = True
