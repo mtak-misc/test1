@@ -30,12 +30,15 @@ jobs:
           docker build --tag=kivy/buildozer .
           cd ..
           docker run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer --version
+          cd ../python-for-android/pythonforandroid/recipes
+          mkdir orjson
 #          sudo apt update
 #          sudo apt upgrade -y
 #          apt autoremove
 #          apt autoclean
       - name: Build
         run : |
+          cp ./sample/__init__.py ./python-for-android/pythonforandroid/recipes/orjson
           cd sample
           mv ../python-for-android .
           sed -i 's/<application android:label/<application android:usesCleartextTraffic="true" android:label/g' ./python-for-android/pythonforandroid/bootstraps/sdl2/build/templates/AndroidManifest.tmpl.xml
