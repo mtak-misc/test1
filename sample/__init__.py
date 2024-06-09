@@ -9,4 +9,4 @@ class OrjsonRecipe(RustCompiledComponentsRecipe):
     site_packages_name = "orjson"
 
 
-recipe = PydanticcoreRecipe()
+recipe = OrjsonRecipe()
