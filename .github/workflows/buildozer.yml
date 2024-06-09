@@ -44,7 +44,7 @@ jobs:
           mv tmp.spec buildozer.spec
           sed -i '/\[app\]/a p4a.source_dir = ./python-for-android' buildozer.spec
           cat buildozer.spec
-          yes | docker run -i --volume "$(pwd)":/home/user/hostcwd kivy/buildozer -v android debug
+          yes | docker run -i --volume "$(pwd)":/home/user/hostcwd kivy/buildozer -v android debug logcat
           find .
           mv bin/*.apk ..
       - name: Upload packages
