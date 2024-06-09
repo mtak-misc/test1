@@ -38,19 +38,19 @@ async def generate_text(message, history):
     temp += 'Echo: ' + message
     yield temp 
 
-demo = gr.ChatInterface(
-    fn=generate_text,
-    title="LangChain Agent Sample",
-    cache_examples=False,
-    retry_btn=None,
-    undo_btn="Remove last",
-    clear_btn="Clear all",
-)
-
 def gradio_worker(app):
     uvicorn.run(app, host="127.0.0.1", port=8080, log_level="info")
 
 if __name__ == '__main__':
+    demo = gr.ChatInterface(
+        fn=generate_text,
+        title="LangChain Agent Sample",
+        cache_examples=False,
+        retry_btn=None,
+        undo_btn="Remove last",
+        clear_btn="Clear all",
+    )        
+    app = gr.mount_gradio_app(app, demo, path='/')
     thread = Thread(target=gradio_worker, args=(app,))
     thread.daemon = True
     thread.start()
