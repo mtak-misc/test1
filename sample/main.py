@@ -3,6 +3,10 @@ from jnius import autoclass
 from kivy.clock import Clock
 from android.runnable import run_on_ui_thread
 from kivy.uix.widget import Widget
+import gradio as gr
+from fastapi import FastAPI
+import uvicorn
+from threading import Thread
 
 WebView = autoclass('android.webkit.WebView')
 WebViewClient = autoclass('android.webkit.WebViewClient')
@@ -15,7 +19,6 @@ def create_webview(*args):
     wvc = WebViewClient();
     webview.setWebViewClient(wvc);
     activity.setContentView(webview)
-#    webview.loadUrl('http://httpbin.org/delay/3')
     webview.loadUrl('http://127.0.0.1:8080')
 
 class Wv(Widget):
@@ -30,5 +33,12 @@ class ServiceApp(App):
 
 # https://github.com/kivy/python-for-android/issues/1908
 
+def gradio_worker(app):
+    uvicorn.run(app, host="127.0.0.1", port=8080, log_level="info")
+
 if __name__ == '__main__':
+    thread = Thread(target=gradio_worker, args=(app,))
+    thread.daemon = True
+    thread.start()
+
     ServiceApp().run()
