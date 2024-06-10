@@ -39,6 +39,7 @@ jobs:
           rm -rf ./python-for-android/pythonforandroid/recipes/pydantic
           cd ./python-for-android/pythonforandroid/recipes
           mkdir orjson
+          mkdir pydantic-core
 #          sudo apt update
 #          sudo apt upgrade -y
 #          apt autoremove
@@ -46,6 +47,8 @@ jobs:
       - name: Build
         run : |
           cp ./sample/__init__.py ./python-for-android/pythonforandroid/recipes/orjson
+          curl -LO https://raw.githubusercontent.com/kivy/python-for-android/develop/pythonforandroid/recipes/pydantic-core/__init__.py
+          cp __init__.py ./python-for-android/pythonforandroid/recipes/pydantic-core/
           cd sample
           mv ../python-for-android .
           sed -i 's/<application android:label/<application android:usesCleartextTraffic="true" android:label/g' ./python-for-android/pythonforandroid/bootstraps/sdl2/build/templates/AndroidManifest.tmpl.xml
