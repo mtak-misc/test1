@@ -55,7 +55,7 @@ jobs:
           sed -i 's/<application android:label/<application android:usesCleartextTraffic="true" android:label/g' ./python-for-android/pythonforandroid/bootstraps/sdl2/build/templates/AndroidManifest.tmpl.xml
           docker run --volume "$(pwd)":/home/user/hostcwd kivy/buildozer init
           sed -i "s/requirements = python3,kivy/requirements = python3,kivy,android,pytz,pydub,ffmpy,websockets==11.0.3,uvloop,ujson,tzdata,typing-extensions,tqdm,toolz,tomlkit==0.12.0,sniffio,six,shellingham,semantic-version,ruff,rpds-py,pyyaml,python-multipart,python-dotenv,pyparsing,pillow,packaging,orjson==3.10.3,numpy,mdurl,markupsafe,kiwisolver,importlib-resources,httptools,h11,fsspec,fonttools,filelock,dnspython,cycler,click,attrs,annotated-types,aiofiles,uvicorn,referencing,python-dateutil,pydantic-core,markdown-it-py,jinja2,huggingface-hub,httpcore,email_validator,contourpy,anyio,watchfiles,starlette,rich,pydantic==2.7.3,pandas,matplotlib,jsonschema-specifications,httpx,typer,jsonschema,gradio-client,fastapi-cli,altair,fastapi,gradio/g" buildozer.spec
-          sed -i 's/#android.ndk = 23b/android.ndk = 26d/g' buildozer.spec
+          sed -i 's/#android.ndk = 23b/android.ndk = 24/g' buildozer.spec
           grep -v '^#' buildozer.spec | sed '/\[app\]/a android.permissions = android.permission.INTERNET' > tmp.spec
           mv tmp.spec buildozer.spec
           sed -i '/\[app\]/a p4a.source_dir = ./python-for-android' buildozer.spec
