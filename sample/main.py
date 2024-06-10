@@ -52,7 +52,7 @@ if __name__ == '__main__':
     )        
     app = gr.mount_gradio_app(app, demo, path='/')
     thread = Thread(target=gradio_worker, args=(app,))
-    thread.daemon = True
+    thread.daemon = False
     thread.start()
 
     ServiceApp().run()
