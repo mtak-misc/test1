@@ -6,7 +6,8 @@ from kivy.uix.widget import Widget
 import gradio as gr
 from fastapi import FastAPI
 import uvicorn
-from threading import Thread
+#from threading import Thread
+from multiprocessing import Process
 
 WebView = autoclass('android.webkit.WebView')
 WebViewClient = autoclass('android.webkit.WebViewClient')
@@ -51,8 +52,10 @@ if __name__ == '__main__':
         clear_btn="Clear all",
     )        
     app = gr.mount_gradio_app(app, demo, path='/')
-    thread = Thread(target=gradio_worker, args=(app,))
-    thread.daemon = False
-    thread.start()
+#    thread = Thread(target=gradio_worker, args=(app,))
+#    thread.daemon = False
+#    thread.start()
+    child_process = Process(target=gradio_worker, args=(app,))
+    child_process.start()
 
     ServiceApp().run()
