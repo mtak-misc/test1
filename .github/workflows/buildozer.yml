@@ -48,6 +48,7 @@ jobs:
         run : |
           cp ./sample/__init__.py ./python-for-android/pythonforandroid/recipes/orjson
           curl -LO https://raw.githubusercontent.com/kivy/python-for-android/develop/pythonforandroid/recipes/pydantic-core/__init__.py
+          sed -i 's/2.16.1/2.18.4/g' __init__.py
           cp __init__.py ./python-for-android/pythonforandroid/recipes/pydantic-core/
           cd sample
           mv ../python-for-android .
