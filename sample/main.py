@@ -57,5 +57,6 @@ if __name__ == '__main__':
 #    thread.start()
     child_process = Process(target=gradio_worker, args=(app,))
     child_process.start()
-
+    import time
+    time.sleep(10)
     ServiceApp().run()
