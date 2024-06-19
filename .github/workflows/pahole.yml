@@ -20,6 +20,9 @@ jobs:
           git clone --depth 1 https://gitlab.archlinux.org/archlinux/packaging/packages/pahole.git
           chown builder -R ..
           chown builder -R /tmp
+          cd pahole
+          sed -i '/cd dwarves-/a \ \ patch -Np1 -i ../pahole.patch' PKGBUILD
+          sed -i '/cd dwarves-/a \ \ curl -L https://github.com/acmel/dwarves/commit/6a2b27c0f512619b0e7a769a18a0fb05bb3789a5.patch -o ../pahole.patch' PKGBUILD
       - name: Build
         run: |
           su builder -c "gpg --recv B23CA2E9A4227E27"
