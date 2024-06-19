@@ -22,6 +22,7 @@ jobs:
           chown builder -R /tmp
       - name: Build
         run: |
+          su builder -c "gpg --recv B23CA2E9A4227E27"
           cd pahole
           su builder -c "yes '' | makepkg --noconfirm -sc"
       - name: Upload packages
