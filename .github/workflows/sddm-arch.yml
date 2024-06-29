@@ -1,4 +1,4 @@
-name: build-sddm
+name: build-sddm-arch
 
 on:
   workflow_dispatch:
