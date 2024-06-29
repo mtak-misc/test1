@@ -29,5 +29,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: sddm
-          path: ${{ env.PKGDEST }}/*.zip
+          path: ${{ env.PKGDEST }}/*.pkg.tar.zst
         
