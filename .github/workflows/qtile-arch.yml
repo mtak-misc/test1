@@ -42,7 +42,9 @@ jobs:
 #          pacman --noconfirm -U /tmp/python-cairocffi*.pkg.tar.zst
       - name: Build Qtile
         run: |
-          curl -L https://github.com/qtile/qtile/commit/d6253321a884887ba48f58b91486fa788faa7c1e.patch -o 4845.patch
+          curl -L https://github.com/qtile/qtile/commit/d6253321a884887ba48f58b91486fa788faa7c1e.patch -o 4845_1.patch
+          curl -L https://github.com/qtile/qtile/compare/d6253321a884887ba48f58b91486fa788faa7c1e..26749db2cfad6c7a9e77363bac5a2b97fce6c135.patch -o 4845_2.patch
+          curl -L https://github.com/qtile/qtile/compare/26749db2cfad6c7a9e77363bac5a2b97fce6c135..450cd072dbf4454362c94632cf83f3eff1761cea.patch -o 4845_3.patch
           curl -L https://github.com/fjpavon/qtile/commit/b6993439be94fd84cdbeeffb3e52eb8d801caf8f.patch -o 4821.patch
           git clone https://gitlab.archlinux.org/archlinux/packaging/packages/qtile.git
           chown builder -R ./qtile
@@ -51,7 +53,9 @@ jobs:
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../libinput.patch' PKGBUILD
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../inputs.patch' PKGBUILD
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../4821.patch' PKGBUILD
-          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../4845.patch' PKGBUILD
+          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../4845_1.patch' PKGBUILD
+          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../4845_2.patch' PKGBUILD
+          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../4845_3.patch' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
       - name : Install Qtile
         run: |
