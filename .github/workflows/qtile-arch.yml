@@ -42,7 +42,7 @@ jobs:
 #          pacman --noconfirm -U /tmp/python-cairocffi*.pkg.tar.zst
       - name: Build Qtile
         run: |
-          curl -L curl -L https://github.com/qtile/qtile/commit/b7cb03a6b89818821667801cac7f2ebcf6c4d830.patch -o 4845.patch
+          curl -L https://github.com/qtile/qtile/commit/b7cb03a6b89818821667801cac7f2ebcf6c4d830.patch -o 4845.patch
           curl -L https://github.com/fjpavon/qtile/commit/b6993439be94fd84cdbeeffb3e52eb8d801caf8f.patch -o 4821.patch
           git clone https://gitlab.archlinux.org/archlinux/packaging/packages/qtile.git
           chown builder -R ./qtile
