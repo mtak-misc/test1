@@ -17,12 +17,12 @@ jobs:
         run: |
           pacman -Syu --noconfirm base-devel sudo git
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-          git clone --depth 1 https://aur.archlinux.org/optimus-manager.git
+          git clone --depth 1 https://aur.archlinux.org/optimus-manager-git.git
           chown builder -R ..
           chown builder -R /tmp
       - name: Build
         run: |
-          cd optimus-manager
+          cd optimus-manager-git
           su builder -c "yes '' | makepkg --noconfirm -sc"
           cd /tmp/optimus-manager-qt
           pacman -U --noconfirm optimus-manager-*.pkg.tar.zst
