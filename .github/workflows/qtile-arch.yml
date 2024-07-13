@@ -33,7 +33,7 @@ jobs:
           sed -i 's/pkgrel=2/pkgrel=1/g' PKGBUILD
           sed -i 's/a57ad598203c1fbfe56130ceefb06d9223c99f4fc240fc05d2e3cf56b5f188fb6da27290d0b546f6c42ffcd541c14d398d80266d09f2f95a30e807c31066cbbc/SKIP/g' PKGBUILD
           sed -i 's/721f7ce98fd526541939ededadba0666d9f7b7683c2f62f71039de5d83a9e79aedbca3a3531adcacb8ce5ff2e28d81b08169bbf71ba7e9ba9b7a2455a1a107a5/SKIP/g' PKGBUILD
-          sed -I 's/wlroots libwlroots.so=12/wlroots0.17 libwlroots.so=12/g' PKGBUILD
+          sed -i 's/wlroots libwlroots.so=12/wlroots0.17 libwlroots.so=12/g' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
       - name : Install Qtile
         run: |
