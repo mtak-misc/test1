@@ -16,7 +16,7 @@ jobs:
       - name: Prepare for makepkg
         run: |
           pacman -Syu --noconfirm base-devel sudo git python-flit-core
-          sed -i 's/SigLevel    = Required DatabaseOptional/SigLevel Never/g' /etc/pacman.conf
+          sed -i 's/SigLevel    = Required DatabaseOptional/SigLevel = Never/g' /etc/pacman.conf
           grep SigLevel /etc/pacman.conf
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           chown builder -R ..
