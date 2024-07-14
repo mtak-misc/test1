@@ -31,6 +31,7 @@ jobs:
           chown builder -R ./qtile
           cd qtile
           su builder -c "gpg --recv-keys 18D18F1BC464DCA3"
+          sed -i '/.\/scripts\/ffibuild/i \ \ curl -LO https://raw.githubusercontent.com/qtile/qtile/465126fb5cb26759aa24b634bbf46f2b8de41a14/CHANGELOG' PKGBUILD
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../libinput.patch' PKGBUILD
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../inputs.patch' PKGBUILD
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../idle.patch' PKGBUILD
