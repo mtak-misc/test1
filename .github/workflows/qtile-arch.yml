@@ -30,10 +30,8 @@ jobs:
           chown builder -R ./qtile
           cd qtile
           su builder -c "gpg --recv-keys 18D18F1BC464DCA3"
-          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../4854.patch' PKGBUILD
-          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../4821.patch' PKGBUILD
-          sed -i '/.\/scripts\/ffibuild/i \ \ curl -LO https://raw.githubusercontent.com/qtile/qtile/465126fb5cb26759aa24b634bbf46f2b8de41a14/CHANGELOG' PKGBUILD
-          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../4845.patch' PKGBUILD
+          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../libinput.patch' PKGBUILD
+          sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../inputs.patch' PKGBUILD
           sed -i 's/wlroots libwlroots.so=12/wlroots0.17 libwlroots.so=12/g' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
 #          sed -i 's/pkgver=0.26.0/pkgver=0.27.0/g' PKGBUILD
