@@ -23,9 +23,6 @@ jobs:
           chown builder -R /tmp          
       - name: Build Qtile
         run: |
-          curl -L https://github.com/qtile/qtile/commit/b7cb03a6b89818821667801cac7f2ebcf6c4d830.patch -o 4845.patch
-          curl -L https://github.com/fjpavon/qtile/commit/b6993439be94fd84cdbeeffb3e52eb8d801caf8f.patch -o 4821.patch
-          curl -LO https://patch-diff.githubusercontent.com/raw/qtile/qtile/pull/4854.patch
           curl -L https://github.com/qtile/qtile/commit/b7cb03a6b89818821667801cac7f2ebcf6c4d830.patch -o idle.patch
           git clone https://gitlab.archlinux.org/archlinux/packaging/packages/qtile.git
           chown builder -R ./qtile
@@ -35,7 +32,6 @@ jobs:
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../libinput.patch' PKGBUILD
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../inputs.patch' PKGBUILD
           sed -i '/.\/scripts\/ffibuild/i \ \ patch -Np1 -i ../../../idle.patch' PKGBUILD
-          sed -i 's/wlroots libwlroots.so=12/wlroots0.17 libwlroots.so=12/g' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
 #          sed -i 's/pkgver=0.26.0/pkgver=0.27.0/g' PKGBUILD
 #          sed -i 's/pkgrel=2/pkgrel=1/g' PKGBUILD
