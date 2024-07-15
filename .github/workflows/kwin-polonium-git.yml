@@ -22,7 +22,7 @@ jobs:
           chown builder -R /tmp
       - name: Build
         run: |
-          cd kwin-polonium
+          cd kwin-polonium-git
           su builder -c "yes '' | makepkg --noconfirm -sc"
           cd /tmp
       - name: Upload packages
