@@ -78,7 +78,7 @@ jobs:
       - name: Apply patches
         run: |
           git clone --depth 1 https://gitlab.archlinux.org/archlinux/packaging/packages/linux-lts.git
-          cd linuxt-lts
+          cd linux-lts
           sed -i 's/pkgver=6.6.40/pkgver=6.6.41/g' PKGBUILD
           sed -i 's/5c3a3c03c055b8d601a6d7f80d1465ada6b83a12299f6ace2027b47f0baff538/SKIP/g' PKGBUILD
           sed -i 's/03f36f064d70426c697645cd052f06ebda26a31cb607fff5678516307e11195d2dccfcedf563ebec119120b927d16d9de63b705af83e4de85afc1c7ed8a5d174/SKIP/g' PKGBUILD
