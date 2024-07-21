@@ -33,7 +33,7 @@ jobs:
       - name: Move repo directory
         run: |
            mv aports/testing/qtile /home/builder
-           sed -i 's/pkgver=0.23.0/pkgver=0.26.0/g' /home/builder/qtile/APKBUILD
+           sed -i 's/pkgver=0.23.0/pkgver=0.27.0/g' /home/builder/qtile/APKBUILD
            sed -i '/0001-use-xcffib-1.4.0-s-new-in-line-APIs.patch/d' /home/builder/qtile/APKBUILD
            chown builder -R /home/builder
 #           sed -i 's/pkgrel=2/pkgrel=1/g' /home/builder/qtile/APKBUILD
