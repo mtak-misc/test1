@@ -9,7 +9,7 @@ jobs:
 #    container: archlinux:latest    
     steps:
       - name: Cleanup
-        if: ${{ 'true' == 'false' }}
+#        if: ${{ 'true' == 'false' }}
         run: |
           docker images
           sudo rm -rf "/opt/*" || true
