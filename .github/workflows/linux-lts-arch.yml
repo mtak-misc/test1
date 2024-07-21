@@ -76,6 +76,7 @@ jobs:
       - name: Checkount repo
         uses: actions/checkout@v4 
       - name: Apply patches
+        run: |
           git clone --depth 1 https://gitlab.archlinux.org/archlinux/packaging/packages/linux-lts.git
           cd linuxt-lts
           sed -i 's/pkgver=6.6.40/pkgver=6.6.41/g' PKGBUILD
