@@ -1,0 +1,98 @@
+name: build-linux-lts-arch
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+#    container: archlinux:latest    
+    steps:
+      - name: Cleanup
+        if: ${{ 'true' == 'false' }}
+        run: |
+          docker images
+          sudo rm -rf "/opt/*" || true
+          sudo rm -rf "/usr/share/dotnet" || true
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY" || true
+          sudo rm -rf "/usr/local/lib/android" || true
+          sudo rm -rf "/usr/local/share/boost" || true
+          sudo rm -rf "/usr/lib/jvm" || true
+          sudo rm -rf "/usr/share/swift" || true
+          sudo rm -rf "/usr/local/julia*" || true
+          sudo rm -rf "/usr/share/kotlinc" || true
+          sudo rm -rf "/usr/local/share/edge_driver" || true
+          sudo rm -rf "/usr/local/share/chromedriver-linux64" || true
+          sudo rm -rf "/usr/local/share/gecko_driver" || true
+          sudo rm -rf "/usr/share/miniconda" || true
+          sudo rm -rf "/usr/local/share/phantomjs*" || true
+          sudo rm -rf "/usr/share/sbt" || true
+          sudo rm -rf "/usr/local/sqlpackage" || true
+          docker rmi $(docker image ls -q --filter "reference=node*")
+          docker rmi $(docker image ls -q --filter "reference=debian*")
+          docker rmi $(docker image ls -q --filter "reference=alpine*")
+          docker rmi $(docker image ls -q --filter "reference=ubuntu:20.04")
+          sudo npm uninstall bazel
+          rustup self uninstall -y
+          sudo apt purge \
+            ansible \
+            apache2 \
+            aria2 \
+            azure-cli \
+            cabal* \
+            clang* \
+            dotnet-sdk* \
+            firefox \
+            ghc* \
+            google-chrome-stable \
+            google-cloud-sdk \
+            kubectl \
+            libpq-dev \
+            microsoft-edge-stable \
+            moby-buildx \
+            moby-cli \
+            moby-compose \
+            moby-engine \
+            mongodb* \
+            mono-complete \
+            mysql* \
+            nginx \
+            node* \
+            npm* \
+            nuget \
+            php* \
+            postgresql* \
+            powershell \
+            r-base \
+            rpm \
+            ruby* \
+            sphinxsearch \
+            subversion \
+            yarn \
+            -yq >/dev/null 2>&1 || true
+          sudo apt-get autoremove -y >/dev/null 2>&1 || true
+          sudo apt-get autoclean -y >/dev/null 2>&1 || true
+          df -h
+      - name: Checkount repo
+        uses: actions/checkout@v4 
+      - name: Apply patches
+          git clone --depth 1 https://gitlab.archlinux.org/archlinux/packaging/packages/linux-lts.git
+          cd linuxt-lts
+          sed -i 's/pkgver=6.6.40/pkgver=6.6.41/g' PKGBUILD
+          sed -i 's/5c3a3c03c055b8d601a6d7f80d1465ada6b83a12299f6ace2027b47f0baff538/SKIP/g' PKGBUILD
+          sed -i 's/03f36f064d70426c697645cd052f06ebda26a31cb607fff5678516307e11195d2dccfcedf563ebec119120b927d16d9de63b705af83e4de85afc1c7ed8a5d174/SKIP/g' PKGBUILD
+          sed -i 's/# Linux/x86 6.6.40 Kernel Configuration/# Linux/x86 6.6.41 Kernel Configuration/g' config
+      - name: Set UserID
+        run: |
+          echo "USERID=$(id -u $(whoami))" >> $GITHUB_ENV
+      - name: Build
+        uses: docker://archlinux:latest
+        with:
+          entrypoint: '/bin/sh'
+          args: ./gcc-build.sh ${{ env.USERID }} 
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-lts-arch
+          path: ${{ github.workspace }}/linux-lts/*.pkg.tar.zst
+        
