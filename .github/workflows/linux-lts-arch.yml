@@ -79,12 +79,12 @@ jobs:
         run: |
           git clone --depth 1 https://gitlab.archlinux.org/archlinux/packaging/packages/linux-lts.git
           cd linux-lts
-          sed -i 's/pkgver=6.6.40/pkgver=6.6.41/g' PKGBUILD
-          sed -i 's/5c3a3c03c055b8d601a6d7f80d1465ada6b83a12299f6ace2027b47f0baff538/SKIP/g' PKGBUILD
-          sed -i 's/87d339c8e8f6859c3efea83d5dcd90573f51d199adcd40fa9bafd59c7973c825/SKIP/g' PKGBUILD
-          sed -i 's/e64e9a6d37076dd565399b40af1977eedfa186a244041fcdfef6cee7b91d6a9e0883c3bfc9a1daa98f1f8cb99a33d5705a5f776cbb82aa95e26dee08228a2c62/SKIP/g' PKGBUILD
-          sed -i 's/03f36f064d70426c697645cd052f06ebda26a31cb607fff5678516307e11195d2dccfcedf563ebec119120b927d16d9de63b705af83e4de85afc1c7ed8a5d174/SKIP/g' PKGBUILD
-          sed -i 's/# Linux/x86 6.6.40 Kernel Configuration/# Linux/x86 6.6.41 Kernel Configuration/g' config
+          sed -i 's/pkgver=6.6.42/pkgver=6.6.43/g' PKGBUILD
+          sed -i 's/7a4537d37dab44dd04b973ff2ec3d2fa8407d270477213a745c50a624bca0370bd7229dbe796e4531ec4fa2731cc8b32bce1940a43f62d53d1d57aa51f5f9785/SKIP/g' PKGBUILD
+          sed -i 's/8801c8c297d774e76044977ec3d0684399dc4e7cce347d730874ec78b774e683/SKIP/g' PKGBUILD
+#          sed -i 's/e64e9a6d37076dd565399b40af1977eedfa186a244041fcdfef6cee7b91d6a9e0883c3bfc9a1daa98f1f8cb99a33d5705a5f776cbb82aa95e26dee08228a2c62/SKIP/g' PKGBUILD
+#          sed -i 's/03f36f064d70426c697645cd052f06ebda26a31cb607fff5678516307e11195d2dccfcedf563ebec119120b927d16d9de63b705af83e4de85afc1c7ed8a5d174/SKIP/g' PKGBUILD
+#          sed -i 's/# Linux/x86 6.6.40 Kernel Configuration/# Linux/x86 6.6.41 Kernel Configuration/g' config
       - name: Set UserID
         run: |
           echo "USERID=$(id -u $(whoami))" >> $GITHUB_ENV
