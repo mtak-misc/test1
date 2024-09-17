@@ -98,6 +98,8 @@ jobs:
           su builder -c "git clone --depth 1 https://aur.archlinux.org/proton-vpn-gtk-app.git"  
           cd proton-vpn-gtk-app
           sed -i 's/pkgver=4.4.4/pkgver=4.4.5/g' PKGBUILD
+          sed -i '/python-proton-vpn-network-manager-openvpn/d' PKGBUILD
+          sed -i '/python-proton-vpn-network-manager-wireguard/d' PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
