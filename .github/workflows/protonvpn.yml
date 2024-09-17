@@ -54,13 +54,6 @@ jobs:
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
-#      - name: Build python-proton-vpn-killswitch
-#        run: |
-#          su builder -c "git clone --depth 1 https://aur.archlinux.org/python-proton-vpn-killswitch.git"  
-#          cd python-proton-vpn-killswitch
-#          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
-#          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
-#          mv ${PKGDEST}/*.zst ${BUILDPKGS}
       - name: Build python-proton-vpn-killswitch-network-manager 
         run: |
           su builder -c "git clone --depth 1 https://aur.archlinux.org/python-proton-vpn-killswitch-network-manager.git"  
