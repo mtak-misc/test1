@@ -72,21 +72,21 @@ jobs:
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
-      - name: Build python-proton-vpn-network-manager-wireguard
-        run: |
-          su builder -c "git clone --depth 1 https://aur.archlinux.org/python-proton-vpn-network-manager-wireguard.git"  
-          cd python-proton-vpn-network-manager-wireguard
-          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
-          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
-          mv ${PKGDEST}/*.zst ${BUILDPKGS}
-#          sed -i 's/pkgver=0.4.1/pkgver=0.4.7/g' PKGBUILD
-#      - name: Build python-proton-vpn-killswitch-network-manager-wireguard
+#      - name: Build python-proton-vpn-network-manager-wireguard
 #        run: |
-#          su builder -c "git clone --depth 1 https://aur.archlinux.org/python-proton-vpn-killswitch-network-manager-wireguard.git"  
-#          cd python-proton-vpn-killswitch-network-manager-wireguard
+#          su builder -c "git clone --depth 1 https://aur.archlinux.org/python-proton-vpn-network-manager-wireguard.git"  
+#          cd python-proton-vpn-network-manager-wireguard
 #          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
 #          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
 #          mv ${PKGDEST}/*.zst ${BUILDPKGS}
+#          sed -i 's/pkgver=0.4.1/pkgver=0.4.7/g' PKGBUILD
+      - name: Build python-proton-vpn-killswitch-network-manager-wireguard
+        run: |
+          su builder -c "git clone --depth 1 https://aur.archlinux.org/python-proton-vpn-killswitch-network-manager-wireguard.git"  
+          cd python-proton-vpn-killswitch-network-manager-wireguard
+          su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
+          pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
+          mv ${PKGDEST}/*.zst ${BUILDPKGS}
       - name: Build python-proton-keyring-linux-secretservice
         run: |
           su builder -c "git clone --depth 1 https://aur.archlinux.org/python-proton-keyring-linux-secretservice.git"  
