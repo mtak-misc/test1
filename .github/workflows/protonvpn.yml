@@ -26,7 +26,8 @@ jobs:
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
-#          sed -i 's/pkgver=0.5.2/pkgver=0.6.3/g' PKGBUILD
+          sed -i 's/pkgver=0.6.3/pkgver=0.7.0/g' PKGBUILD
+          sed -i 's/pkgrel=2/pkgrel=1/g' PKGBUILD
 #      - name: Build python-proton-vpn-network-manager-openvpn 
 #        run: |
 #          su builder -c "git clone --depth 1 https://aur.archlinux.org/python-proton-vpn-network-manager-openvpn.git"  
@@ -43,7 +44,7 @@ jobs:
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
- #         sed -i 's/pkgver=0.32.2/pkgver=0.33.11/g' PKGBUILD
+          sed -i 's/pkgver=0.33.11/pkgver=0.33.12/g' PKGBUILD
       - name: Build python-proton-core
         run: |
           su builder -c "git clone --depth 1 https://aur.archlinux.org/python-proton-core.git"  
@@ -101,7 +102,8 @@ jobs:
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm -sc"
           pacman -U --noconfirm $(ls ${PKGDEST}/*.zst)
           mv ${PKGDEST}/*.zst ${BUILDPKGS}
-#          sed -i 's/pkgver=4.4.4/pkgver=4.4.5/g' PKGBUILD
+          sed -i 's/pkgver=4.4.5/pkgver=4.5.0/g' PKGBUILD
+          sed -i 's/pkgrel=2/pkgrel=1/g' PKGBUILD
 #          sed -i '/python-proton-vpn-network-manager-openvpn/d' PKGBUILD
 #          sed -i '/python-proton-vpn-network-manager-wireguard/d' PKGBUILD          
       - name: Upload packages
