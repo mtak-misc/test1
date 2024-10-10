@@ -13,7 +13,7 @@ jobs:
       - name: Cleanup
         run: |
           sh ./cleanup.sh
-      - name: Checkount aports repository
+      - name: Checkout aports repository
         uses: actions/checkout@v4  
         with:
           repository: alpinelinux/aports
