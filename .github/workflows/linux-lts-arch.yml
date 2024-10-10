@@ -73,7 +73,7 @@ jobs:
           sudo apt-get autoremove -y >/dev/null 2>&1 || true
           sudo apt-get autoclean -y >/dev/null 2>&1 || true
           df -h
-      - name: Checkount repo
+      - name: Checkout repo
         uses: actions/checkout@v4 
       - name: Apply patches
         run: |
