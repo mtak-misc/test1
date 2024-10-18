@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 #    container: alpine:3.19
     steps:
-      - name: Checkount repo
+      - name: Checkout repo
         uses: actions/checkout@v4
       - name: Cleanup
         run: |
