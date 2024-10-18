@@ -1,0 +1,42 @@
+name: build-nvidia
+
+on:
+  workflow_dispatch:
+
+env:
+  PKGDEST: "/tmp/nvidia"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest    
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Prepare for makepkg
+        run: |
+          pacman -Syu --noconfirm base-devel sudo git
+          cd /tmp
+          useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          git clone --depth 1 https://aur.archlinux.org/nvidia-390xx-utils.git
+          git clone --depth 1 https://aur.archlinux.org/nvidia-390xx-settings.git
+          chown builder -R /tmp
+#          sed -i -e '/patch -Np1 -i ..\/kernel-6.8.patch/a \ \ \ \ patch -Np1 -i ..\/..\/..\/gcc-14.patch' ./nvidia-390xx-utils/PKGBUILD
+#          chown builder -R ..
+#          curl -LO https://github.com/mtak-misc/test1/raw/main/kernel-6.6.patch
+#          mv ./kernel-6.6.patch ./nvidia-390xx-utils/
+#          sed -i -e 's/pkgrel=6/pkgrel=6.3/g' ./nvidia-390xx-utils/PKGBUILD
+#          sed -i -e '/patch -Np1 -i ..\/kernel-6.5.patch/a \ \ \ \ patch -Np1 -i ..\/..\/kernel-6.6.patch' ./nvidia-390xx-utils/PKGBUILD
+      - name: Build nvidia-390xx-utils
+        run: |
+          cd /tmp/nvidia-390xx-utils
+          su builder -c "yes '' | makepkg --noconfirm -sc"
+          pacman --noconfirm -U /tmp/nvidia-390xx-utils-*.pkg.tar.zst
+          cd /tmp/nvidia-390xx-settings
+          su builder -c "yes '' | makepkg --noconfirm -sc"
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: nvidia-390xx
+          path: ${{ env.PKGDEST }}/*.pkg.tar.zst
+        
