@@ -1,0 +1,32 @@
+name: build-hfsprogs
+
+on:
+  workflow_dispatch:
+
+env:
+  PKGDEST: "/tmp/hfsprogs"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest    
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Prepare for makepkg
+        run: |
+          pacman -Syu --noconfirm base-devel sudo git
+          cd /tmp
+          useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          git clone --depth 1 https://aur.archlinux.org/hfsprogs.git
+          chown builder -R /tmp
+      - name: Build
+        run: |
+          cd /tmp/hfsprogs
+          su builder -c "yes '' | makepkg --noconfirm -sc"
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: hfsprogs
+          path: ${{ env.PKGDEST }}/*.pkg.tar.zst
+        
