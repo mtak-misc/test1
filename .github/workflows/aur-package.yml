@@ -25,7 +25,7 @@ jobs:
           cd /tmp
           echo ${{ github.event.inputs.package_name }} | sed 's/,/\n/g' | awk '{ print "git clone --depth 1 https://aur.archlinux.org/"$1".git" }' | bash
           chown builder -R /tmp
-          chown builder -R ./${{ github.event.inputs.package_name }}
+          echo ${{ github.event.inputs.package_name }} | sed 's/,/\n/g' | awk '{ print "chown builder -R ./"$1 }' | bash
       - name: Build
         run: |
           echo ${{ github.event.inputs.package_name }} | sed 's/,/\n/g' | awk '{ print "cd /tmp/"$1"; su builder -c \"yes '' | makepkg --noconfirm -sc\" ; pacman --noconfirm -U /tmp/"$1"*.pkg.tar.zst" }' | bash
