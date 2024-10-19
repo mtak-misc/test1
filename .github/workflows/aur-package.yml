@@ -21,6 +21,7 @@ jobs:
       - name: Prepare for makepkg
         run: |
           pacman -Syu --noconfirm base-devel sudo git
+          su builder -c "gpg --recv 4EC1EA64"
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           cd /tmp
           echo ${{ github.event.inputs.package_name }} | sed 's/,/\n/g' | awk '{ print "git clone --depth 1 https://aur.archlinux.org/"$1".git" }' | bash
