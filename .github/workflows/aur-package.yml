@@ -28,7 +28,7 @@ jobs:
           echo ${{ github.event.inputs.package_name }} | sed 's/,/\n/g' | awk '{ print "chown builder -R ./"$1 }' | bash
       - name: Build
         run: |
-          echo ${{ github.event.inputs.package_name }} | sed 's/,/\n/g' | awk '{ print "cd /tmp/"$1"; su builder -c \"yes '' | makepkg --noconfirm -sc\" ; pacman --noconfirm -U /tmp/"$1"*.pkg.tar.zst" }' | bash
+          echo ${{ github.event.inputs.package_name }} | sed 's/,/\n/g' | awk '{ print "cd /tmp/"$1"; su builder -c \"yes '' | makepkg --noconfirm -sc\" ; pacman --noconfirm -U /tmp/*.pkg.tar.zst" }' | bash
 #          su builder -c "yes '' | makepkg --noconfirm -sc"
       - name: Upload packages
         uses: actions/upload-artifact@v4
