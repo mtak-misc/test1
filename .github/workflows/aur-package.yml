@@ -22,13 +22,14 @@ jobs:
         run: |
           pacman -Syu --noconfirm base-devel sudo git
           useradd builder -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          cd /tmp
           echo ${{ github.event.inputs.package_name }} | sed 's/,/\n/g' | awk '{print "git clone --depth 1 https://aur.archlinux.org/"$1".git" }' | bash
           chown builder -R /tmp
           chown builder -R ./${{ github.event.inputs.package_name }}
       - name: Build
         run: |
-          cd ${{ github.event.inputs.package_name }}
-          su builder -c "yes '' | makepkg --noconfirm -sc"
+          echo ${{ github.event.inputs.package_name }} | sed 's/,/\n/g' | awk '{ print "cd "$1"; su builder -c \"yes '' | makepkg --noconfirm -sc\" ; pacman --noconfirm -U "$1"*.pkg.tar.zst" }' | bash
+#          su builder -c "yes '' | makepkg --noconfirm -sc"
       - name: Upload packages
         uses: actions/upload-artifact@v4
         with:
