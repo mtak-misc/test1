@@ -79,7 +79,7 @@ jobs:
         run: |
           git clone --depth 1 https://gitlab.archlinux.org/archlinux/packaging/packages/linux-lts.git
           cd linux-lts
-          sed -i 's/pkgver=6.17.7/pkgver=6.17.8/g' PKGBUILD
+          sed -i 's/pkgver=6.12.47/pkgver=6.12.48/g' PKGBUILD
           grep -oP "'\K[a-f0-9]{64}(?='.*)" PKGBUILD | awk '{print "sed -i \x27s/"$1"/SKIP/g\x27 PKGBUILD"}' | bash
 #          sed -i 's/e64e9a6d37076dd565399b40af1977eedfa186a244041fcdfef6cee7b91d6a9e0883c3bfc9a1daa98f1f8cb99a33d5705a5f776cbb82aa95e26dee08228a2c62/SKIP/g' PKGBUILD
 #          sed -i 's/03f36f064d70426c697645cd052f06ebda26a31cb607fff5678516307e11195d2dccfcedf563ebec119120b927d16d9de63b705af83e4de85afc1c7ed8a5d174/SKIP/g' PKGBUILD
