@@ -92,7 +92,7 @@ jobs:
         uses: docker://archlinux:latest
         with:
           entrypoint: '/bin/sh'
-          args: -c "pacman -Sy --noconfirm python-docutils && ./gcc-build.sh ${{ env.USERID }} 
+          args: ./gcc-build.sh ${{ env.USERID }} 
       - name: Upload packages
         uses: actions/upload-artifact@v4
         with:
