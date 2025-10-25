@@ -1,6 +1,6 @@
 #!/bin/sh
 USERID=$1
-
+pacman -Sy --noconfirm python-docutils
 pacman -Syu --noconfirm base-devel sudo git
 useradd builder -u ${USERID} -m -G wheel && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 #chown builder -R ..
