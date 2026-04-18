@@ -24,6 +24,7 @@ jobs:
       - name: Build
         run: |
           cd firejail
+          sed -i "s/--enable-apparmor/--enable-apparmor --enable overlayfs/g" PKGBUILD
           su builder -c "yes '' | MAKEFLAGS=\"-j $(nproc)\" makepkg --noconfirm --nocheck --skippgpcheck -sc"
       - name: Upload packages
         uses: actions/upload-artifact@v7
